@@ -1681,7 +1681,12 @@ function updateLegend() {
 }
 
 // ── BURNED POLYGONS ──
+const isMobile = window.innerWidth < 768;
+
 async function loadBurnedPolygons() {
+  // บนมือถือไม่โหลด burn polygons เลย — ใช้แค่ choropleth
+  if (isMobile) return;
+
   const burnLayer = document.getElementById('layer-burns');
   const codes = Object.values(PROVINCE_CODE);
   const BATCH = 8;
@@ -1764,7 +1769,19 @@ async function selectProvince(code, thName) {
   if (!geojsonCache[code]) {
     try {
       const res = await fetch(`${GITHUB_BASE}/by_province_en/${code}.geojson`);
-      geojsonCache[code] = await res.json();
+      const text = await res.text();
+
+      let gj;
+      if (isMobile) {
+        // บนมือถือ: ตัด geometry ออกก่อน parse — ลดขนาด JSON 70-80%
+        // เก็บแค่ properties ที่ต้องการ
+        const stripped = text.replace(/"geometry"\s*:\s*\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g, '"geometry":null');
+        gj = JSON.parse(stripped);
+      } else {
+        gj = JSON.parse(text);
+      }
+
+      geojsonCache[code] = gj;
     } catch(e) {
       body.innerHTML = '<div class="map-panel-empty">โหลดข้อมูลไม่ได้</div>';
       return;
