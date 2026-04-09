@@ -222,18 +222,11 @@
   .bar-fill {
     height: 100%;
     background: var(--ink-mid);
-    animation: barGrow 0.8s ease-out forwards;
-    width: 0;
   }
 
   .bar-fill.jan { background: #a8c5da; }
   .bar-fill.feb { background: #5a8fa8; }
   .bar-fill.mar { background: var(--accent); }
-
-  @keyframes barGrow {
-    from { width: 0; }
-    to { width: inherit; }
-  }
 
   .bar-label {
     font-family: 'IBM Plex Mono', monospace;
@@ -348,9 +341,6 @@
 
   .resp-fill {
     height: 100%;
-    transform-origin: left;
-    animation: barGrow 0.9s ease-out forwards;
-    transform: scaleX(0);
   }
   .resp-fill.forest-zone { background: var(--forest); }
   .resp-fill.agri-zone { background: var(--agri); }
@@ -450,9 +440,6 @@
   .mini-bar-fill {
     height: 100%;
     background: var(--accent);
-    transform-origin: left;
-    animation: barGrow 0.7s ease-out forwards;
-    transform: scaleX(0);
   }
 
   .forest-badge {
@@ -801,9 +788,6 @@
   .clmv-bar-fill {
     height: 100%;
     background: var(--ink-mid);
-    transform-origin: left;
-    animation: barGrow 0.8s ease-out forwards;
-    transform: scaleX(0);
   }
   .clmv-bar-fill.thai { background: var(--accent); }
   .clmv-num {
@@ -1369,7 +1353,7 @@ top10.forEach((d, i) => {
     <td class="area-num">${d.sqm.toLocaleString()}</td>
     <td class="mini-bar-cell">
       <div class="mini-bar-track">
-        <div class="mini-bar-fill" style="width:${(d.sqm/maxSqm*100).toFixed(1)}%;animation-delay:${delay}s"></div>
+        <div class="mini-bar-fill" style="width:${(d.sqm/maxSqm*100).toFixed(1)}%"></div>
       </div>
     </td>
     <td>
@@ -1392,7 +1376,7 @@ clusters.forEach((d, i) => {
       ${d.name}
     </div>
     <div class="bar-track" style="height:16px;">
-      <div class="bar-fill" style="background:var(--forest);opacity:0.8;transform:scaleX(${d.sqm/maxCluster});animation-delay:${delay}s"></div>
+      <div class="bar-fill" style="background:var(--forest);opacity:0.8;width:${(d.sqm/maxCluster*100).toFixed(1)}%"></div>
     </div>
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);text-align:right;">${d.sqm.toLocaleString()}</div>
   `;
@@ -1445,7 +1429,7 @@ svg.innerHTML = `
 
 // ── MAP ──
 const GITHUB_BASE = 'https://raw.githubusercontent.com/Teeramon/burn2025/main';
-const BOUNDARY_URL = 'https://raw.githubusercontent.com/cvibhagool/thailand-map/master/thailand-provinces.geojson';
+const BOUNDARY_URL = 'https://raw.githubusercontent.com/apisit/thailand.json/master/thailandWithName.json';
 
 const PROVINCE_CODE = {
   'กรุงเทพมหานคร':'10','จ.กาญจนบุรี':'71','จ.กาฬสินธุ์':'46',
@@ -1519,38 +1503,47 @@ function choroColor(val, max) {
 
 // match boundary feature name → province code
 function matchCode(props) {
-  // try common property keys
-  const raw = props.NAME_1 || props.name || props.NAME || props.CHANGWAT || props.province || '';
-  if (!raw) return null;
-  // direct Thai match
-  for (const [thName, code] of Object.entries(PROVINCE_CODE)) {
-    const clean = thName.replace('จ.', '');
-    if (raw === clean || raw === thName) return code;
+  // apisit/thailand.json uses CHA_TH (Thai) and CHA_NE (English)
+  const rawTH = props.CHA_TH || '';
+  const rawEN = props.CHA_NE || props.NAME_1 || props.name || props.NAME || '';
+
+  // try Thai name first — strip จ. prefix for comparison
+  if (rawTH) {
+    // direct match with จ.X or X
+    for (const [thName, code] of Object.entries(PROVINCE_CODE)) {
+      const clean = thName.replace('จ.', '');
+      if (rawTH === clean || rawTH === thName || rawTH.includes(clean) || clean.includes(rawTH)) return code;
+    }
+    // Bangkok special case
+    if (rawTH.includes('กรุงเทพ')) return '10';
   }
-  // transliteration fallback map (English → code)
+
+  // fallback: English name
   const EN_MAP = {
     'Amnat Charoen':'37','Ang Thong':'15','Bangkok':'10','Bueng Kan':'38',
-    'Buri Ram':'31','Chachoengsao':'24','Chai Nat':'18','Chaiyaphum':'36',
-    'Chanthaburi':'22','Chiang Mai':'50','Chiang Rai':'57','Chon Buri':'20',
+    'Buri Ram':'31','Buriram':'31','Chachoengsao':'24','Chai Nat':'18','Chaiyaphum':'36',
+    'Chanthaburi':'22','Chiang Mai':'50','Chiang Rai':'57','Chon Buri':'20','Chonburi':'20',
     'Chumphon':'86','Kalasin':'46','Kamphaeng Phet':'62','Kanchanaburi':'71',
-    'Khon Kaen':'40','Krabi':'81','Lampang':'52','Lamphun':'51',
-    'Loei':'42','Lop Buri':'16','Mae Hong Son':'58','Maha Sarakham':'44',
-    'Mukdahan':'49','Nakhon Nayok':'26','Nakhon Pathom':'73','Nakhon Phanom':'48',
-    'Nakhon Ratchasima':'30','Nakhon Sawan':'60','Nakhon Si Thammarat':'80',
-    'Nan':'55','Narathiwat':'96','Nong Bua Lam Phu':'39','Nong Khai':'43',
-    'Nonthaburi':'12','Pathum Thani':'13','Pattani':'94','Phang Nga':'82',
-    'Phatthalung':'93','Phayao':'56','Phetchabun':'67','Phetchaburi':'76',
+    'Khon Kaen':'40','Lampang':'52','Lamphun':'51','Loei':'42','Lop Buri':'16',
+    'Lopburi':'16','Mae Hong Son':'58','Maha Sarakham':'44','Mukdahan':'49',
+    'Nakhon Nayok':'26','Nakhon Pathom':'73','Nakhon Phanom':'48',
+    'Nakhon Ratchasima':'30','Nakhon Sawan':'60','Nan':'55',
+    'Nong Bua Lam Phu':'39','Nong Khai':'43','Nonthaburi':'12',
+    'Pathum Thani':'13','Phayao':'56','Phetchabun':'67','Phetchaburi':'76',
     'Phichit':'66','Phitsanulok':'65','Phra Nakhon Si Ayutthaya':'14',
-    'Phrae':'54','Phuket':'83','Prachin Buri':'25','Prachuap Khiri Khan':'77',
-    'Ranong':'85','Ratchaburi':'70','Rayong':'21','Roi Et':'45',
-    'Sa Kaeo':'27','Sakon Nakhon':'47','Samut Prakan':'11','Samut Sakhon':'74',
-    'Samut Songkhram':'75','Sara Buri':'19','Satun':'91','Sing Buri':'17',
-    'Sisaket':'33','Songkhla':'90','Sukhothai':'64','Suphan Buri':'72',
-    'Surat Thani':'84','Surin':'32','Tak':'63','Trang':'92',
-    'Trat':'23','Ubon Ratchathani':'34','Udon Thani':'41','Uthai Thani':'61',
-    'Uttaradit':'53','Yala':'95','Yasothon':'35'
+    'Phrae':'54','Prachin Buri':'25','Prachuap Khiri Khan':'77',
+    'Ratchaburi':'70','Rayong':'21','Roi Et':'45','Sa Kaeo':'27',
+    'Sakon Nakhon':'47','Samut Prakan':'11','Samut Sakhon':'74',
+    'Samut Songkhram':'75','Sara Buri':'19','Saraburi':'19','Sing Buri':'17',
+    'Sisaket':'33','Si Sa Ket':'33','Sukhothai':'64','Suphan Buri':'72',
+    'Surin':'32','Tak':'63','Ubon Ratchathani':'34','Udon Thani':'41',
+    'Uthai Thani':'61','Uttaradit':'53','Yasothon':'35',
+    'Nakhon Si Thammarat':'80','Krabi':'81','Phang Nga':'82','Phuket':'83',
+    'Surat Thani':'84','Ranong':'85','Chumpon':'86','Songkhla':'90',
+    'Satun':'91','Trang':'92','Phatthalung':'93','Pattani':'94','Yala':'95','Narathiwat':'96'
   };
-  return EN_MAP[raw] || null;
+  if (rawEN) return EN_MAP[rawEN] || null;
+  return null;
 }
 
 // ── INIT ──
@@ -1851,7 +1844,7 @@ clmv.forEach((d, i) => {
     <div class="clmv-country" style="${d.isThai?'color:var(--accent);font-weight:500;':''}">${d.country}</div>
     <div class="clmv-bar-track">
       <div class="clmv-bar-fill ${d.isThai?'thai':''}"
-        style="width:${(d.val/maxClmv*100).toFixed(1)}%;animation-delay:${delay}s"></div>
+        style="width:${(d.val/maxClmv*100).toFixed(1)}%"></div>
     </div>
     <div class="clmv-num">${d.val.toLocaleString()}</div>
   `;
