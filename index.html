@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>พื้นที่เผาไหม้ในประเทศไทย มกราคม–มีนาคม 2569</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+Thai:wght@300;400;600;700&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18;
+    --ink-mid: #3d3d38;
+    --ink-light: #7a7a72;
+    --ink-faint: #c8c8c0;
+    --paper: #faf9f6;
+    --paper-warm: #f2f0eb;
+    --paper-rule: #e8e5de;
+    --accent: #c0392b;
+    --accent-muted: #d9534f;
+    --accent-pale: #f8e8e6;
+    --forest: #2d5a1b;
+    --forest-light: #e8f0e3;
+    --agri: #8b6914;
+    --agri-light: #f5edd8;
+    --north: #1a4a6b;
+    --col-w: 760px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ── HEADER RULE ── */
+  .header-rule {
+    width: 100%;
+    border: none;
+    border-top: 4px solid var(--ink);
+    margin: 0;
+  }
+  .header-sub-rule {
+    width: 100%;
+    border: none;
+    border-top: 1px solid var(--ink);
+    margin: 0;
+  }
+
+  /* ── TOP BAR ── */
+  .top-bar {
+    max-width: var(--col-w);
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .source-badge {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 8px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    max-width: var(--col-w);
+    margin: 0 auto;
+    padding: 48px 24px 40px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif Thai', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  .hero-lead {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--ink-mid);
+    max-width: 640px;
+    border-left: 3px solid var(--accent);
+    padding-left: 16px;
+    margin-bottom: 32px;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--paper-rule);
+    background: var(--paper-warm);
+  }
+
+  .hero-stat {
+    padding: 20px 20px;
+    border-right: 1px solid var(--paper-rule);
+  }
+  .hero-stat:last-child { border-right: none; }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .stat-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-number.accent { color: var(--accent); }
+
+  .stat-sub {
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+
+  /* ── SECTION ── */
+  .section {
+    max-width: var(--col-w);
+    margin: 0 auto;
+    padding: 48px 24px;
+    border-top: 1px solid var(--paper-rule);
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 8px;
+  }
+
+  .section h2 {
+    font-family: 'Noto Serif Thai', serif;
+    font-size: clamp(20px, 2.5vw, 26px);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .section-intro {
+    font-size: 15px;
+    color: var(--ink-mid);
+    margin-bottom: 32px;
+    max-width: 580px;
+  }
+
+  /* ── FINDING BOX ── */
+  .finding {
+    background: var(--paper-warm);
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px;
+    margin: 24px 0;
+    font-size: 14px;
+    color: var(--ink-mid);
+  }
+  .finding strong { color: var(--ink); font-weight: 500; }
+
+  /* ── MONTH BARS ── */
+  .month-bars { margin: 24px 0; }
+
+  .month-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 140px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .month-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-mid);
+    text-align: right;
+  }
+
+  .bar-track {
+    height: 28px;
+    background: var(--paper-rule);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--ink-mid);
+    transition: width 0.8s ease-out;
+  }
+
+  .bar-fill.jan { background: #a8c5da; }
+  .bar-fill.feb { background: #5a8fa8; }
+  .bar-fill.mar { background: var(--accent); }
+
+  .bar-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-mid);
+  }
+
+  /* ── LAND TYPE FLOW ── */
+  .land-flow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin: 24px 0;
+    border: 1px solid var(--paper-rule);
+  }
+
+  .land-month {
+    padding: 20px;
+    border-right: 1px solid var(--paper-rule);
+  }
+  .land-month:last-child { border-right: none; }
+
+  .land-month-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 14px;
+  }
+
+  .land-stack {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+
+  .land-seg {
+    transition: all 0.6s ease;
+  }
+
+  .land-seg.forest { background: var(--forest); }
+  .land-seg.agri { background: var(--agri-light); border: 1px solid #c9a83c; }
+  .land-seg.other { background: var(--paper-rule); }
+
+  .land-legend {
+    font-size: 11px;
+    color: var(--ink-mid);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .legend-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+  .legend-dot.forest { background: var(--forest); }
+  .legend-dot.agri { background: var(--agri); }
+
+  /* ── RESPONSIBILITY ── */
+  .resp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--paper-rule);
+    border: 1px solid var(--paper-rule);
+    margin: 24px 0;
+  }
+
+  .resp-cell {
+    background: var(--paper);
+    padding: 18px 16px;
+  }
+
+  .resp-month {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 14px;
+  }
+
+  .resp-bar-group { margin-bottom: 8px; }
+
+  .resp-bar-label {
+    font-size: 11px;
+    color: var(--ink-mid);
+    margin-bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .resp-bar-pct {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .resp-track {
+    height: 10px;
+    background: var(--paper-rule);
+    margin-bottom: 6px;
+  }
+
+  .resp-fill {
+    height: 100%;
+    transform-origin: left;
+    animation: barGrow 0.9s ease-out forwards;
+    transform: scaleX(0);
+  }
+  .resp-fill.forest-zone { background: var(--forest); }
+  .resp-fill.agri-zone { background: var(--agri); }
+  .resp-fill.other-zone { background: var(--ink-faint); }
+
+  /* ── KEY CALLOUT ── */
+  .key-callout {
+    background: #1a1a18;
+    color: #faf9f6;
+    padding: 28px 28px;
+    margin: 32px 0;
+  }
+
+  .key-callout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #999990;
+    margin-bottom: 10px;
+  }
+
+  .key-callout-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(36px, 6vw, 60px);
+    font-weight: 600;
+    color: #e8d5b0;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .key-callout-text {
+    font-family: 'Noto Serif Thai', serif;
+    font-size: 16px;
+    line-height: 1.65;
+    color: #c8c8be;
+    max-width: 520px;
+  }
+
+  /* ── PROVINCE TABLE ── */
+  .province-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 13px;
+  }
+
+  .province-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 2px solid var(--ink);
+    font-weight: 400;
+  }
+
+  .province-table th.right { text-align: right; }
+
+  .province-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--paper-rule);
+    vertical-align: middle;
+  }
+
+  .province-table tr:hover td { background: var(--paper-warm); }
+
+  .rank {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-light);
+    width: 28px;
+  }
+
+  .prov-name {
+    font-family: 'Noto Serif Thai', serif;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .area-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+  }
+
+  .mini-bar-cell { width: 140px; }
+
+  .mini-bar-track {
+    height: 8px;
+    background: var(--paper-rule);
+    position: relative;
+  }
+
+  .mini-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    transform-origin: left;
+    animation: barGrow 0.7s ease-out forwards;
+    transform: scaleX(0);
+  }
+
+  .forest-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--forest-light);
+    color: var(--forest);
+    border: 1px solid #b8d4a8;
+    white-space: nowrap;
+  }
+
+  .forest-badge.high { background: var(--forest-light); }
+  .forest-badge.low { background: var(--agri-light); color: var(--agri); border-color: #d4b870; }
+
+  /* ── CLUSTER BARS ── */
+  .cluster-list { margin: 20px 0; }
+
+  .cluster-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 100px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--paper-rule);
+  }
+
+  .cluster-name {
+    font-size: 12px;
+    color: var(--ink-mid);
+    line-height: 1.3;
+  }
+
+  .cluster-region {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    display: block;
+  }
+
+  /* ── MAP SECTION ── */
+  .map-section {
+    max-width: var(--col-w);
+    margin: 0 auto;
+    padding: 48px 24px;
+    border-top: 1px solid var(--paper-rule);
+  }
+
+  .map-controls {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    border: 1px solid var(--paper-rule);
+    width: fit-content;
+  }
+
+  .map-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border: none;
+    background: var(--paper);
+    color: var(--ink-light);
+    cursor: pointer;
+    border-right: 1px solid var(--paper-rule);
+    transition: all 0.15s;
+  }
+  .map-btn:last-child { border-right: none; }
+  .map-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .map-btn:hover:not(.active) {
+    background: var(--paper-warm);
+    color: var(--ink);
+  }
+
+  .map-layout {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 0;
+    border: 1px solid var(--paper-rule);
+    min-height: 480px;
+  }
+
+  .map-canvas-wrap {
+    position: relative;
+    background: #f0ede6;
+    overflow: hidden;
+  }
+
+  #map-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .map-path {
+    stroke: #fff;
+    stroke-width: 0.4;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .map-path:hover { opacity: 0.75; stroke-width: 0.8; }
+  .map-path.selected { stroke: var(--ink); stroke-width: 1.2; }
+
+  .map-tooltip {
+    position: absolute;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 6px 10px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s;
+    white-space: nowrap;
+    z-index: 10;
+  }
+  .map-tooltip.visible { opacity: 1; }
+
+  .map-legend {
+    padding: 14px 16px;
+    border-top: 1px solid var(--paper-rule);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .map-legend-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-right: 4px;
+  }
+
+  .legend-scale {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .legend-swatch {
+    width: 12px;
+    height: 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .legend-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-light);
+  }
+
+  /* ── MAP PANEL ── */
+  .map-panel {
+    border-left: 1px solid var(--paper-rule);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-panel-header {
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid var(--paper-rule);
+  }
+
+  .map-panel-province {
+    font-family: 'Noto Serif Thai', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .map-panel-hint {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: 0.08em;
+  }
+
+  .map-panel-body {
+    padding: 14px 16px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .panel-section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 14px 0 8px;
+  }
+  .panel-section-label:first-child { margin-top: 0; }
+
+  /* trend bars (3 months) */
+  .trend-row {
+    display: grid;
+    grid-template-columns: 52px 1fr 72px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+  }
+
+  .trend-month {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-light);
+    text-align: right;
+  }
+
+  .trend-track {
+    height: 10px;
+    background: var(--paper-rule);
+    position: relative;
+  }
+
+  .trend-fill {
+    height: 100%;
+    transform-origin: left;
+    transition: transform 0.5s ease-out;
+  }
+
+  .trend-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mid);
+    text-align: right;
+  }
+
+  /* lu breakdown */
+  .lu-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .lu-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .lu-name {
+    font-size: 12px;
+    color: var(--ink-mid);
+    flex: 1;
+  }
+
+  .lu-pct {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .lu-bar-wrap {
+    height: 4px;
+    background: var(--paper-rule);
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+
+  .lu-bar-fill {
+    height: 100%;
+    transition: width 0.5s ease-out;
+  }
+
+  .map-panel-empty {
+    padding: 32px 16px;
+    text-align: center;
+    color: var(--ink-light);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .map-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-light);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── CONTEXT SECTION ── */
+  .context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0;
+  }
+
+  .context-box {
+    border: 1px solid var(--paper-rule);
+    padding: 20px;
+  }
+
+  .context-box-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--paper-rule);
+  }
+
+  .context-note {
+    font-size: 11px;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-top: 10px;
+    border-top: 1px dashed var(--paper-rule);
+    padding-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* sparkline */
+  .sparkline-wrap { overflow: hidden; }
+
+  /* CLMV bars */
+  .clmv-row {
+    display: grid;
+    grid-template-columns: 70px 1fr 80px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .clmv-country { font-size: 12px; color: var(--ink-mid); }
+  .clmv-bar-track { height: 12px; background: var(--paper-rule); }
+  .clmv-bar-fill {
+    height: 100%;
+    background: var(--ink-mid);
+    transform-origin: left;
+    animation: barGrow 0.8s ease-out forwards;
+    transform: scaleX(0);
+  }
+  .clmv-bar-fill.thai { background: var(--accent); }
+  .clmv-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-light);
+    text-align: right;
+  }
+
+  /* ── DATA NOTE ── */
+  .data-note {
+    max-width: var(--col-w);
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+    border-top: 2px solid var(--ink);
+  }
+
+  .data-note-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 16px;
+  }
+
+  .data-note-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .data-note-item h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .data-note-item p {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.65;
+  }
+
+  .limit-tag {
+    display: inline-block;
+    background: var(--paper-rule);
+    color: var(--ink-mid);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 2px 6px;
+    margin: 2px 0;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--ink);
+    color: #888880;
+    padding: 20px 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-align: center;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero-stats { grid-template-columns: 1fr; }
+    .hero-stat { border-right: none; border-bottom: 1px solid var(--paper-rule); }
+    .land-flow { grid-template-columns: 1fr; }
+    .land-month { border-right: none; border-bottom: 1px solid var(--paper-rule); }
+    .resp-grid { grid-template-columns: 1fr; }
+    .context-grid { grid-template-columns: 1fr; }
+    .data-note-grid { grid-template-columns: 1fr; }
+    .month-row { grid-template-columns: 70px 1fr 120px; }
+    .cluster-row { grid-template-columns: 130px 1fr 80px; }
+  }
+
+  /* Animation delays for stagger */
+  .bar-fill { animation-delay: 0.1s; }
+  .bar-fill.feb { animation-delay: 0.2s; }
+  .bar-fill.mar { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<div class="header-rule"></div>
+<div class="header-sub-rule" style="margin-top:3px;"></div>
+
+<div class="top-bar">
+  <span>Thai PBS · สำนักเครือข่ายและการมีส่วนร่วมสาธารณะ</span>
+  <span class="source-badge">ข้อมูล: GISTDA Sentinel-2</span>
+</div>
+
+<div class="header-sub-rule"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">รายงานสถานการณ์ · มกราคม–มีนาคม 2569</div>
+  <h1>พื้นที่เผาไหม้ในประเทศไทย<br>สามเดือนแรกของปี 2569</h1>
+  <p class="hero-lead">
+    ข้อมูลจากดาวเทียม Sentinel-2 โดย GISTDA แสดงให้เห็นว่าในช่วง 3 เดือนแรกของปี 2569
+    พื้นที่เผาไหม้ทั่วประเทศขยายตัวอย่างรวดเร็ว และมีสัดส่วนที่เพิ่มขึ้นอยู่ในพื้นที่ป่าภายใต้การดูแลของหน่วยงานรัฐ
+  </p>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="stat-label">พื้นที่เผาไหม้รวม 3 เดือน</div>
+      <div class="stat-number accent">16.16</div>
+      <div class="stat-sub">ล้าน ตร.ม. (10,080 ไร่)</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-label">สัดส่วนป่าไม้ในมีนาคม</div>
+      <div class="stat-number">57.2%</div>
+      <div class="stat-sub">เทียบกับ 6.2% ในมกราคม</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-label">ป่าสงวน+อนุรักษ์ (มีนาคม)</div>
+      <div class="stat-number">57.3%</div>
+      <div class="stat-sub">ของพื้นที่เผาไหม้ทั้งหมด</div>
+    </div>
+  </div>
+</div>
+
+<!-- S1: MONTHLY TREND -->
+<div class="section">
+  <div class="section-label">01 — ภาพรวมรายเดือน</div>
+  <h2>ไฟเพิ่มขึ้นทุกเดือน — มีนาคมเพิ่มกว่า 3 เท่าของกุมภาพันธ์</h2>
+  <p class="section-intro">
+    พื้นที่เผาไหม้สะสมทั่วประเทศ จำแนกตามเดือน วัดด้วยดาวเทียม Sentinel-2
+  </p>
+
+  <div class="month-bars">
+    <div class="month-row">
+      <div class="month-name">ม.ค. 2569</div>
+      <div class="bar-track">
+        <div class="bar-fill jan" style="width:21.2%"></div>
+      </div>
+      <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">2,264,081 ตร.ม.</span></div>
+    </div>
+    <div class="month-row">
+      <div class="month-name">ก.พ. 2569</div>
+      <div class="bar-track">
+        <div class="bar-fill feb" style="width:29.8%"></div>
+      </div>
+      <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">3,181,491 ตร.ม.</span></div>
+    </div>
+    <div class="month-row">
+      <div class="month-name">มี.ค. 2569</div>
+      <div class="bar-track">
+        <div class="bar-fill mar" style="width:100%"></div>
+      </div>
+      <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);font-weight:600;">10,682,599 ตร.ม.</span></div>
+    </div>
+  </div>
+
+  <div class="finding">
+    <strong>มีนาคมเพิ่มขึ้น 235.8% จากกุมภาพันธ์</strong> — ในเดือนเดียวกัน พื้นที่ป่าไม้ที่ถูกเผาไหม้เพิ่มขึ้น 405% จาก 1.21 ล้าน ตร.ม. เป็น 6.11 ล้าน ตร.ม.
+  </div>
+
+  <!-- 3 periods of March -->
+  <p style="font-size:13px;color:var(--ink-light);margin-bottom:16px;margin-top:24px;">
+    <span style="font-family:'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;font-size:10px;">มีนาคม แบ่งเป็น 3 ช่วง</span>
+  </p>
+  <div class="month-bars">
+    <div class="month-row">
+      <div class="month-name" style="font-size:11px;">1–10 มี.ค.</div>
+      <div class="bar-track" style="height:20px;">
+        <div class="bar-fill" style="background:#f0a090;width:74.5%"></div>
+      </div>
+      <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">2,968,056</div>
+    </div>
+    <div class="month-row">
+      <div class="month-name" style="font-size:11px;">11–20 มี.ค.</div>
+      <div class="bar-track" style="height:20px;">
+        <div class="bar-fill" style="background:#d9534f;width:93.6%"></div>
+      </div>
+      <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">3,730,371</div>
+    </div>
+    <div class="month-row">
+      <div class="month-name" style="font-size:11px;">21–31 มี.ค.</div>
+      <div class="bar-track" style="height:20px;">
+        <div class="bar-fill" style="background:var(--accent);width:100%"></div>
+      </div>
+      <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);">3,984,172</div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--ink-light);">ไฟเพิ่มขึ้นต่อเนื่องตลอดเดือนมีนาคม ไม่มีสัญญาณชะลอตัว</p>
+</div>
+
+<!-- S2: LAND TYPE SHIFT -->
+<div class="section">
+  <div class="section-label">02 — ประเภทพื้นที่เผาไหม้</div>
+  <h2>จากไฟเกษตร สู่ไฟป่า — การเปลี่ยนแปลงใน 3 เดือน</h2>
+  <p class="section-intro">
+    สัดส่วนประเภทพื้นที่ที่ถูกเผาไหม้เปลี่ยนแปลงอย่างมีนัยสำคัญ
+    จากที่เกษตรกรรมครอบครองกว่า 90% ในมกราคม มาเป็นป่าไม้มากกว่าครึ่งในมีนาคม
+  </p>
+
+  <div class="land-flow">
+    <div class="land-month">
+      <div class="land-month-label">ม.ค. 2569</div>
+      <div class="land-stack">
+        <div class="land-seg forest" style="height:6.2%;min-height:3px;"></div>
+        <div class="land-seg agri" style="height:92.9%;"></div>
+        <div class="land-seg other" style="height:0.9%;min-height:2px;"></div>
+      </div>
+      <div class="land-legend">
+        <div><span class="legend-dot forest"></span><span style="font-family:'IBM Plex Mono',monospace;">6.2%</span> ป่าไม้</div>
+        <div><span class="legend-dot agri"></span><span style="font-family:'IBM Plex Mono',monospace;">92.9%</span> เกษตร</div>
+      </div>
+    </div>
+    <div class="land-month">
+      <div class="land-month-label">ก.พ. 2569</div>
+      <div class="land-stack">
+        <div class="land-seg forest" style="height:38%;"></div>
+        <div class="land-seg agri" style="height:62%;"></div>
+      </div>
+      <div class="land-legend">
+        <div><span class="legend-dot forest"></span><span style="font-family:'IBM Plex Mono',monospace;">38.0%</span> ป่าไม้</div>
+        <div><span class="legend-dot agri"></span><span style="font-family:'IBM Plex Mono',monospace;">62.0%</span> เกษตร</div>
+      </div>
+    </div>
+    <div class="land-month">
+      <div class="land-month-label">มี.ค. 2569</div>
+      <div class="land-stack">
+        <div class="land-seg forest" style="height:57.2%;"></div>
+        <div class="land-seg agri" style="height:42.4%;"></div>
+        <div class="land-seg other" style="height:0.4%;min-height:2px;"></div>
+      </div>
+      <div class="land-legend">
+        <div><span class="legend-dot forest"></span><span style="font-family:'IBM Plex Mono',monospace;color:var(--forest);font-weight:600;">57.2%</span> ป่าไม้</div>
+        <div><span class="legend-dot agri"></span><span style="font-family:'IBM Plex Mono',monospace;">42.4%</span> เกษตร</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="finding">
+    <strong>พื้นที่ป่าไม้ที่ถูกเผาไหม้เพิ่มขึ้น 768% จากมกราคมถึงกุมภาพันธ์</strong>
+    และอีก 405% ในมีนาคม — รวมแล้วพื้นที่ป่าที่เผาไหม้สะสม 3 เดือน
+    อยู่ที่ <strong>7.46 ล้าน ตร.ม.</strong>
+  </div>
+</div>
+
+<!-- S3: RESPONSIBILITY — CORE SECTION -->
+<div class="section">
+  <div class="section-label">03 — พื้นที่รับผิดชอบ</div>
+  <h2>ใครดูแลพื้นที่ที่ถูกเผาไหม้?</h2>
+  <p class="section-intro">
+    ข้อมูล Sentinel-2 ซ้อนทับกับแนวเขตพื้นที่รับผิดชอบของหน่วยงาน
+    แยกได้ว่าพื้นที่เผาไหม้อยู่ในเขตใด — ป่าอนุรักษ์ ป่าสงวน เขต ส.ป.ก. หรือพื้นที่เกษตร
+  </p>
+
+  <div class="key-callout">
+    <div class="key-callout-label">ตัวเลขสำคัญ — มีนาคม 2569</div>
+    <div class="key-callout-number">57.3%</div>
+    <div class="key-callout-text">
+      ของพื้นที่เผาไหม้ทั้งหมดในมีนาคม อยู่ในเขต<strong style="color:#e8d5b0;">ป่าสงวนแห่งชาติและป่าอนุรักษ์</strong>
+      ซึ่งเป็นพื้นที่ภายใต้การดูแลของหน่วยงานรัฐโดยตรง
+    </div>
+  </div>
+
+  <div class="resp-grid">
+    <!-- JAN -->
+    <div class="resp-cell">
+      <div class="resp-month">ม.ค. 2569</div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>ป่าสงวน + ป่าอนุรักษ์</span>
+          <span class="resp-bar-pct">12.0%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill forest-zone" style="width:12%"></div></div>
+      </div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>เกษตร + เขต ส.ป.ก.</span>
+          <span class="resp-bar-pct">82.0%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill agri-zone" style="width:82%"></div></div>
+      </div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>ชุมชนและอื่นๆ</span>
+          <span class="resp-bar-pct">5.2%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill other-zone" style="width:5.2%"></div></div>
+      </div>
+    </div>
+    <!-- FEB -->
+    <div class="resp-cell">
+      <div class="resp-month">ก.พ. 2569</div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>ป่าสงวน + ป่าอนุรักษ์</span>
+          <span class="resp-bar-pct">38.0%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill forest-zone" style="width:38%"></div></div>
+      </div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>เกษตร + เขต ส.ป.ก.</span>
+          <span class="resp-bar-pct">52.0%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill agri-zone" style="width:52%"></div></div>
+      </div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>ชุมชนและอื่นๆ</span>
+          <span class="resp-bar-pct">9.4%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill other-zone" style="width:9.4%"></div></div>
+      </div>
+    </div>
+    <!-- MAR -->
+    <div class="resp-cell" style="background:var(--paper-warm);">
+      <div class="resp-month" style="color:var(--accent);">มี.ค. 2569</div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>ป่าสงวน + ป่าอนุรักษ์</span>
+          <span class="resp-bar-pct" style="color:var(--forest);font-weight:600;">57.3%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill forest-zone" style="width:57.3%"></div></div>
+      </div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>เกษตร + เขต ส.ป.ก.</span>
+          <span class="resp-bar-pct">34.4%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill agri-zone" style="width:34.4%"></div></div>
+      </div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>ชุมชนและอื่นๆ</span>
+          <span class="resp-bar-pct">7.9%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill other-zone" style="width:7.9%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="finding">
+    <strong>ข้อมูลนี้บอกได้ว่า "ที่ไหนไหม้" ไม่ใช่ "ใครจุด"</strong> —
+    การที่พื้นที่เผาไหม้อยู่ในเขตป่าของรัฐ ไม่ได้บ่งชี้สาเหตุ
+    แต่ตั้งคำถามที่ชอบธรรมเกี่ยวกับการจัดการพื้นที่เหล่านั้น
+  </div>
+</div>
+
+<!-- S_MAP: GEOGRAPHIC MAP -->
+<div class="map-section">
+  <div class="section-label">04 — แผนที่พื้นที่เผาไหม้</div>
+  <h2>การกระจายทางภูมิศาสตร์ รายจังหวัด</h2>
+  <p class="section-intro">
+    สีแสดงปริมาณพื้นที่เผาไหม้สะสมรายจังหวัด — คลิกจังหวัดเพื่อดูรายละเอียดประเภทที่ดินและแนวโน้ม 3 เดือน
+  </p>
+
+  <div class="map-controls">
+    <button class="map-btn active" data-month="202601">ม.ค. 2569</button>
+    <button class="map-btn" data-month="202602">ก.พ. 2569</button>
+    <button class="map-btn" data-month="202603">มี.ค. 2569</button>
+  </div>
+
+  <div class="map-layout">
+    <div style="display:flex;flex-direction:column;">
+      <div class="map-canvas-wrap" style="flex:1;min-height:440px;">
+        <svg id="map-svg" viewBox="0 0 480 560" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="map-tooltip" id="map-tooltip"></div>
+      </div>
+      <div class="map-legend" id="map-legend">
+        <span class="map-legend-label">พื้นที่เผาไหม้ (ไร่)</span>
+        <div class="legend-scale" id="legend-scale"></div>
+      </div>
+    </div>
+
+    <div class="map-panel" id="map-panel">
+      <div class="map-panel-header">
+        <div class="map-panel-province" id="panel-province">เลือกจังหวัด</div>
+        <div class="map-panel-hint">คลิกจังหวัดบนแผนที่</div>
+      </div>
+      <div class="map-panel-body" id="panel-body">
+        <div class="map-panel-empty">
+          คลิกจังหวัดใดก็ได้<br>เพื่อดูข้อมูลเชิงลึก<br>แนวโน้ม 3 เดือน<br>และประเภทที่ดิน
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="finding" style="margin-top:20px;">
+    <strong>แผนที่นี้แสดง burned area จาก Sentinel-2 — ไม่ใช่ hotspot</strong>
+    แต่ละจังหวัดแสดงพื้นที่ที่ดาวเทียมตรวจพบว่าถูกเผาไหม้จริง
+    คลิกเพื่อดู breakdown ป่า/เกษตร/ส.ป.ก. รายเดือน
+  </div>
+</div>
+
+<!-- S4: PROVINCE -->
+<div class="section">
+  <div class="section-label">05 — ระดับจังหวัด</div>
+  <h2>Top 10 จังหวัด — มีนาคม 2569</h2>
+  <p class="section-intro">
+    ลำปางนำโด่งด้วยพื้นที่เผาไหม้สูงสุด — เชียงใหม่อยู่อันดับที่ 10
+    โดยมีลพบุรีและนครสวรรค์ (ภาคกลาง-เหนือตอนล่าง) ติดอันดับต้น
+  </p>
+
+  <table class="province-table">
+    <thead>
+      <tr>
+        <th style="width:30px;">#</th>
+        <th>จังหวัด</th>
+        <th class="right">พื้นที่เผาไหม้ (ตร.ม.)</th>
+        <th style="width:150px;">สัดส่วน</th>
+        <th>ป่าไม้ %</th>
+      </tr>
+    </thead>
+    <tbody id="province-tbody">
+    </tbody>
+  </table>
+
+  <div class="finding">
+    <strong>ภาคเหนือ 17 จังหวัด รวมกัน 7.03 ล้าน ตร.ม. ในมีนาคม</strong>
+    คิดเป็น 65.8% ของพื้นที่เผาไหม้ทั้งประเทศ
+    เพิ่มขึ้นจาก 39.4% ในกุมภาพันธ์
+  </div>
+</div>
+
+<!-- S5: FOREST CLUSTERS -->
+<div class="section">
+  <div class="section-label">06 — 14 กลุ่มป่า</div>
+  <h2>กลุ่มป่าที่เผาไหม้มากที่สุด — มีนาคม 2569</h2>
+  <p class="section-intro">
+    ข้อมูล GISTDA แบ่งพื้นที่ป่าเป็น 14 กลุ่มป่า
+    กลุ่มป่าภาคเหนือรวมกันมีพื้นที่เผาไหม้ 2.60 ล้าน ตร.ม. (78.8% ของทั้งหมด)
+  </p>
+
+  <div class="cluster-list" id="cluster-list"></div>
+
+  <div class="finding">
+    <strong>กลุ่มป่าแม่ยม</strong> (ลำปาง–แพร่–พะเยา) มีพื้นที่เผาไหม้สูงสุด 678,785 ตร.ม.
+    ตามด้วยกลุ่มป่าเหนือเขื่อนสิริกิติ์ 599,422 ตร.ม. และกลุ่มป่าถ้ำผาไท 476,111 ตร.ม.
+  </div>
+</div>
+
+<!-- S6: CONTEXT -->
+<div class="section">
+  <div class="section-label">07 — ข้อมูลบริบทเพิ่มเติม</div>
+  <h2>บริบทจากปีก่อนหน้า และภูมิภาค</h2>
+  <p class="section-intro">
+    ข้อมูลต่อไปนี้มาจากรายงานประจำปี GISTDA 2568 — ใช้ดาวเทียม MODIS/Landsat
+    และวัดจุดความร้อน (hotspot) ซึ่ง<strong>ต่างจาก burned area ของ Sentinel-2</strong>
+    นำมาเปรียบเทียบตรงกันไม่ได้ แต่ให้บริบทที่เป็นประโยชน์
+  </p>
+
+  <div class="context-grid">
+    <div class="context-box">
+      <div class="context-box-label">จุดความร้อน (MODIS) ภาคเหนือ 17 จังหวัด ย้อนหลัง 8 ปี</div>
+      <svg id="sparkline" width="100%" height="100" viewBox="0 0 300 100" preserveAspectRatio="none"></svg>
+      <div class="context-note">
+        ที่มา: GISTDA รายงานประจำปี 2568 · ม.ค.–พ.ค. ของแต่ละปี ·
+        จุดความร้อน (hotspot count) คนละ methodology กับ burned area —
+        ใช้เป็นบริบทเชิงแนวโน้มเท่านั้น
+      </div>
+    </div>
+
+    <div class="context-box">
+      <div class="context-box-label">จุดความร้อน MODIS ใน CLMV+ไทย ม.ค.–พ.ค. 2568</div>
+      <div id="clmv-bars"></div>
+      <div class="context-note">
+        ที่มา: GISTDA รายงานประจำปี 2568 · ปี 2568 (ปีที่แล้ว) ·
+        ตัวเลขนี้คือ hotspot count ทั่วประเทศ ไม่สามารถระบุได้ว่าควันข้ามแดนมาเท่าไร
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DATA NOTE -->
+<div class="data-note">
+  <div class="data-note-label">หมายเหตุข้อมูล / Data Note</div>
+  <div class="data-note-grid">
+    <div class="data-note-item">
+      <h4>แหล่งข้อมูลหลัก</h4>
+      <p>พื้นที่เผาไหม้ (burned area) จากดาวเทียม Sentinel-2 โดยสำนักงานพัฒนาเทคโนโลยีอวกาศและภูมิสารสนเทศ (GISTDA) ครอบคลุมมกราคม–มีนาคม 2569</p>
+    </div>
+    <div class="data-note-item">
+      <h4>ข้อมูลบริบท</h4>
+      <p>จุดความร้อน (hotspot) ย้อนหลัง 8 ปี และข้อมูล CLMV อ้างอิงจากรายงานประจำปี GISTDA 2568 ซึ่งใช้ดาวเทียม MODIS และ Landsat — เป็นคนละ dataset คนละวิธีวัด</p>
+    </div>
+    <div class="data-note-item">
+      <h4>สิ่งที่ข้อมูลนี้บอกได้</h4>
+      <p>
+        <span class="limit-tag">ที่ไหนไหม้</span>
+        <span class="limit-tag">ขนาดเท่าไร</span>
+        <span class="limit-tag">ประเภทที่ดิน</span>
+        <span class="limit-tag">พื้นที่รับผิดชอบ</span>
+      </p>
+    </div>
+    <div class="data-note-item">
+      <h4>สิ่งที่ข้อมูลนี้บอกไม่ได้</h4>
+      <p>
+        <span class="limit-tag" style="background:#fde8e6;color:var(--accent);">สาเหตุของไฟ</span>
+        <span class="limit-tag" style="background:#fde8e6;color:var(--accent);">ใครจุด</span>
+        <span class="limit-tag" style="background:#fde8e6;color:var(--accent);">ค่า PM2.5</span>
+        <span class="limit-tag" style="background:#fde8e6;color:var(--accent);">ข้อมูลย้อนหลัง</span>
+      </p>
+      <p style="margin-top:6px;">ข้อมูลชุดนี้ครอบคลุมแค่ ม.ค.–มี.ค. 2569 เท่านั้น ยังไม่ครบฤดูกาล</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  ข้อมูล: GISTDA Sentinel-2 Burned Area · รายงาน: Thai PBS สำนักเครือข่ายและการมีส่วนร่วมสาธารณะ · เผยแพร่: เมษายน 2569
+</div>
+
+<script>
+// ── DATA ──
+const top10 = [
+  {province:"ลำปาง", sqm:1195191, forest:92.1},
+  {province:"ลพบุรี", sqm:842748, forest:12.1},
+  {province:"นครสวรรค์", sqm:747442, forest:17.7},
+  {province:"ตาก", sqm:724544, forest:80.6},
+  {province:"แพร่", sqm:712910, forest:91.5},
+  {province:"อุตรดิตถ์", sqm:698331, forest:91.0},
+  {province:"เพชรบูรณ์", sqm:690785, forest:24.6},
+  {province:"นครราชสีมา", sqm:489418, forest:19.7},
+  {province:"พะเยา", sqm:440077, forest:90.7},
+  {province:"เชียงใหม่", sqm:383273, forest:88.1}
+];
+
+const clusters = [
+  {region:"เหนือ", name:"กลุ่มป่าแม่ยม", sqm:678785},
+  {region:"เหนือ", name:"กลุ่มป่าเหนือเขื่อนสิริกิติ์", sqm:599422},
+  {region:"เหนือ", name:"กลุ่มป่าถ้ำผาไท", sqm:476111},
+  {region:"ตะวันตก", name:"กลุ่มป่าเขื่อนภูมิพล", sqm:259125},
+  {region:"เหนือ", name:"กลุ่มป่าตอนใต้เชียงใหม่", sqm:208848},
+  {region:"ตะวันตก", name:"กลุ่มป่ารอบเขื่อนศรีนครินทร์", sqm:182717},
+  {region:"เหนือ", name:"กลุ่มป่าลุ่มน้ำปาย", sqm:173039},
+  {region:"ตะวันออกเฉียงเหนือ", name:"กลุ่มป่าจังหวัดชัยภูมิ", sqm:50890}
+];
+
+const hotspot8yr = {
+  years:[2561,2562,2563,2564,2565,2566,2567,2568],
+  values:[6935,15425,14112,7104,2775,14039,8945,7577]
+};
+
+const clmv = [
+  {country:"เมียนมา", val:48649},
+  {country:"ลาว", val:27907},
+  {country:"กัมพูชา", val:20150},
+  {country:"ไทย", val:14177, isThai:true},
+  {country:"เวียดนาม", val:10928}
+];
+
+// ── PROVINCE TABLE ──
+const tbody = document.getElementById('province-tbody');
+const maxSqm = top10[0].sqm;
+top10.forEach((d, i) => {
+  const isHighForest = d.forest >= 70;
+  const delay = (i * 0.06).toFixed(2);
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td class="rank">${i+1}</td>
+    <td><span class="prov-name">${d.province}</span></td>
+    <td class="area-num">${d.sqm.toLocaleString()}</td>
+    <td class="mini-bar-cell">
+      <div class="mini-bar-track">
+        <div class="mini-bar-fill" style="width:${(d.sqm/maxSqm*100).toFixed(1)}%;animation-delay:${delay}s"></div>
+      </div>
+    </td>
+    <td>
+      <span class="forest-badge ${isHighForest?'high':'low'}">${d.forest}% ป่า</span>
+    </td>
+  `;
+  tbody.appendChild(tr);
+});
+
+// ── CLUSTER LIST ──
+const clusterList = document.getElementById('cluster-list');
+const maxCluster = clusters[0].sqm;
+clusters.forEach((d, i) => {
+  const delay = (i * 0.07).toFixed(2);
+  const div = document.createElement('div');
+  div.className = 'cluster-row';
+  div.innerHTML = `
+    <div class="cluster-name">
+      <span class="cluster-region">${d.region}</span>
+      ${d.name}
+    </div>
+    <div class="bar-track" style="height:16px;">
+      <div class="bar-fill" style="background:var(--forest);opacity:0.8;transform:scaleX(${d.sqm/maxCluster});animation-delay:${delay}s"></div>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);text-align:right;">${d.sqm.toLocaleString()}</div>
+  `;
+  clusterList.appendChild(div);
+});
+
+// ── SPARKLINE (MODIS 8yr) ──
+const svg = document.getElementById('sparkline');
+const W = 300, H = 100;
+const vals = hotspot8yr.values;
+const maxV = Math.max(...vals);
+const minV = Math.min(...vals);
+const pad = 14;
+const points = vals.map((v, i) => {
+  const x = pad + (i / (vals.length-1)) * (W - pad*2);
+  const y = H - pad - ((v - minV) / (maxV - minV)) * (H - pad*2);
+  return [x, y];
+});
+
+// Area fill
+const areaPath = `M ${points[0][0]},${H-pad} ` +
+  points.map(p => `L ${p[0]},${p[1]}`).join(' ') +
+  ` L ${points[points.length-1][0]},${H-pad} Z`;
+
+// Line
+const linePath = `M ` + points.map(p => `${p[0]},${p[1]}`).join(' L ');
+
+svg.innerHTML = `
+  <defs>
+    <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2d5a1b" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#2d5a1b" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path d="${areaPath}" fill="url(#sparkGrad)"/>
+  <path d="${linePath}" fill="none" stroke="#2d5a1b" stroke-width="1.5"/>
+  ${points.map((p, i) => `
+    <circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#2d5a1b"/>
+    <text x="${p[0]}" y="${H}" text-anchor="middle"
+      font-family="IBM Plex Mono,monospace" font-size="8" fill="#7a7a72">
+      ${hotspot8yr.years[i] - 2500}
+    </text>
+    <text x="${p[0]}" y="${p[1]-6}" text-anchor="middle"
+      font-family="IBM Plex Mono,monospace" font-size="8" fill="#3d3d38">
+      ${(vals[i]/1000).toFixed(1)}k
+    </text>
+  `).join('')}
+`;
+
+
+// ── MAP ──
+const GITHUB_BASE = 'https://raw.githubusercontent.com/Teeramon/burn2025/main';
+
+const PROVINCE_CODE = {
+  'กรุงเทพมหานคร':'10','จ.กาญจนบุรี':'71','จ.กาฬสินธุ์':'46',
+  'จ.กำแพงเพชร':'62','จ.ขอนแก่น':'40','จ.จันทบุรี':'22',
+  'จ.ฉะเชิงเทรา':'24','จ.ชลบุรี':'20','จ.ชัยนาท':'18',
+  'จ.ชัยภูมิ':'36','จ.ชุมพร':'86','จ.ตราด':'23',
+  'จ.ตาก':'63','จ.นครนายก':'26','จ.นครปฐม':'73',
+  'จ.นครพนม':'48','จ.นครราชสีมา':'30','จ.นครสวรรค์':'60',
+  'จ.นนทบุรี':'12','จ.น่าน':'55','จ.บึงกาฬ':'38',
+  'จ.บุรีรัมย์':'31','จ.ปทุมธานี':'13','จ.ประจวบคีรีขันธ์':'77',
+  'จ.ปราจีนบุรี':'25','จ.พระนครศรีอยุธยา':'14','จ.พะเยา':'56',
+  'จ.พิจิตร':'66','จ.พิษณุโลก':'65','จ.มหาสารคาม':'44',
+  'จ.มุกดาหาร':'49','จ.ยโสธร':'35','จ.ระยอง':'21',
+  'จ.ราชบุรี':'70','จ.ร้อยเอ็ด':'45','จ.ลพบุรี':'16',
+  'จ.ลำปาง':'52','จ.ลำพูน':'51','จ.ศรีสะเกษ':'33',
+  'จ.สกลนคร':'47','จ.สมุทรปราการ':'11','จ.สมุทรสงคราม':'75',
+  'จ.สมุทรสาคร':'74','จ.สระบุรี':'19','จ.สระแก้ว':'27',
+  'จ.สิงห์บุรี':'17','จ.สุพรรณบุรี':'72','จ.สุรินทร์':'32',
+  'จ.สุโขทัย':'64','จ.หนองคาย':'43','จ.หนองบัวลำภู':'39',
+  'จ.อำนาจเจริญ':'37','จ.อุดรธานี':'41','จ.อุตรดิตถ์':'53',
+  'จ.อุทัยธานี':'61','จ.อุบลราชธานี':'34','จ.อ่างทอง':'15',
+  'จ.เชียงราย':'57','จ.เชียงใหม่':'50','จ.เพชรบุรี':'76',
+  'จ.เพชรบูรณ์':'67','จ.เลย':'42','จ.แพร่':'54',
+  'จ.แม่ฮ่องสอน':'58'
+};
+const CODE_PROVINCE = Object.fromEntries(Object.entries(PROVINCE_CODE).map(([k,v])=>[v,k]));
+
+const LU_COLORS = {
+  'ป่าไม้':'#2d5a1b','ข้าว':'#4a7fb5','ข้าวโพด':'#c9a227',
+  'อ้อย':'#7abf90','เกษตรอื่น ๆ':'#a0785a','อื่น ๆ':'#b8b8b0'
+};
+
+const CHORO_COLORS = ['#fef0e6','#fdd0a2','#fdae6b','#fd8d3c','#f16913','#d94801','#8c2d04'];
+
+let summaryData = null;
+let currentMonth = '202601';
+let selectedProvince = null;
+let geojsonCache = {};
+
+// colour scale
+function choroColor(val, max) {
+  if (!val || val === 0) return '#ede8df';
+  const t = Math.pow(val / max, 0.4);
+  const idx = Math.min(Math.floor(t * (CHORO_COLORS.length - 1)), CHORO_COLORS.length - 1);
+  return CHORO_COLORS[idx];
+}
+
+// project lon/lat → SVG coords (simple equirectangular fitted to Thailand)
+function project(lon, lat) {
+  const x = (lon - 97.5) / (105.7 - 97.5) * 440 + 20;
+  const y = (21.0 - lat) / (21.0 - 5.5) * 520 + 20;
+  return [x, y];
+}
+
+function coordsToPath(coords) {
+  return coords.map((ring, ri) =>
+    ring.map((pt, i) => {
+      const [x, y] = project(pt[0], pt[1]);
+      return (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
+    }).join(' ') + ' Z'
+  ).join(' ');
+}
+
+function geomToPath(geom) {
+  if (!geom) return '';
+  if (geom.type === 'Polygon') return coordsToPath(geom.coordinates);
+  if (geom.type === 'MultiPolygon') return geom.coordinates.map(coordsToPath).join(' ');
+  return '';
+}
+
+// render choropleth from summary data
+function renderChoropleth(month) {
+  const svg = document.getElementById('map-svg');
+  const data = summaryData[month].province;
+  const max = Math.max(...Object.values(data));
+
+  // update legend
+  const legendEl = document.getElementById('legend-scale');
+  const steps = [0, 0.15, 0.35, 0.6, 0.8, 1.0];
+  legendEl.innerHTML = steps.map(t => {
+    const val = Math.round(t * max);
+    const color = t === 0 ? '#ede8df' : CHORO_COLORS[Math.min(Math.floor(Math.pow(t, 0.4) * (CHORO_COLORS.length-1)), CHORO_COLORS.length-1)];
+    return `<div class="legend-swatch" style="background:${color}"></div><span class="legend-val">${val > 0 ? (val/1000).toFixed(0)+'k' : '0'}</span>`;
+  }).join('');
+
+  // update province colours
+  Object.entries(PROVINCE_CODE).forEach(([thName, code]) => {
+    const el = svg.querySelector(`[data-code="${code}"]`);
+    if (!el) return;
+    const val = data[thName] || 0;
+    el.style.fill = choroColor(val, max);
+  });
+}
+
+// load province geojson and draw polygons (first time only)
+async function initMap() {
+  const svg = document.getElementById('map-svg');
+  svg.innerHTML = '<text x="240" y="280" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#7a7a72">กำลังโหลดข้อมูล...</text>';
+
+  // fetch summary
+  const res = await fetch(`${GITHUB_BASE}/summary.json`);
+  summaryData = await res.json();
+
+  // fetch province index for all codes
+  const idxRes = await fetch(`${GITHUB_BASE}/province_index.json`);
+  const provinceIndex = await idxRes.json(); // thName → code
+
+  svg.innerHTML = '';
+
+  // draw each province as a group — use centroid from summary bbox approximation
+  // We'll draw real polygons by fetching one geojson per province lazily
+  // For choropleth: draw simplified rect proxies using known centroids
+  // Then upgrade to real geometry on click
+
+  // Province centroids (approximate lon, lat)
+  const CENTROIDS = {
+    '10':[100.52,13.75],'11':[100.60,13.62],'12':[100.50,13.85],'13':[100.65,14.00],
+    '14':[100.60,14.35],'15':[100.45,14.60],'16':[100.65,14.80],'17':[100.40,14.90],
+    '18':[100.13,15.18],'19':[100.92,14.53],'20':[100.98,13.36],'21':[101.28,12.68],
+    '22':[102.11,12.61],'23':[102.51,12.24],'24':[101.08,13.69],'25':[101.37,14.05],
+    '26':[101.21,14.20],'27':[102.07,13.82],'30':[102.10,14.97],'31':[103.10,14.99],
+    '32':[103.50,14.88],'33':[104.33,15.12],'34':[104.85,15.23],'35':[104.15,15.79],
+    '36':[101.92,15.81],'37':[104.63,15.86],'38':[103.32,18.36],'39':[102.44,17.20],
+    '40':[102.84,16.43],'41':[103.28,17.41],'42':[101.72,17.49],'43':[102.61,17.87],
+    '44':[103.30,16.18],'45':[103.65,16.05],'46':[103.51,16.43],'47':[104.15,17.16],
+    '48':[104.78,17.39],'49':[104.72,16.54],'50':[98.98,18.79],'51':[98.97,18.57],
+    '52':[99.50,18.29],'53':[100.10,17.62],'54':[100.13,18.14],'55':[100.78,18.77],
+    '56':[99.89,19.16],'57':[99.83,19.91],'58':[97.97,19.30],'60':[100.06,15.70],
+    '61':[100.02,15.38],'62':[99.52,16.48],'63':[98.86,16.88],'64':[99.82,17.01],
+    '65':[100.26,16.82],'66':[100.35,16.44],'67':[101.16,16.42],'70':[99.82,13.54],
+    '71':[99.55,14.00],'72':[100.13,14.47],'73':[100.04,13.82],'74':[100.27,13.54],
+    '75':[99.96,13.41],'76':[99.97,13.11],'77':[99.80,11.81],'86':[99.18,10.49]
+  };
+
+  // Approximate province shapes as circles scaled by area for initial choropleth
+  // Real polygons loaded on click
+  const data = summaryData[currentMonth].province;
+  const max = Math.max(...Object.values(data));
+
+  // Create SVG path elements for each province using centroid + circle
+  // We'll replace with real polygon on first click
+  Object.entries(PROVINCE_CODE).forEach(([thName, code]) => {
+    const centroid = CENTROIDS[code];
+    if (!centroid) return;
+    const [cx, cy] = project(centroid[0], centroid[1]);
+    const val = data[thName] || 0;
+    const color = choroColor(val, max);
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('data-code', code);
+    g.setAttribute('data-name', thName);
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', cx.toFixed(1));
+    circle.setAttribute('cy', cy.toFixed(1));
+    circle.setAttribute('r', '7');
+    circle.setAttribute('fill', color);
+    circle.setAttribute('stroke', '#fff');
+    circle.setAttribute('stroke-width', '0.5');
+    circle.style.cursor = 'pointer';
+
+    g.appendChild(circle);
+    g.addEventListener('mouseenter', (e) => showTooltip(e, thName, val));
+    g.addEventListener('mouseleave', hideTooltip);
+    g.addEventListener('click', () => selectProvince(code, thName));
+    svg.appendChild(g);
+  });
+
+  // Now fetch all province geojsons and replace circles with real polygons
+  drawRealPolygons();
+}
+
+async function drawRealPolygons() {
+  const svg = document.getElementById('map-svg');
+  const data = summaryData[currentMonth].province;
+  const max = Math.max(...Object.values(data));
+
+  const codes = Object.values(PROVINCE_CODE);
+
+  // fetch all in parallel (batched)
+  const BATCH = 10;
+  for (let i = 0; i < codes.length; i += BATCH) {
+    const batch = codes.slice(i, i + BATCH);
+    await Promise.all(batch.map(async (code) => {
+      try {
+        const res = await fetch(`${GITHUB_BASE}/by_province_en/${code}.geojson`);
+        const gj = await res.json();
+        geojsonCache[code] = gj;
+
+        const thName = CODE_PROVINCE[code];
+        const val = data[thName] || 0;
+        const color = choroColor(val, max);
+
+        // build combined path from all features
+        let pathStr = '';
+        gj.features.forEach(f => {
+          pathStr += geomToPath(f.geometry) + ' ';
+        });
+
+        if (!pathStr.trim()) return;
+
+        // replace existing g element
+        const existing = svg.querySelector(`[data-code="${code}"]`);
+        if (existing) existing.remove();
+
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('data-code', code);
+        g.setAttribute('data-name', thName);
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', pathStr);
+        path.setAttribute('class', 'map-path');
+        path.setAttribute('fill', color);
+
+        g.appendChild(path);
+        g.addEventListener('mouseenter', (e) => showTooltip(e, thName, val));
+        g.addEventListener('mouseleave', hideTooltip);
+        g.addEventListener('click', () => selectProvince(code, thName));
+        svg.appendChild(g);
+
+      } catch(e) { /* skip */ }
+    }));
+  }
+}
+
+function showTooltip(e, name, val) {
+  const tt = document.getElementById('map-tooltip');
+  const wrap = document.querySelector('.map-canvas-wrap');
+  const rect = wrap.getBoundingClientRect();
+  tt.textContent = `${name.replace('จ.','')}: ${val.toLocaleString()} ไร่`;
+  tt.style.left = (e.clientX - rect.left + 10) + 'px';
+  tt.style.top = (e.clientY - rect.top - 30) + 'px';
+  tt.classList.add('visible');
+}
+
+function hideTooltip() {
+  document.getElementById('map-tooltip').classList.remove('visible');
+}
+
+async function selectProvince(code, thName) {
+  selectedProvince = code;
+
+  // update header
+  document.getElementById('panel-province').textContent = thName.replace('จ.','');
+  document.querySelector('.map-panel-hint').textContent = 'ข้อมูลรายเดือน ม.ค.–มี.ค. 2569';
+
+  // highlight
+  document.querySelectorAll('.map-path').forEach(p => p.classList.remove('selected'));
+  const g = document.querySelector(`[data-code="${code}"]`);
+  if (g) g.querySelector('path,circle').classList.add('selected');
+
+  // render panel
+  const body = document.getElementById('panel-body');
+  body.innerHTML = '<div class="map-loading">กำลังโหลด...</div>';
+
+  // fetch geojson if not cached
+  if (!geojsonCache[code]) {
+    try {
+      const res = await fetch(`${GITHUB_BASE}/by_province_en/${code}.geojson`);
+      geojsonCache[code] = await res.json();
+    } catch(e) {
+      body.innerHTML = '<div class="map-panel-empty">โหลดข้อมูลไม่ได้</div>';
+      return;
+    }
+  }
+
+  const gj = geojsonCache[code];
+
+  // compute stats per month from geojson
+  const monthStats = {};
+  gj.features.forEach(f => {
+    const p = f.properties;
+    const ym = p.year_month;
+    if (!monthStats[ym]) monthStats[ym] = { total: 0, lu: {}, rp: {} };
+    const area = parseFloat(p.Area_rai) || 0;
+    monthStats[ym].total += area;
+    if (p.LU_Name) monthStats[ym].lu[p.LU_Name] = (monthStats[ym].lu[p.LU_Name] || 0) + area;
+    if (p.RP_NAME) monthStats[ym].rp[p.RP_NAME] = (monthStats[ym].rp[p.RP_NAME] || 0) + area;
+  });
+
+  const months = ['202601','202602','202603'];
+  const labels = {'202601':'ม.ค.','202602':'ก.พ.','202603':'มี.ค.'};
+  const monthColors = {'202601':'#a8c5da','202602':'#5a8fa8','202603':'#c0392b'};
+
+  const maxTotal = Math.max(...months.map(m => monthStats[m]?.total || 0));
+
+  // trend section
+  let html = `<div class="panel-section-label">แนวโน้ม 3 เดือน (ไร่)</div>`;
+  months.forEach(m => {
+    const val = monthStats[m]?.total || 0;
+    const pct = maxTotal > 0 ? (val / maxTotal * 100).toFixed(1) : 0;
+    html += `
+      <div class="trend-row">
+        <div class="trend-month">${labels[m]}</div>
+        <div class="trend-track">
+          <div class="trend-fill" style="background:${monthColors[m]};width:${pct}%"></div>
+        </div>
+        <div class="trend-val">${val > 0 ? Math.round(val).toLocaleString() : '—'}</div>
+      </div>`;
+  });
+
+  // land use breakdown for current month
+  const curStats = monthStats[currentMonth];
+  if (curStats && Object.keys(curStats.lu).length > 0) {
+    const luTotal = curStats.total;
+    const luSorted = Object.entries(curStats.lu).sort((a,b) => b[1]-a[1]);
+    html += `<div class="panel-section-label">ประเภทที่ดิน — ${labels[currentMonth]}</div>`;
+    luSorted.forEach(([name, val]) => {
+      const pct = luTotal > 0 ? (val/luTotal*100).toFixed(1) : 0;
+      const color = LU_COLORS[name] || '#aaa';
+      html += `
+        <div class="lu-row">
+          <div class="lu-dot" style="background:${color}"></div>
+          <div class="lu-name">${name}</div>
+          <div class="lu-pct">${pct}%</div>
+        </div>
+        <div class="lu-bar-wrap">
+          <div class="lu-bar-fill" style="background:${color};width:${pct}%;opacity:0.7"></div>
+        </div>`;
+    });
+  }
+
+  // responsibility breakdown
+  if (curStats && Object.keys(curStats.rp).length > 0) {
+    const rpTotal = curStats.total;
+    const rpSorted = Object.entries(curStats.rp).sort((a,b) => b[1]-a[1]);
+    html += `<div class="panel-section-label">พื้นที่รับผิดชอบ — ${labels[currentMonth]}</div>`;
+    rpSorted.forEach(([name, val]) => {
+      const pct = rpTotal > 0 ? (val/rpTotal*100).toFixed(1) : 0;
+      const isForest = name.includes('ป่า');
+      html += `
+        <div class="lu-row">
+          <div class="lu-dot" style="background:${isForest ? '#2d5a1b' : '#8b6914'}"></div>
+          <div class="lu-name" style="font-size:11px;">${name}</div>
+          <div class="lu-pct">${pct}%</div>
+        </div>`;
+    });
+  }
+
+  body.innerHTML = html;
+}
+
+// month toggle
+document.querySelectorAll('.map-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.map-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMonth = btn.dataset.month;
+
+    if (summaryData) {
+      // update choropleth colours
+      const data = summaryData[currentMonth].province;
+      const max = Math.max(...Object.values(data));
+      const svg = document.getElementById('map-svg');
+      Object.entries(PROVINCE_CODE).forEach(([thName, code]) => {
+        const g = svg.querySelector(`[data-code="${code}"]`);
+        if (!g) return;
+        const val = data[thName] || 0;
+        const color = choroColor(val, max);
+        const el = g.querySelector('path') || g.querySelector('circle');
+        if (el) el.setAttribute('fill', color);
+        // update event data
+        g.onmouseenter = null;
+        g.addEventListener('mouseenter', (e) => showTooltip(e, thName, val));
+      });
+
+      // re-render legend
+      renderChoropleth(currentMonth);
+
+      // re-render panel if province selected
+      if (selectedProvince) {
+        selectProvince(selectedProvince, CODE_PROVINCE[selectedProvince]);
+      }
+    }
+  });
+});
+
+// init
+initMap();
+
+
+const clmvEl = document.getElementById('clmv-bars');
+const maxClmv = clmv[0].val;
+clmv.forEach((d, i) => {
+  const delay = (i * 0.08).toFixed(2);
+  const div = document.createElement('div');
+  div.className = 'clmv-row';
+  div.innerHTML = `
+    <div class="clmv-country" style="${d.isThai?'color:var(--accent);font-weight:500;':''}">${d.country}</div>
+    <div class="clmv-bar-track">
+      <div class="clmv-bar-fill ${d.isThai?'thai':''}"
+        style="width:${(d.val/maxClmv*100).toFixed(1)}%;animation-delay:${delay}s"></div>
+    </div>
+    <div class="clmv-num">${d.val.toLocaleString()}</div>
+  `;
+  clmvEl.appendChild(div);
+});
+</script>
+</body>
+</html>
