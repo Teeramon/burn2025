@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-Frame-Options" content="ALLOWALL">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <title>พื้นที่เผาไหม้ในประเทศไทย มกราคม–มีนาคม 2569</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+Thai:wght@300;400;600;700&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet">
@@ -37,6 +39,7 @@
     font-weight: 300;
     line-height: 1.7;
     font-size: 16px;
+    overflow-x: hidden;
   }
 
   /* ── HEADER RULE ── */
@@ -227,6 +230,8 @@
   .bar-fill.jan { background: #a8c5da; }
   .bar-fill.feb { background: #5a8fa8; }
   .bar-fill.mar { background: var(--accent); }
+
+
 
   .bar-label {
     font-family: 'IBM Plex Mono', monospace;
@@ -857,22 +862,46 @@
   }
 
   /* ── RESPONSIVE ── */
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .map-layout { grid-template-columns: 1fr; }
+    .map-panel { border-left: none; border-top: 1px solid var(--paper-rule); }
+    #map-svg { min-height: 320px !important; height: 320px !important; }
+    .map-canvas-wrap { min-height: 320px !important; }
+    .mini-bar-cell { display: none; }
+    .province-table th:nth-child(4),
+    .province-table td:nth-child(4) { display: none; }
+    .cluster-row { grid-template-columns: 1fr 80px; }
+    .cluster-row .bar-track { display: none; }
+    .context-grid { grid-template-columns: 1fr; }
+    .data-note-grid { grid-template-columns: 1fr 1fr; }
+  }
+
   @media (max-width: 600px) {
+    :root { --col-w: 100%; }
+    .hero { padding: 32px 16px 28px; }
     .hero-stats { grid-template-columns: 1fr; }
     .hero-stat { border-right: none; border-bottom: 1px solid var(--paper-rule); }
+    .section, .map-section { padding: 32px 16px; }
+    .month-row { grid-template-columns: 60px 1fr 100px; gap: 8px; }
+    .bar-label span { font-size: 11px !important; }
     .land-flow { grid-template-columns: 1fr; }
     .land-month { border-right: none; border-bottom: 1px solid var(--paper-rule); }
     .resp-grid { grid-template-columns: 1fr; }
+    .map-controls { width: 100%; }
+    .map-btn { flex: 1; text-align: center; font-size: 10px; padding: 7px 8px; }
+    .map-panel-body { max-height: 280px; overflow-y: auto; }
+    .province-table { font-size: 12px; }
+    .province-table th, .province-table td { padding: 7px 6px; }
+    .prov-name { font-size: 13px; }
+    .cluster-row { grid-template-columns: 1fr 70px; }
     .context-grid { grid-template-columns: 1fr; }
     .data-note-grid { grid-template-columns: 1fr; }
-    .month-row { grid-template-columns: 70px 1fr 120px; }
-    .cluster-row { grid-template-columns: 130px 1fr 80px; }
+    .top-bar { font-size: 10px; padding: 8px 16px; }
+    .key-callout { padding: 20px 16px; }
+    .key-callout-number { font-size: clamp(28px, 8vw, 48px); }
+    body { font-size: 15px; }
   }
-
-  /* Animation delays for stagger */
-  .bar-fill { animation-delay: 0.1s; }
-  .bar-fill.feb { animation-delay: 0.2s; }
-  .bar-fill.mar { animation-delay: 0.3s; }
 </style>
 </head>
 <body>
@@ -1133,8 +1162,7 @@
 
   <div class="finding">
     <strong>ข้อมูลนี้บอกได้ว่า "ที่ไหนไหม้" ไม่ใช่ "ใครจุด"</strong> —
-    การที่พื้นที่เผาไหม้อยู่ในเขตป่าของรัฐ ไม่ได้บ่งชี้สาเหตุ
-    แต่ตั้งคำถามที่ชอบธรรมเกี่ยวกับการจัดการพื้นที่เหล่านั้น
+    การที่พื้นที่เผาไหม้อยู่ในเขตป่าของรัฐ ไม่ได้บ่งชี้สาเหตุหรือความรับผิดชอบ
   </div>
 </div>
 
@@ -1376,7 +1404,7 @@ clusters.forEach((d, i) => {
       ${d.name}
     </div>
     <div class="bar-track" style="height:16px;">
-      <div class="bar-fill" style="background:var(--forest);opacity:0.8;width:${(d.sqm/maxCluster*100).toFixed(1)}%"></div>
+      <div class="bar-fill" style="background:var(--forest);opacity:0.8;"></div>
     </div>
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);text-align:right;">${d.sqm.toLocaleString()}</div>
   `;
