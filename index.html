@@ -222,12 +222,18 @@
   .bar-fill {
     height: 100%;
     background: var(--ink-mid);
-    transition: width 0.8s ease-out;
+    animation: barGrow 0.8s ease-out forwards;
+    width: 0;
   }
 
   .bar-fill.jan { background: #a8c5da; }
   .bar-fill.feb { background: #5a8fa8; }
   .bar-fill.mar { background: var(--accent); }
+
+  @keyframes barGrow {
+    from { width: 0; }
+    to { width: inherit; }
+  }
 
   .bar-label {
     font-family: 'IBM Plex Mono', monospace;
@@ -937,21 +943,21 @@
     <div class="month-row">
       <div class="month-name">ม.ค. 2569</div>
       <div class="bar-track">
-        <div class="bar-fill jan" style="width:21.2%"></div>
+        <div class="bar-fill jan" style="width:21.2%;transform:none"></div>
       </div>
       <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">2,264,081 ตร.ม.</span></div>
     </div>
     <div class="month-row">
       <div class="month-name">ก.พ. 2569</div>
       <div class="bar-track">
-        <div class="bar-fill feb" style="width:29.8%"></div>
+        <div class="bar-fill feb" style="width:29.8%;transform:none"></div>
       </div>
       <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">3,181,491 ตร.ม.</span></div>
     </div>
     <div class="month-row">
       <div class="month-name">มี.ค. 2569</div>
       <div class="bar-track">
-        <div class="bar-fill mar" style="width:100%"></div>
+        <div class="bar-fill mar" style="width:100%;transform:none"></div>
       </div>
       <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);font-weight:600;">10,682,599 ตร.ม.</span></div>
     </div>
@@ -969,21 +975,21 @@
     <div class="month-row">
       <div class="month-name" style="font-size:11px;">1–10 มี.ค.</div>
       <div class="bar-track" style="height:20px;">
-        <div class="bar-fill" style="background:#f0a090;width:74.5%"></div>
+        <div class="bar-fill" style="background:#f0a090;width:74.5%;transform:none"></div>
       </div>
       <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">2,968,056</div>
     </div>
     <div class="month-row">
       <div class="month-name" style="font-size:11px;">11–20 มี.ค.</div>
       <div class="bar-track" style="height:20px;">
-        <div class="bar-fill" style="background:#d9534f;width:93.6%"></div>
+        <div class="bar-fill" style="background:#d9534f;width:93.6%;transform:none"></div>
       </div>
       <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">3,730,371</div>
     </div>
     <div class="month-row">
       <div class="month-name" style="font-size:11px;">21–31 มี.ค.</div>
       <div class="bar-track" style="height:20px;">
-        <div class="bar-fill" style="background:var(--accent);width:100%"></div>
+        <div class="bar-fill" style="background:var(--accent);width:100%;transform:none"></div>
       </div>
       <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);">3,984,172</div>
     </div>
@@ -1439,6 +1445,7 @@ svg.innerHTML = `
 
 // ── MAP ──
 const GITHUB_BASE = 'https://raw.githubusercontent.com/Teeramon/burn2025/main';
+const BOUNDARY_URL = 'https://raw.githubusercontent.com/cvibhagool/thailand-map/master/thailand-provinces.geojson';
 
 const PROVINCE_CODE = {
   'กรุงเทพมหานคร':'10','จ.กาญจนบุรี':'71','จ.กาฬสินธุ์':'46',
@@ -1470,231 +1477,269 @@ const LU_COLORS = {
   'ป่าไม้':'#2d5a1b','ข้าว':'#4a7fb5','ข้าวโพด':'#c9a227',
   'อ้อย':'#7abf90','เกษตรอื่น ๆ':'#a0785a','อื่น ๆ':'#b8b8b0'
 };
-
-const CHORO_COLORS = ['#fef0e6','#fdd0a2','#fdae6b','#fd8d3c','#f16913','#d94801','#8c2d04'];
+const CHORO_COLORS = ['#fef0e6','#fdd5aa','#fdaa6e','#f7813a','#e55a1c','#c03b0a','#8c2303'];
 
 let summaryData = null;
 let currentMonth = '202601';
 let selectedProvince = null;
 let geojsonCache = {};
+let boundaryFeatures = []; // store boundary features for re-render
 
-// colour scale
-function choroColor(val, max) {
-  if (!val || val === 0) return '#ede8df';
-  const t = Math.pow(val / max, 0.4);
-  const idx = Math.min(Math.floor(t * (CHORO_COLORS.length - 1)), CHORO_COLORS.length - 1);
-  return CHORO_COLORS[idx];
-}
+// crop to Thailand without deep south
+const MAP_LON_MIN = 97.3, MAP_LON_MAX = 105.8;
+const MAP_LAT_MIN = 10.5, MAP_LAT_MAX = 20.5;
+const SVG_W = 460, SVG_H = 500;
 
-// project lon/lat → SVG coords (simple equirectangular fitted to Thailand)
 function project(lon, lat) {
-  const x = (lon - 97.5) / (105.7 - 97.5) * 440 + 20;
-  const y = (21.0 - lat) / (21.0 - 5.5) * 520 + 20;
+  const x = (lon - MAP_LON_MIN) / (MAP_LON_MAX - MAP_LON_MIN) * SVG_W;
+  const y = (MAP_LAT_MAX - lat) / (MAP_LAT_MAX - MAP_LAT_MIN) * SVG_H;
   return [x, y];
 }
 
-function coordsToPath(coords) {
-  return coords.map((ring, ri) =>
-    ring.map((pt, i) => {
-      const [x, y] = project(pt[0], pt[1]);
-      return (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
-    }).join(' ') + ' Z'
-  ).join(' ');
+function ringToPath(ring) {
+  return ring.map((pt, i) => {
+    const [x, y] = project(pt[0], pt[1]);
+    return (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
+  }).join(' ') + ' Z';
 }
 
 function geomToPath(geom) {
   if (!geom) return '';
-  if (geom.type === 'Polygon') return coordsToPath(geom.coordinates);
-  if (geom.type === 'MultiPolygon') return geom.coordinates.map(coordsToPath).join(' ');
+  if (geom.type === 'Polygon') return geom.coordinates.map(ringToPath).join(' ');
+  if (geom.type === 'MultiPolygon') return geom.coordinates.map(p => p.map(ringToPath).join(' ')).join(' ');
   return '';
 }
 
-// render choropleth from summary data
-function renderChoropleth(month) {
-  const svg = document.getElementById('map-svg');
-  const data = summaryData[month].province;
-  const max = Math.max(...Object.values(data));
-
-  // update legend
-  const legendEl = document.getElementById('legend-scale');
-  const steps = [0, 0.15, 0.35, 0.6, 0.8, 1.0];
-  legendEl.innerHTML = steps.map(t => {
-    const val = Math.round(t * max);
-    const color = t === 0 ? '#ede8df' : CHORO_COLORS[Math.min(Math.floor(Math.pow(t, 0.4) * (CHORO_COLORS.length-1)), CHORO_COLORS.length-1)];
-    return `<div class="legend-swatch" style="background:${color}"></div><span class="legend-val">${val > 0 ? (val/1000).toFixed(0)+'k' : '0'}</span>`;
-  }).join('');
-
-  // update province colours
-  Object.entries(PROVINCE_CODE).forEach(([thName, code]) => {
-    const el = svg.querySelector(`[data-code="${code}"]`);
-    if (!el) return;
-    const val = data[thName] || 0;
-    el.style.fill = choroColor(val, max);
-  });
+function choroColor(val, max) {
+  if (!val || val === 0) return '#ede8df';
+  const t = Math.min(Math.pow(val / max, 0.45), 1);
+  const idx = Math.min(Math.floor(t * CHORO_COLORS.length), CHORO_COLORS.length - 1);
+  return CHORO_COLORS[idx];
 }
 
-// load province geojson and draw polygons (first time only)
+// match boundary feature name → province code
+function matchCode(props) {
+  // try common property keys
+  const raw = props.NAME_1 || props.name || props.NAME || props.CHANGWAT || props.province || '';
+  if (!raw) return null;
+  // direct Thai match
+  for (const [thName, code] of Object.entries(PROVINCE_CODE)) {
+    const clean = thName.replace('จ.', '');
+    if (raw === clean || raw === thName) return code;
+  }
+  // transliteration fallback map (English → code)
+  const EN_MAP = {
+    'Amnat Charoen':'37','Ang Thong':'15','Bangkok':'10','Bueng Kan':'38',
+    'Buri Ram':'31','Chachoengsao':'24','Chai Nat':'18','Chaiyaphum':'36',
+    'Chanthaburi':'22','Chiang Mai':'50','Chiang Rai':'57','Chon Buri':'20',
+    'Chumphon':'86','Kalasin':'46','Kamphaeng Phet':'62','Kanchanaburi':'71',
+    'Khon Kaen':'40','Krabi':'81','Lampang':'52','Lamphun':'51',
+    'Loei':'42','Lop Buri':'16','Mae Hong Son':'58','Maha Sarakham':'44',
+    'Mukdahan':'49','Nakhon Nayok':'26','Nakhon Pathom':'73','Nakhon Phanom':'48',
+    'Nakhon Ratchasima':'30','Nakhon Sawan':'60','Nakhon Si Thammarat':'80',
+    'Nan':'55','Narathiwat':'96','Nong Bua Lam Phu':'39','Nong Khai':'43',
+    'Nonthaburi':'12','Pathum Thani':'13','Pattani':'94','Phang Nga':'82',
+    'Phatthalung':'93','Phayao':'56','Phetchabun':'67','Phetchaburi':'76',
+    'Phichit':'66','Phitsanulok':'65','Phra Nakhon Si Ayutthaya':'14',
+    'Phrae':'54','Phuket':'83','Prachin Buri':'25','Prachuap Khiri Khan':'77',
+    'Ranong':'85','Ratchaburi':'70','Rayong':'21','Roi Et':'45',
+    'Sa Kaeo':'27','Sakon Nakhon':'47','Samut Prakan':'11','Samut Sakhon':'74',
+    'Samut Songkhram':'75','Sara Buri':'19','Satun':'91','Sing Buri':'17',
+    'Sisaket':'33','Songkhla':'90','Sukhothai':'64','Suphan Buri':'72',
+    'Surat Thani':'84','Surin':'32','Tak':'63','Trang':'92',
+    'Trat':'23','Ubon Ratchathani':'34','Udon Thani':'41','Uthai Thani':'61',
+    'Uttaradit':'53','Yala':'95','Yasothon':'35'
+  };
+  return EN_MAP[raw] || null;
+}
+
+// ── INIT ──
 async function initMap() {
   const svg = document.getElementById('map-svg');
-  svg.innerHTML = '<text x="240" y="280" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#7a7a72">กำลังโหลดข้อมูล...</text>';
+  svg.setAttribute('viewBox', `0 0 ${SVG_W} ${SVG_H}`);
+  svg.innerHTML = `<text x="${SVG_W/2}" y="${SVG_H/2}" text-anchor="middle"
+    font-family="IBM Plex Mono,monospace" font-size="11" fill="#aaa">กำลังโหลดแผนที่...</text>`;
 
-  // fetch summary
-  const res = await fetch(`${GITHUB_BASE}/summary.json`);
-  summaryData = await res.json();
-
-  // fetch province index for all codes
-  const idxRes = await fetch(`${GITHUB_BASE}/province_index.json`);
-  const provinceIndex = await idxRes.json(); // thName → code
+  // fetch summary + boundary in parallel
+  const [sumRes, bdRes] = await Promise.all([
+    fetch(`${GITHUB_BASE}/summary.json`),
+    fetch(BOUNDARY_URL)
+  ]);
+  summaryData = await sumRes.json();
+  const bdData = await bdRes.json();
 
   svg.innerHTML = '';
 
-  // draw each province as a group — use centroid from summary bbox approximation
-  // We'll draw real polygons by fetching one geojson per province lazily
-  // For choropleth: draw simplified rect proxies using known centroids
-  // Then upgrade to real geometry on click
+  // create layer groups
+  const fillLayer   = document.createElementNS('http://www.w3.org/2000/svg','g');
+  fillLayer.id = 'layer-fills';
+  const strokeLayer = document.createElementNS('http://www.w3.org/2000/svg','g');
+  strokeLayer.id = 'layer-strokes';
+  strokeLayer.setAttribute('pointer-events','none');
+  const burnLayer   = document.createElementNS('http://www.w3.org/2000/svg','g');
+  burnLayer.id = 'layer-burns';
+  burnLayer.setAttribute('pointer-events','none');
 
-  // Province centroids (approximate lon, lat)
-  const CENTROIDS = {
-    '10':[100.52,13.75],'11':[100.60,13.62],'12':[100.50,13.85],'13':[100.65,14.00],
-    '14':[100.60,14.35],'15':[100.45,14.60],'16':[100.65,14.80],'17':[100.40,14.90],
-    '18':[100.13,15.18],'19':[100.92,14.53],'20':[100.98,13.36],'21':[101.28,12.68],
-    '22':[102.11,12.61],'23':[102.51,12.24],'24':[101.08,13.69],'25':[101.37,14.05],
-    '26':[101.21,14.20],'27':[102.07,13.82],'30':[102.10,14.97],'31':[103.10,14.99],
-    '32':[103.50,14.88],'33':[104.33,15.12],'34':[104.85,15.23],'35':[104.15,15.79],
-    '36':[101.92,15.81],'37':[104.63,15.86],'38':[103.32,18.36],'39':[102.44,17.20],
-    '40':[102.84,16.43],'41':[103.28,17.41],'42':[101.72,17.49],'43':[102.61,17.87],
-    '44':[103.30,16.18],'45':[103.65,16.05],'46':[103.51,16.43],'47':[104.15,17.16],
-    '48':[104.78,17.39],'49':[104.72,16.54],'50':[98.98,18.79],'51':[98.97,18.57],
-    '52':[99.50,18.29],'53':[100.10,17.62],'54':[100.13,18.14],'55':[100.78,18.77],
-    '56':[99.89,19.16],'57':[99.83,19.91],'58':[97.97,19.30],'60':[100.06,15.70],
-    '61':[100.02,15.38],'62':[99.52,16.48],'63':[98.86,16.88],'64':[99.82,17.01],
-    '65':[100.26,16.82],'66':[100.35,16.44],'67':[101.16,16.42],'70':[99.82,13.54],
-    '71':[99.55,14.00],'72':[100.13,14.47],'73':[100.04,13.82],'74':[100.27,13.54],
-    '75':[99.96,13.41],'76':[99.97,13.11],'77':[99.80,11.81],'86':[99.18,10.49]
-  };
+  svg.appendChild(fillLayer);
+  svg.appendChild(strokeLayer);
+  svg.appendChild(burnLayer);
 
-  // Approximate province shapes as circles scaled by area for initial choropleth
-  // Real polygons loaded on click
-  const data = summaryData[currentMonth].province;
-  const max = Math.max(...Object.values(data));
+  // draw boundaries
+  const features = bdData.features || bdData;
+  boundaryFeatures = [];
 
-  // Create SVG path elements for each province using centroid + circle
-  // We'll replace with real polygon on first click
-  Object.entries(PROVINCE_CODE).forEach(([thName, code]) => {
-    const centroid = CENTROIDS[code];
-    if (!centroid) return;
-    const [cx, cy] = project(centroid[0], centroid[1]);
-    const val = data[thName] || 0;
-    const color = choroColor(val, max);
+  features.forEach(feat => {
+    const code = matchCode(feat.properties);
+    const thName = code ? CODE_PROVINCE[code] : null;
+    const pathStr = geomToPath(feat.geometry);
+    if (!pathStr) return;
 
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.setAttribute('data-code', code);
-    g.setAttribute('data-name', thName);
+    boundaryFeatures.push({ code, thName, pathStr });
 
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', cx.toFixed(1));
-    circle.setAttribute('cy', cy.toFixed(1));
-    circle.setAttribute('r', '7');
-    circle.setAttribute('fill', color);
-    circle.setAttribute('stroke', '#fff');
-    circle.setAttribute('stroke-width', '0.5');
-    circle.style.cursor = 'pointer';
+    // fill
+    const fillPath = document.createElementNS('http://www.w3.org/2000/svg','path');
+    fillPath.setAttribute('d', pathStr);
+    fillPath.setAttribute('fill', '#e8e4dc');
+    fillPath.setAttribute('class', 'map-path');
+    if (code) {
+      fillPath.setAttribute('data-code', code);
+      fillPath.style.cursor = 'pointer';
+      fillPath.addEventListener('click', () => selectProvince(code, thName));
+      fillPath.addEventListener('mouseenter', (e) => {
+        const val = summaryData[currentMonth].province[thName] || 0;
+        showTooltip(e, thName, val);
+      });
+      fillPath.addEventListener('mouseleave', hideTooltip);
+    }
+    fillLayer.appendChild(fillPath);
 
-    g.appendChild(circle);
-    g.addEventListener('mouseenter', (e) => showTooltip(e, thName, val));
-    g.addEventListener('mouseleave', hideTooltip);
-    g.addEventListener('click', () => selectProvince(code, thName));
-    svg.appendChild(g);
+    // stroke
+    const strokePath = document.createElementNS('http://www.w3.org/2000/svg','path');
+    strokePath.setAttribute('d', pathStr);
+    strokePath.setAttribute('fill', 'none');
+    strokePath.setAttribute('stroke', '#fff');
+    strokePath.setAttribute('stroke-width', '0.7');
+    strokeLayer.appendChild(strokePath);
   });
 
-  // Now fetch all province geojsons and replace circles with real polygons
-  drawRealPolygons();
+  updateChoropleth();
+  updateLegend();
+  loadBurnedPolygons();
 }
 
-async function drawRealPolygons() {
-  const svg = document.getElementById('map-svg');
+// ── CHOROPLETH ──
+function updateChoropleth() {
+  if (!summaryData) return;
   const data = summaryData[currentMonth].province;
-  const max = Math.max(...Object.values(data));
+  const max = Math.max(...Object.values(data).filter(v => v > 0));
 
+  document.querySelectorAll('#layer-fills [data-code]').forEach(el => {
+    const code = el.getAttribute('data-code');
+    const thName = CODE_PROVINCE[code];
+    const val = data[thName] || 0;
+    el.setAttribute('fill', choroColor(val, max));
+    // refresh tooltip handler
+    el.onmouseenter = null;
+    el.addEventListener('mouseenter', (e) => showTooltip(e, thName, val));
+  });
+}
+
+function updateLegend() {
+  if (!summaryData) return;
+  const data = summaryData[currentMonth].province;
+  const max = Math.max(...Object.values(data).filter(v => v > 0));
+  const legendEl = document.getElementById('legend-scale');
+  if (!legendEl) return;
+  const steps = [0, 0.2, 0.4, 0.6, 0.8, 1.0];
+  legendEl.innerHTML = steps.map(t => {
+    const val = Math.round(t * max);
+    const color = t === 0 ? '#ede8df' : CHORO_COLORS[Math.min(Math.floor(t * CHORO_COLORS.length), CHORO_COLORS.length-1)];
+    const label = val === 0 ? '0' : (val/1000).toFixed(0)+'k';
+    return `<div class="legend-swatch" style="background:${color}"></div><span class="legend-val">${label}</span>`;
+  }).join('');
+}
+
+// ── BURNED POLYGONS ──
+async function loadBurnedPolygons() {
+  const burnLayer = document.getElementById('layer-burns');
   const codes = Object.values(PROVINCE_CODE);
+  const BATCH = 8;
 
-  // fetch all in parallel (batched)
-  const BATCH = 10;
   for (let i = 0; i < codes.length; i += BATCH) {
     const batch = codes.slice(i, i + BATCH);
     await Promise.all(batch.map(async (code) => {
+      if (geojsonCache[code]) return;
       try {
         const res = await fetch(`${GITHUB_BASE}/by_province_en/${code}.geojson`);
+        if (!res.ok) return;
         const gj = await res.json();
         geojsonCache[code] = gj;
-
-        const thName = CODE_PROVINCE[code];
-        const val = data[thName] || 0;
-        const color = choroColor(val, max);
-
-        // build combined path from all features
-        let pathStr = '';
-        gj.features.forEach(f => {
-          pathStr += geomToPath(f.geometry) + ' ';
-        });
-
-        if (!pathStr.trim()) return;
-
-        // replace existing g element
-        const existing = svg.querySelector(`[data-code="${code}"]`);
-        if (existing) existing.remove();
-
-        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        g.setAttribute('data-code', code);
-        g.setAttribute('data-name', thName);
-
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', pathStr);
-        path.setAttribute('class', 'map-path');
-        path.setAttribute('fill', color);
-
-        g.appendChild(path);
-        g.addEventListener('mouseenter', (e) => showTooltip(e, thName, val));
-        g.addEventListener('mouseleave', hideTooltip);
-        g.addEventListener('click', () => selectProvince(code, thName));
-        svg.appendChild(g);
-
-      } catch(e) { /* skip */ }
+        renderBurnedProvince(code, gj, burnLayer);
+      } catch(e) {}
     }));
   }
 }
 
+function renderBurnedProvince(code, gj, burnLayer) {
+  ['202601','202602','202603'].forEach(ym => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('data-burn-code', code);
+    g.setAttribute('data-burn-month', ym);
+    g.style.display = ym === currentMonth ? '' : 'none';
+
+    gj.features.forEach(f => {
+      if (f.properties.year_month !== ym) return;
+      const lu = f.properties.LU_Name || '';
+      const color = LU_COLORS[lu] || '#888';
+      const pathStr = geomToPath(f.geometry);
+      if (!pathStr) return;
+      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d', pathStr);
+      path.setAttribute('fill', color);
+      path.setAttribute('fill-opacity', '0.78');
+      path.setAttribute('stroke', 'none');
+      g.appendChild(path);
+    });
+
+    burnLayer.appendChild(g);
+  });
+}
+
+function updateBurnLayer(month) {
+  document.querySelectorAll('[data-burn-month]').forEach(g => {
+    g.style.display = g.getAttribute('data-burn-month') === month ? '' : 'none';
+  });
+}
+
+// ── TOOLTIP ──
 function showTooltip(e, name, val) {
   const tt = document.getElementById('map-tooltip');
   const wrap = document.querySelector('.map-canvas-wrap');
   const rect = wrap.getBoundingClientRect();
-  tt.textContent = `${name.replace('จ.','')}: ${val.toLocaleString()} ไร่`;
-  tt.style.left = (e.clientX - rect.left + 10) + 'px';
-  tt.style.top = (e.clientY - rect.top - 30) + 'px';
+  const display = (name||'').replace('จ.','');
+  tt.textContent = `${display}: ${val > 0 ? val.toLocaleString()+' ไร่' : 'ไม่มีข้อมูล'}`;
+  tt.style.left = (e.clientX - rect.left + 12) + 'px';
+  tt.style.top  = (e.clientY - rect.top  - 36) + 'px';
   tt.classList.add('visible');
 }
-
 function hideTooltip() {
   document.getElementById('map-tooltip').classList.remove('visible');
 }
 
+// ── SELECT PROVINCE ──
 async function selectProvince(code, thName) {
   selectedProvince = code;
-
-  // update header
-  document.getElementById('panel-province').textContent = thName.replace('จ.','');
+  document.getElementById('panel-province').textContent = (thName||'').replace('จ.','');
   document.querySelector('.map-panel-hint').textContent = 'ข้อมูลรายเดือน ม.ค.–มี.ค. 2569';
 
-  // highlight
-  document.querySelectorAll('.map-path').forEach(p => p.classList.remove('selected'));
-  const g = document.querySelector(`[data-code="${code}"]`);
-  if (g) g.querySelector('path,circle').classList.add('selected');
+  // highlight selected
+  document.querySelectorAll('#layer-fills .map-path').forEach(p => p.classList.remove('selected'));
+  const el = document.querySelector(`#layer-fills [data-code="${code}"]`);
+  if (el) el.classList.add('selected');
 
-  // render panel
   const body = document.getElementById('panel-body');
   body.innerHTML = '<div class="map-loading">กำลังโหลด...</div>';
 
-  // fetch geojson if not cached
   if (!geojsonCache[code]) {
     try {
       const res = await fetch(`${GITHUB_BASE}/by_province_en/${code}.geojson`);
@@ -1704,51 +1749,48 @@ async function selectProvince(code, thName) {
       return;
     }
   }
+  renderPanel(code, thName, geojsonCache[code]);
+}
 
-  const gj = geojsonCache[code];
+// ── PANEL ──
+function renderPanel(code, thName, gj) {
+  const months  = ['202601','202602','202603'];
+  const labels  = {'202601':'ม.ค.','202602':'ก.พ.','202603':'มี.ค.'};
+  const mColors = {'202601':'#a8c5da','202602':'#5a8fa8','202603':'#c0392b'};
 
-  // compute stats per month from geojson
-  const monthStats = {};
+  const stats = {};
   gj.features.forEach(f => {
     const p = f.properties;
     const ym = p.year_month;
-    if (!monthStats[ym]) monthStats[ym] = { total: 0, lu: {}, rp: {} };
-    const area = parseFloat(p.Area_rai) || 0;
-    monthStats[ym].total += area;
-    if (p.LU_Name) monthStats[ym].lu[p.LU_Name] = (monthStats[ym].lu[p.LU_Name] || 0) + area;
-    if (p.RP_NAME) monthStats[ym].rp[p.RP_NAME] = (monthStats[ym].rp[p.RP_NAME] || 0) + area;
+    if (!stats[ym]) stats[ym] = { total:0, lu:{}, rp:{} };
+    const a = parseFloat(p.Area_rai) || 0;
+    stats[ym].total += a;
+    if (p.LU_Name) stats[ym].lu[p.LU_Name] = (stats[ym].lu[p.LU_Name]||0) + a;
+    if (p.RP_NAME) stats[ym].rp[p.RP_NAME] = (stats[ym].rp[p.RP_NAME]||0) + a;
   });
 
-  const months = ['202601','202602','202603'];
-  const labels = {'202601':'ม.ค.','202602':'ก.พ.','202603':'มี.ค.'};
-  const monthColors = {'202601':'#a8c5da','202602':'#5a8fa8','202603':'#c0392b'};
+  const maxTotal = Math.max(...months.map(m => stats[m]?.total||0));
 
-  const maxTotal = Math.max(...months.map(m => monthStats[m]?.total || 0));
-
-  // trend section
   let html = `<div class="panel-section-label">แนวโน้ม 3 เดือน (ไร่)</div>`;
   months.forEach(m => {
-    const val = monthStats[m]?.total || 0;
-    const pct = maxTotal > 0 ? (val / maxTotal * 100).toFixed(1) : 0;
+    const val = stats[m]?.total || 0;
+    const pct = maxTotal > 0 ? (val/maxTotal*100).toFixed(1) : 0;
     html += `
       <div class="trend-row">
         <div class="trend-month">${labels[m]}</div>
         <div class="trend-track">
-          <div class="trend-fill" style="background:${monthColors[m]};width:${pct}%"></div>
+          <div class="trend-fill" style="background:${mColors[m]};width:${pct}%"></div>
         </div>
         <div class="trend-val">${val > 0 ? Math.round(val).toLocaleString() : '—'}</div>
       </div>`;
   });
 
-  // land use breakdown for current month
-  const curStats = monthStats[currentMonth];
-  if (curStats && Object.keys(curStats.lu).length > 0) {
-    const luTotal = curStats.total;
-    const luSorted = Object.entries(curStats.lu).sort((a,b) => b[1]-a[1]);
+  const cur = stats[currentMonth];
+  if (cur && Object.keys(cur.lu).length) {
     html += `<div class="panel-section-label">ประเภทที่ดิน — ${labels[currentMonth]}</div>`;
-    luSorted.forEach(([name, val]) => {
-      const pct = luTotal > 0 ? (val/luTotal*100).toFixed(1) : 0;
-      const color = LU_COLORS[name] || '#aaa';
+    Object.entries(cur.lu).sort((a,b)=>b[1]-a[1]).forEach(([name,val]) => {
+      const pct = (val/cur.total*100).toFixed(1);
+      const color = LU_COLORS[name]||'#aaa';
       html += `
         <div class="lu-row">
           <div class="lu-dot" style="background:${color}"></div>
@@ -1756,68 +1798,47 @@ async function selectProvince(code, thName) {
           <div class="lu-pct">${pct}%</div>
         </div>
         <div class="lu-bar-wrap">
-          <div class="lu-bar-fill" style="background:${color};width:${pct}%;opacity:0.7"></div>
+          <div class="lu-bar-fill" style="background:${color};width:${pct}%;opacity:0.75"></div>
         </div>`;
     });
   }
 
-  // responsibility breakdown
-  if (curStats && Object.keys(curStats.rp).length > 0) {
-    const rpTotal = curStats.total;
-    const rpSorted = Object.entries(curStats.rp).sort((a,b) => b[1]-a[1]);
+  if (cur && Object.keys(cur.rp).length) {
     html += `<div class="panel-section-label">พื้นที่รับผิดชอบ — ${labels[currentMonth]}</div>`;
-    rpSorted.forEach(([name, val]) => {
-      const pct = rpTotal > 0 ? (val/rpTotal*100).toFixed(1) : 0;
+    Object.entries(cur.rp).sort((a,b)=>b[1]-a[1]).forEach(([name,val]) => {
+      const pct = (val/cur.total*100).toFixed(1);
       const isForest = name.includes('ป่า');
       html += `
         <div class="lu-row">
-          <div class="lu-dot" style="background:${isForest ? '#2d5a1b' : '#8b6914'}"></div>
+          <div class="lu-dot" style="background:${isForest?'#2d5a1b':'#8b6914'}"></div>
           <div class="lu-name" style="font-size:11px;">${name}</div>
           <div class="lu-pct">${pct}%</div>
         </div>`;
     });
   }
 
-  body.innerHTML = html;
+  document.getElementById('panel-body').innerHTML = html;
 }
 
-// month toggle
+// ── MONTH TOGGLE ──
 document.querySelectorAll('.map-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.map-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentMonth = btn.dataset.month;
-
     if (summaryData) {
-      // update choropleth colours
-      const data = summaryData[currentMonth].province;
-      const max = Math.max(...Object.values(data));
-      const svg = document.getElementById('map-svg');
-      Object.entries(PROVINCE_CODE).forEach(([thName, code]) => {
-        const g = svg.querySelector(`[data-code="${code}"]`);
-        if (!g) return;
-        const val = data[thName] || 0;
-        const color = choroColor(val, max);
-        const el = g.querySelector('path') || g.querySelector('circle');
-        if (el) el.setAttribute('fill', color);
-        // update event data
-        g.onmouseenter = null;
-        g.addEventListener('mouseenter', (e) => showTooltip(e, thName, val));
-      });
-
-      // re-render legend
-      renderChoropleth(currentMonth);
-
-      // re-render panel if province selected
-      if (selectedProvince) {
-        selectProvince(selectedProvince, CODE_PROVINCE[selectedProvince]);
+      updateChoropleth();
+      updateLegend();
+      updateBurnLayer(currentMonth);
+      if (selectedProvince && geojsonCache[selectedProvince]) {
+        renderPanel(selectedProvince, CODE_PROVINCE[selectedProvince], geojsonCache[selectedProvince]);
       }
     }
   });
 });
 
-// init
 initMap();
+
 
 
 const clmvEl = document.getElementById('clmv-bars');
