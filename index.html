@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-Frame-Options" content="ALLOWALL">
-<meta name="referrer" content="no-referrer-when-downgrade">
 <title>พื้นที่เผาไหม้ในประเทศไทย มกราคม–มีนาคม 2569</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+Thai:wght@300;400;600;700&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #1a1a18;
@@ -35,11 +33,10 @@
   body {
     background: var(--paper);
     color: var(--ink);
-    font-family: 'Sarabun', sans-serif;
+    font-family: 'Noto Sans Thai', sans-serif;
     font-weight: 300;
-    line-height: 1.75;
-    font-size: 17px;
-    overflow-x: hidden;
+    line-height: 1.7;
+    font-size: 16px;
   }
 
   /* ── HEADER RULE ── */
@@ -96,7 +93,7 @@
   }
 
   .hero h1 {
-    font-family: 'Sarabun', sans-serif;
+    font-family: 'Noto Serif Thai', serif;
     font-size: clamp(28px, 4vw, 42px);
     font-weight: 700;
     line-height: 1.25;
@@ -105,14 +102,13 @@
   }
 
   .hero-lead {
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.75;
     color: var(--ink-mid);
     max-width: 640px;
     border-left: 3px solid var(--accent);
     padding-left: 16px;
     margin-bottom: 32px;
-    border-radius: 0 4px 4px 0;
   }
 
   .hero-stats {
@@ -121,8 +117,6 @@
     gap: 0;
     border: 1px solid var(--paper-rule);
     background: var(--paper-warm);
-    border-radius: 8px;
-    overflow: hidden;
   }
 
   .hero-stat {
@@ -165,11 +159,16 @@
   }
 
   .section-label {
-    display: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 8px;
   }
 
   .section h2 {
-    font-family: 'Sarabun', sans-serif;
+    font-family: 'Noto Serif Thai', serif;
     font-size: clamp(20px, 2.5vw, 26px);
     font-weight: 600;
     line-height: 1.3;
@@ -192,7 +191,6 @@
     margin: 24px 0;
     font-size: 14px;
     color: var(--ink-mid);
-    border-radius: 0 8px 8px 0;
   }
   .finding strong { color: var(--ink); font-weight: 500; }
 
@@ -229,8 +227,6 @@
   .bar-fill.jan { background: #a8c5da; }
   .bar-fill.feb { background: #5a8fa8; }
   .bar-fill.mar { background: var(--accent); }
-
-
 
   .bar-label {
     font-family: 'IBM Plex Mono', monospace;
@@ -356,7 +352,6 @@
     color: #faf9f6;
     padding: 28px 28px;
     margin: 32px 0;
-    border-radius: 8px;
   }
 
   .key-callout-label {
@@ -378,7 +373,7 @@
   }
 
   .key-callout-text {
-    font-family: 'Sarabun', sans-serif;
+    font-family: 'Noto Serif Thai', serif;
     font-size: 16px;
     line-height: 1.65;
     color: #c8c8be;
@@ -423,7 +418,7 @@
   }
 
   .prov-name {
-    font-family: 'Sarabun', sans-serif;
+    font-family: 'Noto Serif Thai', serif;
     font-weight: 500;
     font-size: 14px;
   }
@@ -619,7 +614,7 @@
   }
 
   .map-panel-province {
-    font-family: 'Sarabun', sans-serif;
+    font-family: 'Noto Serif Thai', serif;
     font-size: 16px;
     font-weight: 600;
     color: var(--ink);
@@ -862,46 +857,22 @@
   }
 
   /* ── RESPONSIVE ── */
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .map-layout { grid-template-columns: 1fr; }
-    .map-panel { border-left: none; border-top: 1px solid var(--paper-rule); }
-    #map-svg { min-height: 320px !important; height: 320px !important; }
-    .map-canvas-wrap { min-height: 320px !important; }
-    .mini-bar-cell { display: none; }
-    .province-table th:nth-child(4),
-    .province-table td:nth-child(4) { display: none; }
-    .cluster-row { grid-template-columns: 1fr 80px; }
-    .cluster-row .bar-track { display: none; }
-    .context-grid { grid-template-columns: 1fr; }
-    .data-note-grid { grid-template-columns: 1fr 1fr; }
-  }
-
   @media (max-width: 600px) {
-    :root { --col-w: 100%; }
-    .hero { padding: 32px 16px 28px; }
     .hero-stats { grid-template-columns: 1fr; }
     .hero-stat { border-right: none; border-bottom: 1px solid var(--paper-rule); }
-    .section, .map-section { padding: 32px 16px; }
-    .month-row { grid-template-columns: 60px 1fr 100px; gap: 8px; }
-    .bar-label span { font-size: 11px !important; }
     .land-flow { grid-template-columns: 1fr; }
     .land-month { border-right: none; border-bottom: 1px solid var(--paper-rule); }
     .resp-grid { grid-template-columns: 1fr; }
-    .map-controls { width: 100%; }
-    .map-btn { flex: 1; text-align: center; font-size: 10px; padding: 7px 8px; }
-    .map-panel-body { max-height: 280px; overflow-y: auto; }
-    .province-table { font-size: 12px; }
-    .province-table th, .province-table td { padding: 7px 6px; }
-    .prov-name { font-size: 13px; }
-    .cluster-row { grid-template-columns: 1fr 70px; }
     .context-grid { grid-template-columns: 1fr; }
     .data-note-grid { grid-template-columns: 1fr; }
-    .top-bar { font-size: 10px; padding: 8px 16px; }
-    .key-callout { padding: 20px 16px; }
-    .key-callout-number { font-size: clamp(28px, 8vw, 48px); }
-    body { font-size: 15px; }
+    .month-row { grid-template-columns: 70px 1fr 120px; }
+    .cluster-row { grid-template-columns: 130px 1fr 80px; }
   }
+
+  /* Animation delays for stagger */
+  .bar-fill { animation-delay: 0.1s; }
+  .bar-fill.feb { animation-delay: 0.2s; }
+  .bar-fill.mar { animation-delay: 0.3s; }
 </style>
 </head>
 <body>
@@ -1162,7 +1133,8 @@
 
   <div class="finding">
     <strong>ข้อมูลนี้บอกได้ว่า "ที่ไหนไหม้" ไม่ใช่ "ใครจุด"</strong> —
-    การที่พื้นที่เผาไหม้อยู่ในเขตป่าของรัฐ ไม่ได้บ่งชี้สาเหตุหรือความรับผิดชอบ
+    การที่พื้นที่เผาไหม้อยู่ในเขตป่าของรัฐ ไม่ได้บ่งชี้สาเหตุ
+    แต่ตั้งคำถามที่ชอบธรรมเกี่ยวกับการจัดการพื้นที่เหล่านั้น
   </div>
 </div>
 
@@ -1404,7 +1376,7 @@ clusters.forEach((d, i) => {
       ${d.name}
     </div>
     <div class="bar-track" style="height:16px;">
-      <div class="bar-fill" style="background:var(--forest);opacity:0.8;"></div>
+      <div class="bar-fill" style="background:var(--forest);opacity:0.8;width:${(d.sqm/maxCluster*100).toFixed(1)}%"></div>
     </div>
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);text-align:right;">${d.sqm.toLocaleString()}</div>
   `;
@@ -1681,12 +1653,7 @@ function updateLegend() {
 }
 
 // ── BURNED POLYGONS ──
-const isMobile = window.innerWidth < 768;
-
 async function loadBurnedPolygons() {
-  // บนมือถือไม่โหลด burn polygons เลย — ใช้แค่ choropleth
-  if (isMobile) return;
-
   const burnLayer = document.getElementById('layer-burns');
   const codes = Object.values(PROVINCE_CODE);
   const BATCH = 8;
@@ -1769,19 +1736,7 @@ async function selectProvince(code, thName) {
   if (!geojsonCache[code]) {
     try {
       const res = await fetch(`${GITHUB_BASE}/by_province_en/${code}.geojson`);
-      const text = await res.text();
-
-      let gj;
-      if (isMobile) {
-        // บนมือถือ: ตัด geometry ออกก่อน parse — ลดขนาด JSON 70-80%
-        // เก็บแค่ properties ที่ต้องการ
-        const stripped = text.replace(/"geometry"\s*:\s*\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g, '"geometry":null');
-        gj = JSON.parse(stripped);
-      } else {
-        gj = JSON.parse(text);
-      }
-
-      geojsonCache[code] = gj;
+      geojsonCache[code] = await res.json();
     } catch(e) {
       body.innerHTML = '<div class="map-panel-empty">โหลดข้อมูลไม่ได้</div>';
       return;
