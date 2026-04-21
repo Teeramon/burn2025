@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>พื้นที่เผาไหม้ในประเทศไทย มกราคม–มีนาคม 2569</title>
+<meta http-equiv="X-Frame-Options" content="ALLOWALL">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<title>พื้นที่เผาไหม้ในประเทศไทย มกราคม–10 เมษายน 2569</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+Thai:wght@300;400;600;700&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #1a1a18;
@@ -33,10 +35,11 @@
   body {
     background: var(--paper);
     color: var(--ink);
-    font-family: 'Noto Sans Thai', sans-serif;
+    font-family: 'Sarabun', sans-serif;
     font-weight: 300;
-    line-height: 1.7;
-    font-size: 16px;
+    line-height: 1.75;
+    font-size: 17px;
+    overflow-x: hidden;
   }
 
   /* ── HEADER RULE ── */
@@ -93,7 +96,7 @@
   }
 
   .hero h1 {
-    font-family: 'Noto Serif Thai', serif;
+    font-family: 'Sarabun', sans-serif;
     font-size: clamp(28px, 4vw, 42px);
     font-weight: 700;
     line-height: 1.25;
@@ -102,13 +105,14 @@
   }
 
   .hero-lead {
-    font-size: 17px;
+    font-size: 18px;
     line-height: 1.75;
     color: var(--ink-mid);
     max-width: 640px;
     border-left: 3px solid var(--accent);
     padding-left: 16px;
     margin-bottom: 32px;
+    border-radius: 0 4px 4px 0;
   }
 
   .hero-stats {
@@ -117,6 +121,8 @@
     gap: 0;
     border: 1px solid var(--paper-rule);
     background: var(--paper-warm);
+    border-radius: 8px;
+    overflow: hidden;
   }
 
   .hero-stat {
@@ -159,16 +165,11 @@
   }
 
   .section-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    margin-bottom: 8px;
+    display: none;
   }
 
   .section h2 {
-    font-family: 'Noto Serif Thai', serif;
+    font-family: 'Sarabun', sans-serif;
     font-size: clamp(20px, 2.5vw, 26px);
     font-weight: 600;
     line-height: 1.3;
@@ -191,6 +192,7 @@
     margin: 24px 0;
     font-size: 14px;
     color: var(--ink-mid);
+    border-radius: 0 8px 8px 0;
   }
   .finding strong { color: var(--ink); font-weight: 500; }
 
@@ -228,6 +230,8 @@
   .bar-fill.feb { background: #5a8fa8; }
   .bar-fill.mar { background: var(--accent); }
 
+
+
   .bar-label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
@@ -237,7 +241,7 @@
   /* ── LAND TYPE FLOW ── */
   .land-flow {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0;
     margin: 24px 0;
     border: 1px solid var(--paper-rule);
@@ -296,7 +300,7 @@
   /* ── RESPONSIBILITY ── */
   .resp-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1px;
     background: var(--paper-rule);
     border: 1px solid var(--paper-rule);
@@ -352,6 +356,7 @@
     color: #faf9f6;
     padding: 28px 28px;
     margin: 32px 0;
+    border-radius: 8px;
   }
 
   .key-callout-label {
@@ -373,7 +378,7 @@
   }
 
   .key-callout-text {
-    font-family: 'Noto Serif Thai', serif;
+    font-family: 'Sarabun', sans-serif;
     font-size: 16px;
     line-height: 1.65;
     color: #c8c8be;
@@ -418,7 +423,7 @@
   }
 
   .prov-name {
-    font-family: 'Noto Serif Thai', serif;
+    font-family: 'Sarabun', sans-serif;
     font-weight: 500;
     font-size: 14px;
   }
@@ -614,7 +619,7 @@
   }
 
   .map-panel-province {
-    font-family: 'Noto Serif Thai', serif;
+    font-family: 'Sarabun', sans-serif;
     font-size: 16px;
     font-weight: 600;
     color: var(--ink);
@@ -857,22 +862,46 @@
   }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 600px) {
-    .hero-stats { grid-template-columns: 1fr; }
-    .hero-stat { border-right: none; border-bottom: 1px solid var(--paper-rule); }
-    .land-flow { grid-template-columns: 1fr; }
-    .land-month { border-right: none; border-bottom: 1px solid var(--paper-rule); }
-    .resp-grid { grid-template-columns: 1fr; }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .map-layout { grid-template-columns: 1fr; }
+    .map-panel { border-left: none; border-top: 1px solid var(--paper-rule); }
+    #map-svg { min-height: 320px !important; height: 320px !important; }
+    .map-canvas-wrap { min-height: 320px !important; }
+    .mini-bar-cell { display: none; }
+    .province-table th:nth-child(4),
+    .province-table td:nth-child(4) { display: none; }
+    .cluster-row { grid-template-columns: 1fr 80px; }
+    .cluster-row .bar-track { display: none; }
     .context-grid { grid-template-columns: 1fr; }
-    .data-note-grid { grid-template-columns: 1fr; }
-    .month-row { grid-template-columns: 70px 1fr 120px; }
-    .cluster-row { grid-template-columns: 130px 1fr 80px; }
+    .data-note-grid { grid-template-columns: 1fr 1fr; }
   }
 
-  /* Animation delays for stagger */
-  .bar-fill { animation-delay: 0.1s; }
-  .bar-fill.feb { animation-delay: 0.2s; }
-  .bar-fill.mar { animation-delay: 0.3s; }
+  @media (max-width: 600px) {
+    :root { --col-w: 100%; }
+    .hero { padding: 32px 16px 28px; }
+    .hero-stats { grid-template-columns: 1fr; }
+    .hero-stat { border-right: none; border-bottom: 1px solid var(--paper-rule); }
+    .section, .map-section { padding: 32px 16px; }
+    .month-row { grid-template-columns: 60px 1fr 100px; gap: 8px; }
+    .bar-label span { font-size: 11px !important; }
+    .land-flow { grid-template-columns: repeat(2, 1fr); }
+    .land-month { border-right: none; border-bottom: 1px solid var(--paper-rule); }
+    .resp-grid { grid-template-columns: 1fr; }
+    .map-controls { width: 100%; }
+    .map-btn { flex: 1; text-align: center; font-size: 10px; padding: 7px 8px; }
+    .map-panel-body { max-height: 280px; overflow-y: auto; }
+    .province-table { font-size: 12px; }
+    .province-table th, .province-table td { padding: 7px 6px; }
+    .prov-name { font-size: 13px; }
+    .cluster-row { grid-template-columns: 1fr 70px; }
+    .context-grid { grid-template-columns: 1fr; }
+    .data-note-grid { grid-template-columns: 1fr; }
+    .top-bar { font-size: 10px; padding: 8px 16px; }
+    .key-callout { padding: 20px 16px; }
+    .key-callout-number { font-size: clamp(28px, 8vw, 48px); }
+    body { font-size: 15px; }
+  }
 </style>
 </head>
 <body>
@@ -889,27 +918,27 @@
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-eyebrow">รายงานสถานการณ์ · มกราคม–มีนาคม 2569</div>
-  <h1>พื้นที่เผาไหม้ในประเทศไทย<br>สามเดือนแรกของปี 2569</h1>
+  <div class="hero-eyebrow">รายงานสถานการณ์ · มกราคม–10 เมษายน 2569</div>
+  <h1>พื้นที่เผาไหม้ในประเทศไทย<br>มกราคม–10 เมษายน 2569</h1>
   <p class="hero-lead">
-    ข้อมูลจากดาวเทียม Sentinel-2 โดย GISTDA แสดงให้เห็นว่าในช่วง 3 เดือนแรกของปี 2569
-    พื้นที่เผาไหม้ทั่วประเทศขยายตัวอย่างรวดเร็ว และมีสัดส่วนที่เพิ่มขึ้นอยู่ในพื้นที่ป่าภายใต้การดูแลของหน่วยงานรัฐ
+    ข้อมูลจากดาวเทียม Sentinel-2 โดย GISTDA แสดงให้เห็นว่าตั้งแต่มกราคมถึง 10 เมษายน 2569
+    พื้นที่เผาไหม้ทั่วประเทศขยายตัวต่อเนื่อง โดยสัดส่วนป่าไม้เพิ่มขึ้นถึง 69.1% ในช่วง 10 วันแรกของเมษายน
   </p>
 
   <div class="hero-stats">
     <div class="hero-stat">
-      <div class="stat-label">พื้นที่เผาไหม้รวม 3 เดือน</div>
-      <div class="stat-number accent">16.16</div>
-      <div class="stat-sub">ล้าน ตร.ม. (10,080 ไร่)</div>
+      <div class="stat-label">พื้นที่เผาไหม้รวม 4 เดือน</div>
+      <div class="stat-number accent">17.60</div>
+      <div class="stat-sub">ล้านไร่ (ม.ค.–10 เม.ย. 2569)</div>
     </div>
     <div class="hero-stat">
-      <div class="stat-label">สัดส่วนป่าไม้ในมีนาคม</div>
-      <div class="stat-number">57.2%</div>
+      <div class="stat-label">สัดส่วนป่าไม้ (1–10 เม.ย.)</div>
+      <div class="stat-number">69.1%</div>
       <div class="stat-sub">เทียบกับ 6.2% ในมกราคม</div>
     </div>
     <div class="hero-stat">
-      <div class="stat-label">ป่าสงวน+อนุรักษ์ (มีนาคม)</div>
-      <div class="stat-number">57.3%</div>
+      <div class="stat-label">ป่าสงวน+อนุรักษ์ (1–10 เม.ย.)</div>
+      <div class="stat-number">71.9%</div>
       <div class="stat-sub">ของพื้นที่เผาไหม้ทั้งหมด</div>
     </div>
   </div>
@@ -918,7 +947,7 @@
 <!-- S1: MONTHLY TREND -->
 <div class="section">
   <div class="section-label">01 — ภาพรวมรายเดือน</div>
-  <h2>ไฟเพิ่มขึ้นทุกเดือน — มีนาคมเพิ่มกว่า 3 เท่าของกุมภาพันธ์</h2>
+  <h2>ไฟเพิ่มขึ้นต่อเนื่อง — 10 วันแรกของเมษายนแซงทุกเดือนก่อนหน้า</h2>
   <p class="section-intro">
     พื้นที่เผาไหม้สะสมทั่วประเทศ จำแนกตามเดือน วัดด้วยดาวเทียม Sentinel-2
   </p>
@@ -927,28 +956,35 @@
     <div class="month-row">
       <div class="month-name">ม.ค. 2569</div>
       <div class="bar-track">
-        <div class="bar-fill jan" style="width:21.2%;transform:none"></div>
+        <div class="bar-fill jan" style="width:34.3%"></div>
       </div>
-      <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">2,264,081 ตร.ม.</span></div>
+      <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">2,264,081 ไร่</span></div>
     </div>
     <div class="month-row">
       <div class="month-name">ก.พ. 2569</div>
       <div class="bar-track">
-        <div class="bar-fill feb" style="width:29.8%;transform:none"></div>
+        <div class="bar-fill feb" style="width:48.1%"></div>
       </div>
-      <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">3,181,491 ตร.ม.</span></div>
+      <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">3,181,491 ไร่</span></div>
     </div>
     <div class="month-row">
       <div class="month-name">มี.ค. 2569</div>
       <div class="bar-track">
-        <div class="bar-fill mar" style="width:100%;transform:none"></div>
+        <div class="bar-fill mar" style="width:84.0%"></div>
       </div>
-      <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);font-weight:600;">10,682,599 ตร.ม.</span></div>
+      <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;">5,551,135 ไร่</span></div>
+    </div>
+    <div class="month-row">
+      <div class="month-name">1–10 เม.ย.</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="background:#8c1a0a;width:100%"></div>
+      </div>
+      <div class="bar-label"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8c1a0a;font-weight:600;">6,329,102 ไร่</span></div>
     </div>
   </div>
 
   <div class="finding">
-    <strong>มีนาคมเพิ่มขึ้น 235.8% จากกุมภาพันธ์</strong> — ในเดือนเดียวกัน พื้นที่ป่าไม้ที่ถูกเผาไหม้เพิ่มขึ้น 405% จาก 1.21 ล้าน ตร.ม. เป็น 6.11 ล้าน ตร.ม.
+    <strong>10 วันแรกของเมษายนมีพื้นที่เผาไหม้ 6.61 ล้านไร่</strong> — เกินทั้งเดือนมีนาคม (5.55 ล้านไร่) แล้ว และสัดส่วนป่าไม้อยู่ที่ 69.1%
   </div>
 
   <!-- 3 periods of March -->
@@ -961,33 +997,33 @@
       <div class="bar-track" style="height:20px;">
         <div class="bar-fill" style="background:#f0a090;width:74.5%;transform:none"></div>
       </div>
-      <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">2,968,056</div>
+      <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">2,968,056 ไร่</div>
     </div>
     <div class="month-row">
       <div class="month-name" style="font-size:11px;">11–20 มี.ค.</div>
       <div class="bar-track" style="height:20px;">
         <div class="bar-fill" style="background:#d9534f;width:93.6%;transform:none"></div>
       </div>
-      <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">3,730,371</div>
+      <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">3,730,371 ไร่</div>
     </div>
     <div class="month-row">
       <div class="month-name" style="font-size:11px;">21–31 มี.ค.</div>
       <div class="bar-track" style="height:20px;">
         <div class="bar-fill" style="background:var(--accent);width:100%;transform:none"></div>
       </div>
-      <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);">3,984,172</div>
+      <div class="bar-label" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);">3,984,172 ไร่</div>
     </div>
   </div>
-  <p style="font-size:12px;color:var(--ink-light);">ไฟเพิ่มขึ้นต่อเนื่องตลอดเดือนมีนาคม ไม่มีสัญญาณชะลอตัว</p>
+  <p style="font-size:12px;color:var(--ink-light);">10 วันแรกของเมษายนมีพื้นที่เผาไหม้สูงกว่าทั้งเดือนมีนาคม — ฤดูไฟยังไม่สิ้นสุด</p>
 </div>
 
 <!-- S2: LAND TYPE SHIFT -->
 <div class="section">
   <div class="section-label">02 — ประเภทพื้นที่เผาไหม้</div>
-  <h2>จากไฟเกษตร สู่ไฟป่า — การเปลี่ยนแปลงใน 3 เดือน</h2>
+  <h2>จากไฟเกษตร สู่ไฟป่า — การเปลี่ยนแปลงใน 4 เดือน</h2>
   <p class="section-intro">
     สัดส่วนประเภทพื้นที่ที่ถูกเผาไหม้เปลี่ยนแปลงอย่างมีนัยสำคัญ
-    จากที่เกษตรกรรมครอบครองกว่า 90% ในมกราคม มาเป็นป่าไม้มากกว่าครึ่งในมีนาคม
+    จากที่เกษตรกรรมครอบครองกว่า 90% ในมกราคม มาเป็นป่าไม้ถึง 71% ใน 10 วันแรกของเมษายน
   </p>
 
   <div class="land-flow">
@@ -1017,21 +1053,32 @@
     <div class="land-month">
       <div class="land-month-label">มี.ค. 2569</div>
       <div class="land-stack">
-        <div class="land-seg forest" style="height:57.2%;"></div>
-        <div class="land-seg agri" style="height:42.4%;"></div>
-        <div class="land-seg other" style="height:0.4%;min-height:2px;"></div>
+        <div class="land-seg forest" style="height:63.7%;"></div>
+        <div class="land-seg agri" style="height:35.7%;"></div>
+        <div class="land-seg other" style="height:0.6%;min-height:2px;"></div>
       </div>
       <div class="land-legend">
-        <div><span class="legend-dot forest"></span><span style="font-family:'IBM Plex Mono',monospace;color:var(--forest);font-weight:600;">57.2%</span> ป่าไม้</div>
-        <div><span class="legend-dot agri"></span><span style="font-family:'IBM Plex Mono',monospace;">42.4%</span> เกษตร</div>
+        <div><span class="legend-dot forest"></span><span style="font-family:'IBM Plex Mono',monospace;color:var(--forest);font-weight:600;">63.7%</span> ป่าไม้</div>
+        <div><span class="legend-dot agri"></span><span style="font-family:'IBM Plex Mono',monospace;">35.7%</span> เกษตร</div>
+      </div>
+    </div>
+    <div class="land-month">
+      <div class="land-month-label">1–10 เม.ย.</div>
+      <div class="land-stack">
+        <div class="land-seg forest" style="height:69.1%;"></div>
+        <div class="land-seg agri" style="height:30.4%;"></div>
+        <div class="land-seg other" style="height:0.5%;min-height:2px;"></div>
+      </div>
+      <div class="land-legend">
+        <div><span class="legend-dot forest"></span><span style="font-family:'IBM Plex Mono',monospace;color:var(--forest);font-weight:700;">69.1%</span> ป่าไม้</div>
+        <div><span class="legend-dot agri"></span><span style="font-family:'IBM Plex Mono',monospace;">30.4%</span> เกษตร</div>
       </div>
     </div>
   </div>
 
   <div class="finding">
-    <strong>พื้นที่ป่าไม้ที่ถูกเผาไหม้เพิ่มขึ้น 768% จากมกราคมถึงกุมภาพันธ์</strong>
-    และอีก 405% ในมีนาคม — รวมแล้วพื้นที่ป่าที่เผาไหม้สะสม 3 เดือน
-    อยู่ที่ <strong>7.46 ล้าน ตร.ม.</strong>
+    <strong>สัดส่วนป่าไม้พุ่งจาก 6.2% ในมกราคม เป็น 69.1% ใน 10 วันแรกของเมษายน</strong>
+    — พื้นที่ป่าที่เผาไหม้สะสม 4 เดือนอยู่ที่ <strong>9.45 ล้านไร่</strong> จากทั้งหมด 17.60 ล้านไร่
   </div>
 </div>
 
@@ -1045,11 +1092,11 @@
   </p>
 
   <div class="key-callout">
-    <div class="key-callout-label">ตัวเลขสำคัญ — มีนาคม 2569</div>
-    <div class="key-callout-number">57.3%</div>
+    <div class="key-callout-label">ตัวเลขสำคัญ — 1–10 เมษายน 2569</div>
+    <div class="key-callout-number">71.9%</div>
     <div class="key-callout-text">
-      ของพื้นที่เผาไหม้ทั้งหมดในมีนาคม อยู่ในเขต<strong style="color:#e8d5b0;">ป่าสงวนแห่งชาติและป่าอนุรักษ์</strong>
-      ซึ่งเป็นพื้นที่ภายใต้การดูแลของหน่วยงานรัฐโดยตรง
+      ของพื้นที่เผาไหม้ใน 10 วันแรกของเมษายน อยู่ในเขต<strong style="color:#e8d5b0;">ป่าสงวนแห่งชาติและป่าอนุรักษ์</strong>
+      เพิ่มขึ้นจาก 64.2% ในมีนาคม
     </div>
   </div>
 
@@ -1110,31 +1157,55 @@
       <div class="resp-bar-group">
         <div class="resp-bar-label">
           <span>ป่าสงวน + ป่าอนุรักษ์</span>
-          <span class="resp-bar-pct" style="color:var(--forest);font-weight:600;">57.3%</span>
+          <span class="resp-bar-pct" style="color:var(--forest);font-weight:600;">64.2%</span>
         </div>
-        <div class="resp-track"><div class="resp-fill forest-zone" style="width:57.3%"></div></div>
+        <div class="resp-track"><div class="resp-fill forest-zone" style="width:64.2%"></div></div>
       </div>
       <div class="resp-bar-group">
         <div class="resp-bar-label">
           <span>เกษตร + เขต ส.ป.ก.</span>
-          <span class="resp-bar-pct">34.4%</span>
+          <span class="resp-bar-pct">27.3%</span>
         </div>
-        <div class="resp-track"><div class="resp-fill agri-zone" style="width:34.4%"></div></div>
+        <div class="resp-track"><div class="resp-fill agri-zone" style="width:27.3%"></div></div>
       </div>
       <div class="resp-bar-group">
         <div class="resp-bar-label">
           <span>ชุมชนและอื่นๆ</span>
-          <span class="resp-bar-pct">7.9%</span>
+          <span class="resp-bar-pct">8.2%</span>
         </div>
         <div class="resp-track"><div class="resp-fill other-zone" style="width:7.9%"></div></div>
+      </div>
+    </div>
+    <!-- APR -->
+    <div class="resp-cell" style="background:#fff5f4;">
+      <div class="resp-month" style="color:#8c1a0a;">1–10 เม.ย. 2569</div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>ป่าสงวน + ป่าอนุรักษ์</span>
+          <span class="resp-bar-pct" style="color:var(--forest);font-weight:600;">71.9%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill forest-zone" style="width:71.9%"></div></div>
+      </div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>เกษตร + เขต ส.ป.ก.</span>
+          <span class="resp-bar-pct">22.0%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill agri-zone" style="width:22.0%"></div></div>
+      </div>
+      <div class="resp-bar-group">
+        <div class="resp-bar-label">
+          <span>ชุมชนและอื่นๆ</span>
+          <span class="resp-bar-pct">5.8%</span>
+        </div>
+        <div class="resp-track"><div class="resp-fill other-zone" style="width:5.8%"></div></div>
       </div>
     </div>
   </div>
 
   <div class="finding">
     <strong>ข้อมูลนี้บอกได้ว่า "ที่ไหนไหม้" ไม่ใช่ "ใครจุด"</strong> —
-    การที่พื้นที่เผาไหม้อยู่ในเขตป่าของรัฐ ไม่ได้บ่งชี้สาเหตุ
-    แต่ตั้งคำถามที่ชอบธรรมเกี่ยวกับการจัดการพื้นที่เหล่านั้น
+    การที่พื้นที่เผาไหม้อยู่ในเขตป่าของรัฐ ไม่ได้บ่งชี้สาเหตุหรือความรับผิดชอบ
   </div>
 </div>
 
@@ -1150,6 +1221,7 @@
     <button class="map-btn active" data-month="202601">ม.ค. 2569</button>
     <button class="map-btn" data-month="202602">ก.พ. 2569</button>
     <button class="map-btn" data-month="202603">มี.ค. 2569</button>
+    <button class="map-btn" data-month="202604">1–10 เม.ย.</button>
   </div>
 
   <div class="map-layout">
@@ -1187,10 +1259,10 @@
 <!-- S4: PROVINCE -->
 <div class="section">
   <div class="section-label">05 — ระดับจังหวัด</div>
-  <h2>Top 10 จังหวัด — มีนาคม 2569</h2>
+  <h2>Top 10 จังหวัด — 1–10 เมษายน 2569</h2>
   <p class="section-intro">
-    ลำปางนำโด่งด้วยพื้นที่เผาไหม้สูงสุด — เชียงใหม่อยู่อันดับที่ 10
-    โดยมีลพบุรีและนครสวรรค์ (ภาคกลาง-เหนือตอนล่าง) ติดอันดับต้น
+    เชียงใหม่และแม่ฮ่องสอนนำ 2 อันดับแรกใน 1–10 เมษายน
+    จังหวัดภาคเหนือ 9 ใน 10 อันดับแรก ยกเว้นลพบุรี (ภาคกลาง) ที่ยังติดอันดับ 7
   </p>
 
   <table class="province-table">
@@ -1198,7 +1270,7 @@
       <tr>
         <th style="width:30px;">#</th>
         <th>จังหวัด</th>
-        <th class="right">พื้นที่เผาไหม้ (ตร.ม.)</th>
+        <th class="right">พื้นที่เผาไหม้ (ไร่)</th>
         <th style="width:150px;">สัดส่วน</th>
         <th>ป่าไม้ %</th>
       </tr>
@@ -1208,26 +1280,25 @@
   </table>
 
   <div class="finding">
-    <strong>ภาคเหนือ 17 จังหวัด รวมกัน 7.03 ล้าน ตร.ม. ในมีนาคม</strong>
-    คิดเป็น 65.8% ของพื้นที่เผาไหม้ทั้งประเทศ
-    เพิ่มขึ้นจาก 39.4% ในกุมภาพันธ์
+    <strong>ภาคเหนือครองพื้นที่เผาไหม้ใน 1–10 เมษายน</strong>
+    ด้วย 9 จาก 10 จังหวัดแรก ทั้งเชียงใหม่ แม่ฮ่องสอน ลำปาง ตาก — สะท้อนสถานการณ์ที่กระจุกตัวในภาคเหนือ
   </div>
 </div>
 
 <!-- S5: FOREST CLUSTERS -->
 <div class="section">
   <div class="section-label">06 — 14 กลุ่มป่า</div>
-  <h2>กลุ่มป่าที่เผาไหม้มากที่สุด — มีนาคม 2569</h2>
+  <h2>กลุ่มป่าที่เผาไหม้มากที่สุด — 1–10 เมษายน 2569</h2>
   <p class="section-intro">
     ข้อมูล GISTDA แบ่งพื้นที่ป่าเป็น 14 กลุ่มป่า
-    กลุ่มป่าภาคเหนือรวมกันมีพื้นที่เผาไหม้ 2.60 ล้าน ตร.ม. (78.8% ของทั้งหมด)
+    ข้อมูล 1–10 เมษายน: กลุ่มป่าในภาคเหนือรวมกัน 2.46 ล้านไร่ จากพื้นที่เผาไหม้ทั้งหมดในกลุ่มป่า 2.05 ล้านไร่
   </p>
 
   <div class="cluster-list" id="cluster-list"></div>
 
   <div class="finding">
-    <strong>กลุ่มป่าแม่ยม</strong> (ลำปาง–แพร่–พะเยา) มีพื้นที่เผาไหม้สูงสุด 678,785 ตร.ม.
-    ตามด้วยกลุ่มป่าเหนือเขื่อนสิริกิติ์ 599,422 ตร.ม. และกลุ่มป่าถ้ำผาไท 476,111 ตร.ม.
+    <strong>กลุ่มป่าเหนือเขื่อนสิริกิติ์</strong> มีพื้นที่เผาไหม้สูงสุดใน 1–10 เมษายน ที่ 384,844 ไร่
+    ตามด้วยกลุ่มป่าตอนใต้เชียงใหม่ 326,063 ไร่ และกลุ่มป่าลุ่มน้ำปาย 247,509 ไร่
   </div>
 </div>
 
@@ -1298,33 +1369,35 @@
 </div>
 
 <div class="footer">
-  ข้อมูล: GISTDA Sentinel-2 Burned Area · รายงาน: Thai PBS สำนักเครือข่ายและการมีส่วนร่วมสาธารณะ · เผยแพร่: เมษายน 2569
+  ข้อมูล: GISTDA Sentinel-2 Burned Area · อัปเดตล่าสุด: 10 เมษายน 2569 · รายงาน: Thai PBS สำนักเครือข่ายและการมีส่วนร่วมสาธารณะ
 </div>
 
 <script>
 // ── DATA ──
 const top10 = [
-  {province:"ลำปาง", sqm:1195191, forest:92.1},
-  {province:"ลพบุรี", sqm:842748, forest:12.1},
-  {province:"นครสวรรค์", sqm:747442, forest:17.7},
-  {province:"ตาก", sqm:724544, forest:80.6},
-  {province:"แพร่", sqm:712910, forest:91.5},
-  {province:"อุตรดิตถ์", sqm:698331, forest:91.0},
-  {province:"เพชรบูรณ์", sqm:690785, forest:24.6},
-  {province:"นครราชสีมา", sqm:489418, forest:19.7},
-  {province:"พะเยา", sqm:440077, forest:90.7},
-  {province:"เชียงใหม่", sqm:383273, forest:88.1}
+  {province:"เชียงใหม่", rai:784017, forest:89.2},
+  {province:"แม่ฮ่องสอน", rai:759374, forest:95.9},
+  {province:"ลำปาง", rai:691874, forest:91.5},
+  {province:"ตาก", rai:562560, forest:88.0},
+  {province:"อุตรดิตถ์", rai:379561, forest:93.2},
+  {province:"ลำพูน", rai:275815, forest:90.9},
+  {province:"ลพบุรี", rai:250692, forest:10.8},
+  {province:"น่าน", rai:227648, forest:91.5},
+  {province:"แพร่", rai:210178, forest:89.9},
+  {province:"พะเยา", rai:192765, forest:89.7}
 ];
 
 const clusters = [
-  {region:"เหนือ", name:"กลุ่มป่าแม่ยม", sqm:678785},
-  {region:"เหนือ", name:"กลุ่มป่าเหนือเขื่อนสิริกิติ์", sqm:599422},
-  {region:"เหนือ", name:"กลุ่มป่าถ้ำผาไท", sqm:476111},
-  {region:"ตะวันตก", name:"กลุ่มป่าเขื่อนภูมิพล", sqm:259125},
-  {region:"เหนือ", name:"กลุ่มป่าตอนใต้เชียงใหม่", sqm:208848},
-  {region:"ตะวันตก", name:"กลุ่มป่ารอบเขื่อนศรีนครินทร์", sqm:182717},
-  {region:"เหนือ", name:"กลุ่มป่าลุ่มน้ำปาย", sqm:173039},
-  {region:"ตะวันออกเฉียงเหนือ", name:"กลุ่มป่าจังหวัดชัยภูมิ", sqm:50890}
+  {region:"เหนือ", name:"กลุ่มป่าเหนือเขื่อนสิริกิติ์", rai:384844},
+  {region:"เหนือ", name:"กลุ่มป่าตอนใต้เชียงใหม่", rai:326063},
+  {region:"เหนือ", name:"กลุ่มป่าลุ่มน้ำปาย", rai:247509},
+  {region:"เหนือ", name:"กลุ่มป่าถ้ำผาไท", rai:220151},
+  {region:"เหนือ", name:"กลุ่มป่าศรีลานนา-แม่ลาว", rai:205381},
+  {region:"เหนือ", name:"กลุ่มป่าแม่ยม", rai:199824},
+  {region:"เหนือ", name:"กลุ่มป่าเขื่อนภูมิพล", rai:186809},
+  {region:"เหนือ", name:"กลุ่มป่าสะเมิง", rai:122120},
+  {region:"ตะวันตก", name:"กลุ่มป่าห้วยขาแข้ง-แม่วงก์", rai:72075},
+  {region:"เหนือ", name:"กลุ่มป่าสาละวิน", rai:2246}
 ];
 
 const hotspot8yr = {
@@ -1342,7 +1415,7 @@ const clmv = [
 
 // ── PROVINCE TABLE ──
 const tbody = document.getElementById('province-tbody');
-const maxSqm = top10[0].sqm;
+const maxRai = top10[0].rai;
 top10.forEach((d, i) => {
   const isHighForest = d.forest >= 70;
   const delay = (i * 0.06).toFixed(2);
@@ -1350,10 +1423,10 @@ top10.forEach((d, i) => {
   tr.innerHTML = `
     <td class="rank">${i+1}</td>
     <td><span class="prov-name">${d.province}</span></td>
-    <td class="area-num">${d.sqm.toLocaleString()}</td>
+    <td class="area-num">${d.rai.toLocaleString()}</td>
     <td class="mini-bar-cell">
       <div class="mini-bar-track">
-        <div class="mini-bar-fill" style="width:${(d.sqm/maxSqm*100).toFixed(1)}%"></div>
+        <div class="mini-bar-fill" style="width:${(d.rai/maxRai*100).toFixed(1)}%"></div>
       </div>
     </td>
     <td>
@@ -1365,9 +1438,8 @@ top10.forEach((d, i) => {
 
 // ── CLUSTER LIST ──
 const clusterList = document.getElementById('cluster-list');
-const maxCluster = clusters[0].sqm;
+const maxCluster = clusters[0].rai;
 clusters.forEach((d, i) => {
-  const delay = (i * 0.07).toFixed(2);
   const div = document.createElement('div');
   div.className = 'cluster-row';
   div.innerHTML = `
@@ -1376,9 +1448,9 @@ clusters.forEach((d, i) => {
       ${d.name}
     </div>
     <div class="bar-track" style="height:16px;">
-      <div class="bar-fill" style="background:var(--forest);opacity:0.8;width:${(d.sqm/maxCluster*100).toFixed(1)}%"></div>
+      <div class="bar-fill" style="background:var(--forest);opacity:0.8;width:${(d.rai/maxCluster*100).toFixed(1)}%"></div>
     </div>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);text-align:right;">${d.sqm.toLocaleString()}</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);text-align:right;">${d.rai.toLocaleString()}</div>
   `;
   clusterList.appendChild(div);
 });
@@ -1653,7 +1725,12 @@ function updateLegend() {
 }
 
 // ── BURNED POLYGONS ──
+const isMobile = window.innerWidth < 768;
+
 async function loadBurnedPolygons() {
+  // บนมือถือไม่โหลด burn polygons เลย — ใช้แค่ choropleth
+  if (isMobile) return;
+
   const burnLayer = document.getElementById('layer-burns');
   const codes = Object.values(PROVINCE_CODE);
   const BATCH = 8;
@@ -1736,7 +1813,19 @@ async function selectProvince(code, thName) {
   if (!geojsonCache[code]) {
     try {
       const res = await fetch(`${GITHUB_BASE}/by_province_en/${code}.geojson`);
-      geojsonCache[code] = await res.json();
+      const text = await res.text();
+
+      let gj;
+      if (isMobile) {
+        // บนมือถือ: ตัด geometry ออกก่อน parse — ลดขนาด JSON 70-80%
+        // เก็บแค่ properties ที่ต้องการ
+        const stripped = text.replace(/"geometry"\s*:\s*\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g, '"geometry":null');
+        gj = JSON.parse(stripped);
+      } else {
+        gj = JSON.parse(text);
+      }
+
+      geojsonCache[code] = gj;
     } catch(e) {
       body.innerHTML = '<div class="map-panel-empty">โหลดข้อมูลไม่ได้</div>';
       return;
@@ -1747,9 +1836,9 @@ async function selectProvince(code, thName) {
 
 // ── PANEL ──
 function renderPanel(code, thName, gj) {
-  const months  = ['202601','202602','202603'];
-  const labels  = {'202601':'ม.ค.','202602':'ก.พ.','202603':'มี.ค.'};
-  const mColors = {'202601':'#a8c5da','202602':'#5a8fa8','202603':'#c0392b'};
+  const months  = ['202601','202602','202603','202604'];
+  const labels  = {'202601':'ม.ค.','202602':'ก.พ.','202603':'มี.ค.','202604':'1–10 เม.ย.'};
+  const mColors = {'202601':'#a8c5da','202602':'#5a8fa8','202603':'#c0392b','202604':'#8c1a0a'};
 
   const stats = {};
   gj.features.forEach(f => {
