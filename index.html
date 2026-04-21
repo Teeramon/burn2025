@@ -851,11 +851,13 @@
     align-items: center;
     justify-content: center;
     padding: 16px;
+    cursor: pointer;
   }
   .cluster-modal-overlay.active { display: flex; }
 
   .cluster-modal {
     background: var(--paper);
+    cursor: default;
     max-width: 520px;
     width: 100%;
     max-height: 90vh;
@@ -1770,14 +1772,29 @@ function openClusterModal(name, data) {
 }
 
 function closeClusterModal() {
-  document.getElementById('cluster-modal-overlay').classList.remove('active');
-  document.body.style.overflow = '';
+  const overlay = document.getElementById('cluster-modal-overlay');
+  if (overlay) {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 }
 
-document.getElementById('modal-close').addEventListener('click', closeClusterModal);
-document.getElementById('cluster-modal-overlay').addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) closeClusterModal();
+// bind ปุ่มปิดหลัง DOM พร้อม
+document.addEventListener('DOMContentLoaded', () => {
+  const closeBtn = document.getElementById('modal-close');
+  const overlay = document.getElementById('cluster-modal-overlay');
+
+  if (closeBtn) closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeClusterModal();
+  });
+  if (overlay) {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeClusterModal();
+    });
+  }
 });
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeClusterModal();
 });
@@ -2274,7 +2291,7 @@ clmv.forEach((d, i) => {
     <div class="cluster-modal-header">
       <div class="cluster-modal-region" id="modal-region"></div>
       <div class="cluster-modal-title" id="modal-title"></div>
-      <button class="cluster-modal-close" id="modal-close">✕</button>
+      <button class="cluster-modal-close" id="modal-close" onclick="closeClusterModal()">✕</button>
     </div>
     <div class="cluster-modal-body" id="modal-body"></div>
   </div>
