@@ -743,6 +743,227 @@
     letter-spacing: 0.08em;
   }
 
+
+  /* ── PROVINCE GROUPED BARS ── */
+  .prov-chart { margin: 20px 0; }
+
+  .prov-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--paper-rule);
+  }
+  .prov-row:last-child { border-bottom: none; }
+
+  .prov-label {
+    font-family: 'Sarabun', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: right;
+    line-height: 1.3;
+  }
+
+  .prov-bars { display: flex; flex-direction: column; gap: 3px; }
+
+  .prov-month-row {
+    display: grid;
+    grid-template-columns: 52px 1fr 90px;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .prov-month-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-light);
+    text-align: right;
+    letter-spacing: 0.04em;
+  }
+
+  .prov-bar-track {
+    height: 10px;
+    background: var(--paper-rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .prov-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+  }
+
+  .prov-bar-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-light);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .prov-chart-legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .prov-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-light);
+  }
+
+  .prov-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
+    .prov-row { grid-template-columns: 70px 1fr; }
+    .prov-month-row { grid-template-columns: 40px 1fr 70px; }
+    .prov-month-label { font-size: 8px; }
+    .prov-bar-val { font-size: 8px; }
+  }
+
+
+  /* ── FOREST CLUSTER MODAL ── */
+  .cluster-row {
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .cluster-row:hover { background: var(--paper-warm); }
+
+  .cluster-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,26,24,0.55);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .cluster-modal-overlay.active { display: flex; }
+
+  .cluster-modal {
+    background: var(--paper);
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-top: 3px solid var(--forest);
+    position: relative;
+  }
+
+  .cluster-modal-header {
+    padding: 20px 24px 14px;
+    border-bottom: 1px solid var(--paper-rule);
+  }
+
+  .cluster-modal-region {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+
+  .cluster-modal-title {
+    font-family: 'Sarabun', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .cluster-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--ink-light);
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+  }
+  .cluster-modal-close:hover { color: var(--ink); }
+
+  .cluster-modal-body { padding: 20px 24px; }
+
+  .cluster-modal-section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+  .cluster-modal-section-label:first-child { margin-top: 0; }
+
+  .cluster-trend-row {
+    display: grid;
+    grid-template-columns: 52px 1fr 100px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .cluster-trend-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-light);
+    text-align: right;
+  }
+
+  .cluster-trend-track {
+    height: 12px;
+    background: var(--paper-rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .cluster-trend-fill {
+    height: 100%;
+    border-radius: 2px;
+  }
+
+  .cluster-trend-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mid);
+    text-align: right;
+  }
+
+  .cluster-insight {
+    background: var(--paper-warm);
+    border-left: 3px solid var(--forest);
+    padding: 12px 16px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--ink-mid);
+    border-radius: 0 6px 6px 0;
+    line-height: 1.6;
+  }
+  .cluster-insight strong { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .cluster-modal-body { padding: 16px; }
+    .cluster-modal-header { padding: 16px 16px 12px; }
+    .cluster-trend-row { grid-template-columns: 40px 1fr 80px; }
+  }
+
   /* ── CONTEXT SECTION ── */
   .context-grid {
     display: grid;
@@ -1254,6 +1475,10 @@
     แต่ละจังหวัดแสดงพื้นที่ที่ดาวเทียมตรวจพบว่าถูกเผาไหม้จริง
     คลิกเพื่อดู breakdown ป่า/เกษตร/ส.ป.ก. รายเดือน
   </div>
+  <p style="font-size:12px;color:var(--ink-light);margin-top:8px;font-style:italic;">
+    หมายเหตุ: ตัวเลขบนแผนที่คำนวณจากข้อมูล GeoJSON ที่ผ่านการลดความละเอียดเพื่อแสดงผลบนเว็บ
+    อาจมีความคลาดเคลื่อนเล็กน้อยจากตัวเลขสถิติ GISTDA ที่แสดงในส่วนอื่นของหน้านี้
+  </p>
 </div>
 
 <!-- S4: PROVINCE -->
@@ -1265,19 +1490,13 @@
     จังหวัดภาคเหนือ 9 ใน 10 อันดับแรก ยกเว้นลพบุรี (ภาคกลาง) ที่ยังติดอันดับ 7
   </p>
 
-  <table class="province-table">
-    <thead>
-      <tr>
-        <th style="width:30px;">#</th>
-        <th>จังหวัด</th>
-        <th class="right">พื้นที่เผาไหม้ (ไร่)</th>
-        <th style="width:150px;">สัดส่วน</th>
-        <th>ป่าไม้ %</th>
-      </tr>
-    </thead>
-    <tbody id="province-tbody">
-    </tbody>
-  </table>
+  <div class="prov-chart-legend">
+    <div class="prov-legend-item"><div class="prov-legend-dot" style="background:#a8c5da"></div>ม.ค. 2569</div>
+    <div class="prov-legend-item"><div class="prov-legend-dot" style="background:#5a8fa8"></div>ก.พ. 2569</div>
+    <div class="prov-legend-item"><div class="prov-legend-dot" style="background:#c0392b"></div>มี.ค. 2569</div>
+    <div class="prov-legend-item"><div class="prov-legend-dot" style="background:#7b1010"></div>1–10 เม.ย. 2569</div>
+  </div>
+  <div class="prov-chart" id="prov-chart"></div>
 
   <div class="finding">
     <strong>ภาคเหนือครองพื้นที่เผาไหม้ใน 1–10 เมษายน</strong>
@@ -1288,10 +1507,10 @@
 <!-- S5: FOREST CLUSTERS -->
 <div class="section">
   <div class="section-label">06 — 14 กลุ่มป่า</div>
-  <h2>กลุ่มป่าที่เผาไหม้มากที่สุด — 1–10 เมษายน 2569</h2>
+  <h2>พื้นที่เผาไหม้สะสมใน 14 กลุ่มป่า — มกราคม–10 เมษายน 2569</h2>
   <p class="section-intro">
-    ข้อมูล GISTDA แบ่งพื้นที่ป่าเป็น 14 กลุ่มป่า
-    ข้อมูล 1–10 เมษายน: กลุ่มป่าในภาคเหนือรวมกัน 2.46 ล้านไร่ จากพื้นที่เผาไหม้ทั้งหมดในกลุ่มป่า 2.05 ล้านไร่
+    ข้อมูล GISTDA แบ่งพื้นที่ป่าเป็น 14 กลุ่มป่า — bar แสดงพื้นที่เผาไหม้สะสม 4 เดือน
+    <strong>คลิกกลุ่มป่าเพื่อดูข้อมูลรายเดือนและ insight เชิงลึก</strong>
   </p>
 
   <div class="cluster-list" id="cluster-list"></div>
@@ -1413,46 +1632,154 @@ const clmv = [
   {country:"เวียดนาม", val:10928}
 ];
 
-// ── PROVINCE TABLE ──
-const tbody = document.getElementById('province-tbody');
-const maxRai = top10[0].rai;
-top10.forEach((d, i) => {
-  const isHighForest = d.forest >= 70;
-  const delay = (i * 0.06).toFixed(2);
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td class="rank">${i+1}</td>
-    <td><span class="prov-name">${d.province}</span></td>
-    <td class="area-num">${d.rai.toLocaleString()}</td>
-    <td class="mini-bar-cell">
-      <div class="mini-bar-track">
-        <div class="mini-bar-fill" style="width:${(d.rai/maxRai*100).toFixed(1)}%"></div>
-      </div>
-    </td>
-    <td>
-      <span class="forest-badge ${isHighForest?'high':'low'}">${d.forest}% ป่า</span>
-    </td>
+// ── PROVINCE GROUPED BAR CHART ──
+const provinceData = {
+  "เชียงใหม่":  {"202601":11363,  "202602":27676,  "202603":240017, "202604":784017},
+  "แม่ฮ่องสอน":{"202601":7764,   "202602":19875,  "202603":311046, "202604":759374},
+  "ลำปาง":      {"202601":11887,  "202602":130495, "202603":662753, "202604":691874},
+  "ตาก":        {"202601":51910,  "202602":125246, "202603":434831, "202604":562560},
+  "อุตรดิตถ์":  {"202601":22997,  "202602":91028,  "202603":399267, "202604":379561},
+  "ลำพูน":      {"202601":1986,   "202602":56214,  "202603":159357, "202604":275815},
+  "ลพบุรี":     {"202601":274381, "202602":402239, "202603":258083, "202604":250692},
+  "น่าน":       {"202601":23424,  "202602":25367,  "202603":151532, "202604":227648},
+  "แพร่":       {"202601":7731,   "202602":77598,  "202603":378372, "202604":210178},
+  "พะเยา":      {"202601":32898,  "202602":40899,  "202603":207972, "202604":192765},
+};
+
+const monthColors = {
+  "202601": "#a8c5da",
+  "202602": "#5a8fa8",
+  "202603": "#c0392b",
+  "202604": "#7b1010",
+};
+const monthLabels = {
+  "202601": "ม.ค.",
+  "202602": "ก.พ.",
+  "202603": "มี.ค.",
+  "202604": "เม.ย.",
+};
+const months = ["202601","202602","202603","202604"];
+
+// หา max ทั้งหมดเพื่อ scale
+const allVals = Object.values(provinceData).flatMap(d => Object.values(d));
+const maxProvRai = Math.max(...allVals);
+
+const provChart = document.getElementById('prov-chart');
+Object.entries(provinceData).forEach(([pv, data], i) => {
+  const div = document.createElement('div');
+  div.className = 'prov-row';
+  const barsHtml = months.map(m => {
+    const val = data[m] || 0;
+    const pct = (val / maxProvRai * 100).toFixed(1);
+    const label = val > 0 ? (val >= 10000 ? (val/10000).toFixed(1)+'หมื่นไร่' : val.toLocaleString()+' ไร่') : '—';
+    return `
+      <div class="prov-month-row">
+        <div class="prov-month-label">${monthLabels[m]}</div>
+        <div class="prov-bar-track">
+          <div class="prov-bar-fill" style="background:${monthColors[m]};width:${pct}%"></div>
+        </div>
+        <div class="prov-bar-val">${label}</div>
+      </div>`;
+  }).join('');
+
+  div.innerHTML = `
+    <div class="prov-label">${i+1}. ${pv}</div>
+    <div class="prov-bars">${barsHtml}</div>
   `;
-  tbody.appendChild(tr);
+  provChart.appendChild(div);
 });
+
+// ── CLUSTER DATA (4 months) ──
+const clusterData = {
+  "กลุ่มป่าเหนือเขื่อนสิริกิติ์":     {region:"เหนือ",    total:801134, months:{"202601":5428,  "202602":56893,  "202603":353969, "202604":384844}, insight:"สูงสุดอย่างต่อเนื่องตลอด 4 เดือน — ยังไม่มีสัญญาณลดลงในเมษายน"},
+  "กลุ่มป่าแม่ยม":                     {region:"เหนือ",    total:587935, months:{"202601":6105,  "202602":77164,  "202603":304842, "202604":199824}, insight:"พื้นที่เผาไหม้ลดลงในเมษายน หลังจากสูงสุดในมีนาคม"},
+  "กลุ่มป่าถ้ำผาไท":                   {region:"เหนือ",    total:509721, months:{"202601":6866,  "202602":58207,  "202603":224497, "202604":220151}, insight:"พื้นที่เผาไหม้ทรงตัวสูงระหว่างมีนาคม–เมษายน"},
+  "กลุ่มป่าตอนใต้จังหวัดเชียงใหม่":   {region:"เหนือ",    total:466725, months:{"202601":4852,  "202602":10017,  "202603":125793, "202604":326063}, insight:"พื้นที่เผาไหม้เพิ่มขึ้น 159% ในเมษายน เทียบกับมีนาคม — สูงสุดในกลุ่มนี้"},
+  "กลุ่มป่าลุ่มน้ำปาย":                {region:"เหนือ",    total:401795, months:{"202601":3541,  "202602":9215,   "202603":141530, "202604":247509}, insight:"พื้นที่เผาไหม้เพิ่มขึ้น 75% ในเมษายน เทียบกับมีนาคม"},
+  "กลุ่มป่าเขื่อนภูมิพล":              {region:"เหนือ",    total:350444, months:{"202601":2566,  "202602":11182,  "202603":149887, "202604":186809}, insight:"พื้นที่เผาไหม้เพิ่มขึ้นต่อเนื่องทุกเดือน ยังไม่ถึงจุดสูงสุด"},
+  "กลุ่มป่าศรีลานนา-แม่ลาว":           {region:"เหนือ",    total:274820, months:{"202601":9681,  "202602":22695,  "202603":37063,  "202604":205381}, insight:"พื้นที่เผาไหม้พุ่งสูงมากในเมษายน — เพิ่มขึ้น 454% จากมีนาคม"},
+  "กลุ่มป่ารอบเขื่อนศรีนครินทร์":     {region:"ตะวันตก",  total:185571, months:{"202601":4737,  "202602":39633,  "202603":141137, "202604":64},     insight:"พื้นที่เผาไหม้ลดลงแทบเป็นศูนย์ในเมษายน หลังสูงสุดในมีนาคม"},
+  "กลุ่มป่าสาละวิน":                   {region:"เหนือ",    total:152306, months:{"202601":3928,  "202602":7292,   "202603":138840, "202604":2246},   insight:"พื้นที่เผาไหม้ลดลง 98% ในเมษายน จากจุดสูงสุดในมีนาคม"},
+  "กลุ่มป่าสะเมิง":                    {region:"เหนือ",    total:126640, months:{"202601":257,   "202602":1630,   "202603":2633,   "202604":122120}, insight:"พื้นที่เผาไหม้เพิ่มขึ้น 4,537% ในเมษายน — สูงที่สุดในทุกเดือนก่อนหน้ารวมกัน"},
+  "กลุ่มป่าห้วยขาแข้ง-แม่วงก์":       {region:"ตะวันตก",  total:103935, months:{"202601":989,   "202602":7409,   "202603":23462,  "202604":72075}, insight:"พื้นที่เผาไหม้เพิ่มขึ้น 207% ในเมษายน เทียบกับมีนาคม"},
+  "กลุ่มป่าจังหวัดชัยภูมิ":            {region:"อีสาน",    total:102349, months:{"202601":2959,  "202602":43542,  "202603":26664,  "202604":29184}, insight:"พื้นที่เผาไหม้สูงสุดในกุมภาพันธ์ และทรงตัวในมีนาคม–เมษายน"},
+  "กลุ่มป่าจังหวัดเลย":                {region:"อีสาน",    total:45935,  months:{"202601":82,    "202602":105,    "202603":3942,   "202604":41806}, insight:"พื้นที่เผาไหม้เพิ่มขึ้นอย่างรวดเร็วในเมษายน — เพิ่มขึ้น 961% จากมีนาคม"},
+  "กลุ่มป่าเวียงโกศัย-แม่วะ-ป่าแม่มอก":{region:"เหนือ",   total:36195,  months:{"202601":566,   "202602":2475,   "202603":16501,  "202604":16653}, insight:"พื้นที่เผาไหม้ทรงตัวระหว่างมีนาคม–เมษายน"},
+};
+
+const monthColors4 = {"202601":"#a8c5da","202602":"#5a8fa8","202603":"#c0392b","202604":"#7b1010"};
+const monthLabels4 = {"202601":"ม.ค. 2569","202602":"ก.พ. 2569","202603":"มี.ค. 2569","202604":"1–10 เม.ย."};
+const months4 = ["202601","202602","202603","202604"];
 
 // ── CLUSTER LIST ──
 const clusterList = document.getElementById('cluster-list');
-const maxCluster = clusters[0].rai;
-clusters.forEach((d, i) => {
+const clusterEntries = Object.entries(clusterData).sort((a,b) => b[1].total - a[1].total);
+const maxClusterTotal = clusterEntries[0][1].total;
+
+clusterEntries.forEach(([name, data]) => {
   const div = document.createElement('div');
   div.className = 'cluster-row';
+  div.style.cursor = 'pointer';
   div.innerHTML = `
     <div class="cluster-name">
-      <span class="cluster-region">${d.region}</span>
-      ${d.name}
+      <span class="cluster-region">${data.region}</span>
+      ${name}
     </div>
     <div class="bar-track" style="height:16px;">
-      <div class="bar-fill" style="background:var(--forest);opacity:0.8;width:${(d.rai/maxCluster*100).toFixed(1)}%"></div>
+      <div class="bar-fill" style="background:var(--forest);opacity:0.75;width:${(data.total/maxClusterTotal*100).toFixed(1)}%"></div>
     </div>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);text-align:right;">${d.rai.toLocaleString()}</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);text-align:right;">${data.total.toLocaleString()} ไร่</div>
   `;
+  div.addEventListener('click', () => openClusterModal(name, data));
   clusterList.appendChild(div);
+});
+
+// ── MODAL ──
+function openClusterModal(name, data) {
+  document.getElementById('modal-region').textContent = data.region;
+  document.getElementById('modal-title').textContent = name;
+
+  const maxVal = Math.max(...months4.map(m => data.months[m] || 0));
+
+  let html = `<div class="cluster-modal-section-label">พื้นที่เผาไหม้รายเดือน (ไร่)</div>`;
+  months4.forEach(m => {
+    const val = data.months[m] || 0;
+    const pct = maxVal > 0 ? (val/maxVal*100).toFixed(1) : 0;
+    const label = val > 0 ? val.toLocaleString() : '—';
+    html += `
+      <div class="cluster-trend-row">
+        <div class="cluster-trend-label">${monthLabels4[m]}</div>
+        <div class="cluster-trend-track">
+          <div class="cluster-trend-fill" style="background:${monthColors4[m]};width:${pct}%"></div>
+        </div>
+        <div class="cluster-trend-val">${label}</div>
+      </div>`;
+  });
+
+  html += `
+    <div class="cluster-modal-section-label">ข้อสังเกตจากข้อมูล</div>
+    <div class="cluster-insight">${data.insight}</div>
+    <div class="cluster-modal-section-label" style="margin-top:16px;">ยอดรวม 4 เดือน</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:var(--forest);">
+      ${data.total.toLocaleString()} ไร่
+    </div>`;
+
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('cluster-modal-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeClusterModal() {
+  document.getElementById('cluster-modal-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal-close').addEventListener('click', closeClusterModal);
+document.getElementById('cluster-modal-overlay').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeClusterModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeClusterModal();
 });
 
 // ── SPARKLINE (MODIS 8yr) ──
@@ -1940,5 +2267,18 @@ clmv.forEach((d, i) => {
   clmvEl.appendChild(div);
 });
 </script>
+
+<!-- FOREST CLUSTER MODAL -->
+<div class="cluster-modal-overlay" id="cluster-modal-overlay">
+  <div class="cluster-modal">
+    <div class="cluster-modal-header">
+      <div class="cluster-modal-region" id="modal-region"></div>
+      <div class="cluster-modal-title" id="modal-title"></div>
+      <button class="cluster-modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="cluster-modal-body" id="modal-body"></div>
+  </div>
+</div>
+
 </body>
 </html>
