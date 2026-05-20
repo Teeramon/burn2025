@@ -1133,6 +1133,107 @@
     .key-callout-number { font-size: clamp(28px, 8vw, 48px); }
     body { font-size: 15px; }
   }
+
+  /* ── CROP MODAL ── */
+  .crop-card {
+    cursor: pointer;
+    transition: box-shadow 0.15s, transform 0.12s;
+    position: relative;
+  }
+  .crop-card:hover { box-shadow:0 3px 14px rgba(0,0,0,.13); transform:translateY(-2px); }
+  .crop-card-hint {
+    position:absolute; top:10px; right:12px;
+    font-family:'IBM Plex Mono',monospace; font-size:9px;
+    color:var(--ink-faint); letter-spacing:.06em;
+  }
+  .crop-modal-overlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(26,26,24,.55); z-index:2000;
+    align-items:center; justify-content:center; padding:16px; cursor:pointer;
+  }
+  .crop-modal-overlay.active { display:flex; }
+  .crop-modal {
+    background:var(--paper); cursor:default;
+    max-width:620px; width:100%; max-height:90vh; overflow-y:auto;
+    border-top:3px solid var(--accent); position:relative;
+  }
+  .crop-modal-header {
+    padding:18px 24px 12px; border-bottom:1px solid var(--paper-rule);
+    position:sticky; top:0; background:var(--paper); z-index:1;
+  }
+  .crop-modal-title { font-family:'Sarabun',sans-serif; font-size:20px; font-weight:700; color:var(--ink); }
+  .crop-modal-close {
+    position:absolute; top:12px; right:16px;
+    background:none; border:none; font-size:20px;
+    color:var(--ink-light); cursor:pointer; padding:4px 8px; line-height:1;
+  }
+  .crop-modal-close:hover { color:var(--ink); }
+  .crop-modal-body { padding:20px 24px; }
+  .crop-sec {
+    font-family:'IBM Plex Mono',monospace; font-size:9px;
+    letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:10px; margin-top:20px;
+  }
+  .crop-sec:first-child { margin-top:0; }
+  /* search */
+  .crop-search-wrap { position:relative; margin-bottom:8px; }
+  .crop-search {
+    width:100%; padding:8px 12px 8px 30px;
+    border:1px solid var(--paper-rule); background:var(--paper-warm);
+    font-family:'Sarabun',sans-serif; font-size:13px; color:var(--ink);
+    outline:none; box-sizing:border-box;
+  }
+  .crop-search:focus { border-color:var(--ink-mid); }
+  .crop-search-icon {
+    position:absolute; left:9px; top:50%; transform:translateY(-50%);
+    font-size:12px; color:var(--ink-light); pointer-events:none;
+  }
+  .crop-pv-count {
+    font-family:'IBM Plex Mono',monospace; font-size:10px;
+    color:var(--ink-light); margin-bottom:6px;
+  }
+  .crop-pv-list { max-height:300px; overflow-y:auto; }
+  .crop-pv-row {
+    display:grid; grid-template-columns:110px 1fr 85px 58px;
+    align-items:center; gap:8px;
+    padding:7px 0; border-bottom:1px solid var(--paper-rule);
+  }
+  .crop-pv-row:last-child { border-bottom:none; }
+  .crop-pv-row.hidden { display:none; }
+  .crop-pv-name { font-family:'Sarabun',sans-serif; font-size:12px; font-weight:500; color:var(--ink); }
+  .crop-pv-bars { display:flex; flex-direction:column; gap:2px; }
+  .crop-pv-bar-row { display:grid; grid-template-columns:28px 1fr; align-items:center; gap:4px; }
+  .crop-pv-bar-lbl { font-family:'IBM Plex Mono',monospace; font-size:8px; color:var(--ink-faint); text-align:right; }
+  .crop-pv-bar-track { height:5px; background:var(--paper-rule); border-radius:2px; }
+  .crop-pv-bar-fill { height:100%; border-radius:2px; }
+  .crop-pv-total { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-mid); text-align:right; }
+  .crop-pv-rep { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--accent); text-align:right; }
+  /* tambons */
+  .crop-tb-row {
+    display:grid; grid-template-columns:1fr 90px;
+    gap:8px; padding:6px 0; border-bottom:1px solid var(--paper-rule); align-items:center;
+  }
+  .crop-tb-row:last-child { border-bottom:none; }
+  .crop-tb-name { font-size:12px; color:var(--ink); }
+  .crop-tb-sub { font-size:10px; color:var(--ink-light); }
+  .crop-tb-val { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-mid); text-align:right; }
+  /* RP */
+  .crop-rp-row { display:grid; grid-template-columns:1fr 150px 48px; align-items:center; gap:8px; margin-bottom:7px; }
+  .crop-rp-name { font-size:11px; color:var(--ink-mid); }
+  .crop-rp-track { height:8px; background:var(--paper-rule); border-radius:2px; }
+  .crop-rp-fill { height:100%; border-radius:2px; }
+  .crop-rp-pct { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-mid); text-align:right; }
+  /* note box */
+  .crop-note {
+    background:var(--paper-warm); border-left:3px solid var(--ink-faint);
+    padding:10px 14px; font-size:11px; color:var(--ink-light);
+    line-height:1.6; margin-top:16px; border-radius:0 4px 4px 0;
+  }
+  @media(max-width:600px){
+    .crop-modal-body{padding:14px 16px;}
+    .crop-pv-row{grid-template-columns:90px 1fr 70px 50px;}
+  }
+
 </style>
 </head>
 <body>
@@ -1526,9 +1627,240 @@
   </div>
 </div>
 
+
+<!-- S7: CROP ANALYSIS -->
+<div class="section">
+  <div class="section-label">07 — พฤติกรรมการเผาตามชนิดพืช</div>
+  <h2>ไฟแต่ละชนิดพืชมีปฏิทินของตัวเอง</h2>
+  <p class="section-intro">
+    วิเคราะห์จาก Shapefile GISTDA Sentinel-2 ม.ค.–เม.ย. 2569 จำแนกตามชนิดพืช
+    ข้อมูลนี้ไม่ได้แค่บอกว่า "เผาที่ไหน" — แต่บอกว่าพฤติกรรมการเผาของแต่ละพืชต่างกันอย่างไร
+    และพื้นที่รับผิดชอบใดมีส่วนเกี่ยวข้อง
+  </p>
+
+  <!-- ปฏิทิน 4 พืช -->
+  <div style="margin:28px 0;">
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;">ปฏิทินการเผา — สัดส่วนรายเดือน</p>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+
+      <!-- ข้าว -->
+      <div class="crop-card" onclick="openCropModal('ข้าว')" style="background:var(--paper-warm);padding:18px 20px;border:1px solid var(--paper-rule);"><span class="crop-card-hint">↗ ดูรายละเอียด</span>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#4a7fb5;margin-bottom:10px;">ข้าว — peak เมษายน (51%)</div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">ม.ค.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#4a7fb5;opacity:.5;width:25%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">25%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">ก.พ.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#4a7fb5;opacity:.6;width:13%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">13%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">มี.ค.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#4a7fb5;opacity:.7;width:11%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">11%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4a7fb5;font-weight:600;">เม.ย.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#4a7fb5;width:51%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4a7fb5;font-weight:600;">51%</div>
+        </div>
+        <p style="font-size:12px;color:var(--ink-mid);line-height:1.6;">82.8% ของพื้นที่เผาไหม้ข้าวอยู่ในพื้นที่เกษตร — แต่พื้นที่เผาไหม้กว่าครึ่งเกิดในเมษายนซึ่งเลยฤดูเก็บเกี่ยวแล้ว ตั้งคำถามว่าเผาเพื่ออะไร</p>
+      </div>
+
+      <!-- อ้อย -->
+      <div class="crop-card" onclick="openCropModal('อ้อย')" style="background:var(--paper-warm);padding:18px 20px;border:1px solid var(--paper-rule);"><span class="crop-card-hint">↗ ดูรายละเอียด</span>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#3d8b4f;margin-bottom:10px;">อ้อย — peak กุมภาพันธ์ (32%)</div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">ม.ค.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#7abf90;opacity:.7;width:17%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">17%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3d8b4f;font-weight:600;">ก.พ.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#7abf90;width:32%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3d8b4f;font-weight:600;">32%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">มี.ค.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#7abf90;opacity:.8;width:29%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">29%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">เม.ย.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#7abf90;opacity:.5;width:21%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">21%</div>
+        </div>
+        <p style="font-size:12px;color:var(--ink-mid);line-height:1.6;">46.0% ของพื้นที่เผาอ้อยอยู่ในเขต ส.ป.ก. — กระจายสม่ำเสมอตลอด 4 เดือน สอดคล้องกับปฏิทินตัดอ้อยก่อนเข้าโรงงาน</p>
+      </div>
+
+      <!-- ข้าวโพด -->
+      <div class="crop-card" onclick="openCropModal('ข้าวโพด')" style="background:var(--paper-warm);padding:18px 20px;border:1px solid var(--paper-rule);"><span class="crop-card-hint">↗ ดูรายละเอียด</span>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#c9a227;margin-bottom:10px;">ข้าวโพด — peak เมษายน (47%)</div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">ม.ค.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#c9a227;opacity:.5;width:13%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">13%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">ก.พ.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#c9a227;opacity:.6;width:18%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">18%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">มี.ค.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#c9a227;opacity:.7;width:22%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">22%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#c9a227;font-weight:600;">เม.ย.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#c9a227;width:47%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#c9a227;font-weight:600;">47%</div>
+        </div>
+        <p style="font-size:12px;color:var(--ink-mid);line-height:1.6;">63.1% ของพื้นที่เผาไหม้ข้าวโพดอยู่ในป่าสงวนและป่าอนุรักษ์ — สูงที่สุดในบรรดาพืชทั้งหมด และเพิ่มขึ้นต่อเนื่องตลอด 4 เดือน</p>
+      </div>
+
+      <!-- ป่าไม้ -->
+      <div class="crop-card" onclick="openCropModal('ป่าไม้')" style="background:var(--paper-warm);padding:18px 20px;border:1px solid var(--paper-rule);"><span class="crop-card-hint">↗ ดูรายละเอียด</span>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#2d5a1b;margin-bottom:10px;">ป่าไม้ — peak เมษายน (63%)</div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">ม.ค.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#2d5a1b;opacity:.3;width:1%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">1%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">ก.พ.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#2d5a1b;opacity:.4;width:9%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">9%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">มี.ค.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#2d5a1b;opacity:.6;width:27%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);">27%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#2d5a1b;font-weight:600;">เม.ย.</div>
+          <div style="height:8px;background:var(--paper-rule);"><div style="height:100%;background:#2d5a1b;width:63%"></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#2d5a1b;font-weight:600;">63%</div>
+        </div>
+        <p style="font-size:12px;color:var(--ink-mid);line-height:1.6;">90.6% ของพื้นที่เผาไหม้ป่าไม้อยู่ในป่าสงวนและป่าอนุรักษ์ — และ 63% เกิดในเมษายนเดือนเดียว ช่วงที่แห้งแล้งที่สุด</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="finding">
+    <strong>อ้อยเป็นพืชที่มีพฤติกรรมต่างออกไป</strong> —
+    เผากระจายสม่ำเสมอตลอด 4 เดือน (17–32% ต่อเดือน) ซึ่งสอดคล้องกับปฏิทินอุตสาหกรรม
+    ขณะที่ข้าวโพดและป่าไม้กระจุกตัวในเมษายนอย่างชัดเจน
+  </div>
+
+  <!-- พื้นที่เผาซ้ำซาก -->
+  <h2 style="margin-top:40px;">พื้นที่ทับซ้อนกับโซนเผาซ้ำ — อ้อยสูงสุด</h2>
+  <p class="section-intro">
+    นำ Shapefile GISTDA 2569 ทาบกับข้อมูลโซนการเผาซ้ำ 3 ปี (2567–2569) ของระบบ<strong>ตามรอยเผา</strong> (HII) — สองชุดข้อมูลนี้ใช้ methodology ต่างกัน ตัวเลขที่ได้คือ <em>พื้นที่ที่ทั้งสองระบบตรวจพบร่วมกัน</em> ใช้เป็นบริบทเปรียบเทียบ ไม่ใช่การวัดซ้ำซากโดยตรง
+  </p>
+
+  <!-- repeat burn bars -->
+  <div style="margin:24px 0;">
+    <div style="display:grid;grid-template-columns:120px 1fr 160px;align-items:center;gap:10px;margin-bottom:10px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em;">ชนิดพืช</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em;">% ทับซ้อน ≥2 ปี</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em;text-align:right;">ซ้ำทุกปี 3 ปี</div>
+    </div>
+
+    <!-- อ้อย -->
+    <div style="display:grid;grid-template-columns:120px 1fr 160px;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--paper-rule);">
+      <div style="font-size:13px;font-weight:500;color:#3d8b4f;">อ้อย</div>
+      <div>
+        <div style="height:12px;background:var(--paper-rule);position:relative;">
+          <div style="height:100%;background:#7abf90;width:23.1%"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3d8b4f;margin-top:3px;">23.1% — 276,352 ไร่</div>
+      </div>
+      <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-mid);">75,560 ไร่ (6.3%)</div>
+    </div>
+
+    <!-- ข้าวโพด -->
+    <div style="display:grid;grid-template-columns:120px 1fr 160px;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--paper-rule);">
+      <div style="font-size:13px;font-weight:500;color:#c9a227;">ข้าวโพด</div>
+      <div>
+        <div style="height:12px;background:var(--paper-rule);position:relative;">
+          <div style="height:100%;background:#c9a227;width:14.9%"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#c9a227;margin-top:3px;">14.9% — 98,150 ไร่</div>
+      </div>
+      <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-mid);">30,131 ไร่ (4.6%)</div>
+    </div>
+
+    <!-- เกษตรอื่น ๆ -->
+    <div style="display:grid;grid-template-columns:120px 1fr 160px;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--paper-rule);">
+      <div style="font-size:13px;font-weight:500;color:#a0785a;">เกษตรอื่น ๆ</div>
+      <div>
+        <div style="height:12px;background:var(--paper-rule);position:relative;">
+          <div style="height:100%;background:#a0785a;width:13.8%"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#a0785a;margin-top:3px;">13.8% — 579,060 ไร่</div>
+      </div>
+      <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-mid);">184,361 ไร่ (4.4%)</div>
+    </div>
+
+    <!-- ข้าว -->
+    <div style="display:grid;grid-template-columns:120px 1fr 160px;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--paper-rule);">
+      <div style="font-size:13px;font-weight:500;color:#4a7fb5;">ข้าว</div>
+      <div>
+        <div style="height:12px;background:var(--paper-rule);position:relative;">
+          <div style="height:100%;background:#4a7fb5;width:12.7%"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4a7fb5;margin-top:3px;">12.7% — 586,454 ไร่</div>
+      </div>
+      <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-mid);">221,564 ไร่ (4.8%)</div>
+    </div>
+
+    <!-- ป่าไม้ -->
+    <div style="display:grid;grid-template-columns:120px 1fr 160px;align-items:center;gap:10px;margin-bottom:10px;">
+      <div style="font-size:13px;font-weight:500;color:#2d5a1b;">ป่าไม้</div>
+      <div>
+        <div style="height:12px;background:var(--paper-rule);position:relative;">
+          <div style="height:100%;background:#2d5a1b;width:0.5%"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#2d5a1b;margin-top:3px;">0.5% — 65,279 ไร่</div>
+      </div>
+      <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-mid);">43,678 ไร่ (0.3%)</div>
+    </div>
+  </div>
+
+  <!-- repeat จังหวัด -->
+  <div class="key-callout" style="margin:28px 0;">
+    <div class="key-callout-label">พื้นที่ซ้ำซากเชิงภูมิศาสตร์</div>
+    <div class="key-callout-number" style="font-size:clamp(28px,4vw,44px);">ลพบุรี–นครสวรรค์</div>
+    <div class="key-callout-text">
+      สองจังหวัดภาคกลางที่มีพื้นที่เผาซ้ำสูงสุด — ลพบุรีเผาซ้ำ 25.0% ของพื้นที่ทั้งหมด (104,834 ไร่เผาซ้ำทุกปี 3 ปีติด)
+      นครสวรรค์เผาซ้ำ 20.5% (90,193 ไร่) — ทั้งสองจังหวัดเป็นพื้นที่เกษตรข้าว อ้อย และเกษตรอื่นๆ
+      ไม่ใช่ป่า แต่ติดอันดับสูงสุดในประเทศ
+    </div>
+  </div>
+
+  <div class="finding">
+    <strong>การทาบข้อมูลสองชุดนี้บอกอะไร?</strong> —
+    พื้นที่เผาไหม้ GISTDA 2569 กว่า <strong>1.6 ล้านไร่</strong> ทับซ้อนกับโซนที่ระบบตามรอยเผา (HII) ระบุว่ามีการเผาซ้ำใน 3 ปีที่ผ่านมา
+    ข้อมูลนี้ไม่ได้พิสูจน์ว่าเผาซ้ำจริง เพราะสองระบบวัดต่างกัน — แต่ชี้ให้เห็น<em>พื้นที่ที่ควรตรวจสอบเพิ่มเติม</em>
+    โดยเฉพาะพื้นที่อ้อยและข้าวโพดที่ทับซ้อนสูงกว่าพืชชนิดอื่น
+  </div>
+
+  <p style="font-size:11px;color:var(--ink-light);font-style:italic;border-top:1px dashed var(--paper-rule);padding-top:10px;margin-top:16px;">
+    ข้อมูลพื้นที่เผาซ้ำซาก (2567–2569): ระบบ<strong>ตามรอยเผา</strong> สถาบันสารสนเทศทรัพยากรน้ำ (HII)
+    ภายใต้โครงการวิจัย "การวิจัยและพัฒนาระบบประมวลผล รายงาน ติดตาม พื้นที่การเผาในที่โล่งด้วยการประยุกต์ใช้เทคโนโลยีภาพถ่ายจากดาวเทียมรายละเอียดสูง"
+    สำนักงานวิจัยแห่งชาติ (วช.) + มหาวิทยาลัยเกษตรศาสตร์ ปี 2567
+    · <strong>ข้อมูลนี้เป็นคนละ dataset กับ GISTDA Sentinel-2</strong> ใช้เป็นข้อมูลเปรียบเทียบเชิงบริบทเท่านั้น
+  </p>
+</div>
+
 <!-- S6: CONTEXT -->
 <div class="section">
-  <div class="section-label">07 — ข้อมูลบริบทเพิ่มเติม</div>
+  <div class="section-label">08 — ข้อมูลบริบทเพิ่มเติม</div>
   <h2>บริบทจากปีก่อนหน้า และภูมิภาค</h2>
   <p class="section-intro">
     ข้อมูลต่อไปนี้มาจากรายงานประจำปี GISTDA 2568 — ใช้ดาวเทียม MODIS/Landsat
@@ -2494,6 +2826,141 @@ clmv.forEach((d, i) => {
   `;
   clmvEl.appendChild(div);
 });
+
+const CROP_DATA = {"ข้าว": {"pv": [{"name": "นครสวรรค์", "total": 505058, "m": [192004, 35097, 21588, 256369], "rep": 20.5}, {"name": "พิจิตร", "total": 484155, "m": [150779, 36737, 13096, 283543], "rep": 10.9}, {"name": "นครราชสีมา", "total": 374215, "m": [109574, 98349, 88524, 77768], "rep": 16.2}, {"name": "ร้อยเอ็ด", "total": 309304, "m": [54045, 95908, 41397, 117954], "rep": 13.9}, {"name": "พิษณุโลก", "total": 237948, "m": [13624, 3381, 2835, 218108], "rep": 1.2}, {"name": "อุบลราชธานี", "total": 227974, "m": [28347, 35090, 32632, 131905], "rep": 2.8}, {"name": "ชัยนาท", "total": 153442, "m": [5598, 3174, 14857, 129813], "rep": 7.4}, {"name": "ศรีสะเกษ", "total": 139971, "m": [28661, 24957, 20501, 65852], "rep": 8.9}, {"name": "เพชรบูรณ์", "total": 120709, "m": [79228, 11796, 7588, 22097], "rep": 11.0}, {"name": "สุรินทร์", "total": 117463, "m": [44577, 27741, 13274, 31871], "rep": 9.3}, {"name": "สุพรรณบุรี", "total": 114923, "m": [5674, 7533, 15355, 86361], "rep": 13.7}, {"name": "ปราจีนบุรี", "total": 111087, "m": [31619, 10520, 36117, 32831], "rep": 34.7}, {"name": "ยโสธร", "total": 107501, "m": [12192, 25012, 20190, 50107], "rep": 10.0}, {"name": "กำแพงเพชร", "total": 107401, "m": [18206, 10665, 2558, 75972], "rep": 2.2}, {"name": "พระนครศรีอยุธยา", "total": 104507, "m": [1236, 1583, 2561, 99127], "rep": 2.8}, {"name": "ขอนแก่น", "total": 97445, "m": [58074, 14009, 7620, 17742], "rep": 5.7}, {"name": "นครนายก", "total": 96897, "m": [23389, 4725, 41032, 27751], "rep": 46.0}, {"name": "ลพบุรี", "total": 93139, "m": [11245, 13342, 13708, 54844], "rep": 25.0}, {"name": "สุโขทัย", "total": 83405, "m": [2987, 496, 529, 79393], "rep": 1.2}, {"name": "ชัยภูมิ", "total": 83395, "m": [20635, 29355, 12531, 20874], "rep": 4.3}, {"name": "บุรีรัมย์", "total": 77630, "m": [21045, 19976, 10792, 25817], "rep": 7.1}, {"name": "ฉะเชิงเทรา", "total": 76947, "m": [7393, 8576, 10914, 50064], "rep": 5.9}, {"name": "มหาสารคาม", "total": 75163, "m": [34453, 6053, 11387, 23270], "rep": 3.1}, {"name": "อำนาจเจริญ", "total": 73818, "m": [4963, 10267, 6802, 51786], "rep": 5.4}, {"name": "สิงห์บุรี", "total": 64375, "m": [1075, 1789, 3289, 58222], "rep": 3.5}, {"name": "นครพนม", "total": 54779, "m": [7480, 14218, 7784, 25297], "rep": 8.4}, {"name": "อุดรธานี", "total": 53600, "m": [5903, 8881, 9121, 29695], "rep": 5.2}, {"name": "สกลนคร", "total": 53290, "m": [9262, 9131, 5539, 29358], "rep": 5.8}, {"name": "กาฬสินธุ์", "total": 40547, "m": [19097, 4411, 4046, 12993], "rep": 7.2}, {"name": "หนองบัวลำภู", "total": 38267, "m": [7030, 11038, 7326, 12873], "rep": 10.5}, {"name": "สระบุรี", "total": 37789, "m": [1648, 1247, 3392, 31502], "rep": 14.5}, {"name": "พะเยา", "total": 37518, "m": [28180, 4750, 2787, 1801], "rep": 4.2}, {"name": "อ่างทอง", "total": 29980, "m": [1642, 1252, 1336, 25750], "rep": 4.1}, {"name": "อุตรดิตถ์", "total": 26864, "m": [17446, 5040, 1200, 3178], "rep": 2.1}, {"name": "กาญจนบุรี", "total": 23441, "m": [20635, 2246, 324, 236], "rep": 3.6}, {"name": "เชียงราย", "total": 20359, "m": [16123, 2817, 359, 1060], "rep": 4.2}, {"name": "บึงกาฬ", "total": 17375, "m": [6300, 2767, 744, 7564], "rep": 2.7}, {"name": "ราชบุรี", "total": 17337, "m": [15500, 1253, 380, 204], "rep": 0.0}, {"name": "หนองคาย", "total": 17159, "m": [4628, 3131, 1309, 8091], "rep": 4.5}, {"name": "นครปฐม", "total": 15861, "m": [504, 314, 361, 14682], "rep": 3.5}, {"name": "เลย", "total": 14382, "m": [1017, 1926, 3110, 8329], "rep": 3.1}, {"name": "เพชรบุรี", "total": 13745, "m": [5979, 7394, 162, 210], "rep": 0.0}, {"name": "อุทัยธานี", "total": 13244, "m": [2092, 425, 953, 9774], "rep": 4.1}, {"name": "ปทุมธานี", "total": 11551, "m": [228, 25, 823, 10475], "rep": 1.7}, {"name": "นนทบุรี", "total": 7516, "m": [164, 13, 74, 7265], "rep": 1.1}, {"name": "สระแก้ว", "total": 5136, "m": [736, 696, 1298, 2406], "rep": 18.6}, {"name": "น่าน", "total": 5087, "m": [4538, 326, 110, 113], "rep": 0.7}, {"name": "ตาก", "total": 4818, "m": [3660, 377, 45, 736], "rep": 2.6}, {"name": "ลำปาง", "total": 4790, "m": [914, 607, 1131, 2138], "rep": 1.3}, {"name": "แพร่", "total": 3438, "m": [1157, 448, 924, 909], "rep": 6.6}, {"name": "กรุงเทพมหานคร", "total": 3188, "m": [11, 41, 553, 2583], "rep": 0.1}, {"name": "มุกดาหาร", "total": 3048, "m": [313, 281, 705, 1749], "rep": 0.6}, {"name": "เชียงใหม่", "total": 2782, "m": [449, 82, 370, 1881], "rep": 1.0}, {"name": "ชลบุรี", "total": 1804, "m": [81, 7, 0, 1716], "rep": 0.4}, {"name": "สมุทรปราการ", "total": 1627, "m": [0, 552, 159, 916], "rep": 0.8}, {"name": "แม่ฮ่องสอน", "total": 950, "m": [255, 134, 77, 484], "rep": 0.1}, {"name": "ลำพูน", "total": 246, "m": [14, 11, 18, 203], "rep": 0.2}, {"name": "สมุทรสงคราม", "total": 177, "m": [172, 5, 0, 0], "rep": 0.0}, {"name": "จันทบุรี", "total": 11, "m": [11, 0, 0, 0], "rep": 4.6}, {"name": "สมุทรสาคร", "total": 10, "m": [0, 0, 10, 0], "rep": 0.0}, {"name": "ประจวบคีรีขันธ์", "total": 2, "m": [0, 0, 0, 2], "rep": 0.0}], "rp": [["พื้นที่เกษตร", 82.8], ["เขตปฏิรูปที่ดินเพื่อเกษตรกรรม", 10.3], ["ชุมชนและอื่นๆ", 5.0], ["ป่าสงวนแห่งชาติ", 1.0], ["ริมทางหลวง 50 เมตร", 0.8], ["ป่าอนุรักษ์", 0.1]], "rep": 12.7, "rep3": 4.8, "rep_rai": 586454, "rep3_rai": 221564, "tb": [{"n": "ต.ดอนคา", "a": "อ.ท่าตะโก", "p": "นครสวรรค์", "t": 37512}, {"n": "ต.ชีวาน", "a": "อ.พิมาย", "p": "นครราชสีมา", "t": 24664}, {"n": "ต.ชุมแสงสงคราม", "a": "อ.บางระกำ", "p": "พิษณุโลก", "t": 24567}, {"n": "ต.วังน้ำลัด", "a": "อ.ไพศาลี", "p": "นครสวรรค์", "t": 22997}, {"n": "ต.หนองกระเจา", "a": "อ.ชุมแสง", "p": "นครสวรรค์", "t": 22213}]}, "อ้อย": {"pv": [{"name": "ลพบุรี", "total": 257918, "m": [40168, 84116, 83917, 49717], "rep": 25.0}, {"name": "เพชรบูรณ์", "total": 252279, "m": [43500, 98477, 64431, 45871], "rep": 11.0}, {"name": "นครสวรรค์", "total": 87642, "m": [16218, 32770, 22832, 15822], "rep": 20.5}, {"name": "ชัยภูมิ", "total": 84305, "m": [20570, 34820, 14621, 14294], "rep": 4.3}, {"name": "นครราชสีมา", "total": 71585, "m": [4760, 19270, 25435, 22120], "rep": 16.2}, {"name": "หนองบัวลำภู", "total": 62752, "m": [15701, 23355, 15241, 8455], "rep": 10.5}, {"name": "เลย", "total": 57721, "m": [5565, 12587, 21508, 18061], "rep": 3.1}, {"name": "สระแก้ว", "total": 49625, "m": [9319, 10140, 17420, 12746], "rep": 18.6}, {"name": "ขอนแก่น", "total": 42279, "m": [9610, 14464, 10362, 7843], "rep": 5.7}, {"name": "สุพรรณบุรี", "total": 34677, "m": [8424, 8999, 13411, 3843], "rep": 13.7}, {"name": "กาญจนบุรี", "total": 31246, "m": [5178, 7987, 13229, 4852], "rep": 3.6}, {"name": "กำแพงเพชร", "total": 27539, "m": [6560, 8932, 3846, 8201], "rep": 2.2}, {"name": "อุทัยธานี", "total": 25424, "m": [4725, 7821, 7471, 5407], "rep": 4.1}, {"name": "บุรีรัมย์", "total": 17115, "m": [2003, 3802, 4126, 7184], "rep": 7.1}, {"name": "สระบุรี", "total": 12149, "m": [2398, 2572, 2385, 4794], "rep": 14.5}, {"name": "อุดรธานี", "total": 11595, "m": [1455, 2529, 4295, 3316], "rep": 5.2}, {"name": "ชัยนาท", "total": 10840, "m": [1831, 2480, 3798, 2731], "rep": 7.4}, {"name": "ตาก", "total": 9390, "m": [2073, 1110, 1898, 4309], "rep": 2.6}, {"name": "พิษณุโลก", "total": 8016, "m": [1942, 1613, 1171, 3290], "rep": 1.2}, {"name": "พิจิตร", "total": 5450, "m": [1345, 1025, 1102, 1978], "rep": 10.9}, {"name": "ราชบุรี", "total": 4949, "m": [1196, 1302, 1824, 627], "rep": 0.0}, {"name": "ปราจีนบุรี", "total": 4251, "m": [982, 638, 2187, 444], "rep": 34.7}, {"name": "อุตรดิตถ์", "total": 3480, "m": [511, 1222, 517, 1230], "rep": 2.1}, {"name": "กาฬสินธุ์", "total": 3217, "m": [507, 1140, 1065, 505], "rep": 7.2}, {"name": "ร้อยเอ็ด", "total": 3140, "m": [334, 661, 836, 1309], "rep": 13.9}, {"name": "สุโขทัย", "total": 2063, "m": [280, 168, 441, 1174], "rep": 1.2}, {"name": "นครปฐม", "total": 1779, "m": [139, 413, 1178, 49], "rep": 3.5}, {"name": "ยโสธร", "total": 1725, "m": [59, 173, 356, 1137], "rep": 10.0}, {"name": "สิงห์บุรี", "total": 1683, "m": [247, 104, 340, 992], "rep": 3.5}, {"name": "ชลบุรี", "total": 1499, "m": [587, 545, 311, 56], "rep": 0.4}, {"name": "อำนาจเจริญ", "total": 1361, "m": [31, 174, 326, 830], "rep": 5.4}, {"name": "มุกดาหาร", "total": 1357, "m": [184, 172, 552, 449], "rep": 0.6}, {"name": "จันทบุรี", "total": 1112, "m": [3, 271, 67, 771], "rep": 4.6}, {"name": "สุรินทร์", "total": 1003, "m": [140, 395, 217, 251], "rep": 9.3}, {"name": "อ่างทอง", "total": 826, "m": [111, 21, 158, 536], "rep": 4.1}, {"name": "มหาสารคาม", "total": 697, "m": [201, 168, 183, 145], "rep": 3.1}, {"name": "ฉะเชิงเทรา", "total": 489, "m": [120, 93, 264, 12], "rep": 5.9}, {"name": "ลำปาง", "total": 411, "m": [10, 10, 177, 214], "rep": 1.3}, {"name": "หนองคาย", "total": 411, "m": [74, 42, 104, 191], "rep": 4.5}, {"name": "เพชรบุรี", "total": 338, "m": [14, 74, 136, 114], "rep": 0.0}, {"name": "สกลนคร", "total": 328, "m": [27, 113, 51, 137], "rep": 5.8}, {"name": "ประจวบคีรีขันธ์", "total": 250, "m": [11, 17, 136, 86], "rep": 0.0}, {"name": "นครพนม", "total": 174, "m": [3, 127, 18, 26], "rep": 8.4}, {"name": "ศรีสะเกษ", "total": 83, "m": [16, 5, 11, 51], "rep": 8.9}, {"name": "อุบลราชธานี", "total": 63, "m": [7, 6, 33, 17], "rep": 2.8}, {"name": "แพร่", "total": 49, "m": [0, 10, 5, 34], "rep": 6.6}, {"name": "เชียงใหม่", "total": 26, "m": [0, 0, 0, 26], "rep": 1.0}, {"name": "พะเยา", "total": 8, "m": [4, 4, 0, 0], "rep": 4.2}], "rp": [["เขตปฏิรูปที่ดินเพื่อเกษตรกรรม", 46.0], ["พื้นที่เกษตร", 43.2], ["ป่าสงวนแห่งชาติ", 8.1], ["ชุมชนและอื่นๆ", 2.0], ["ริมทางหลวง 50 เมตร", 0.6], ["ป่าอนุรักษ์", 0.2]], "rep": 23.1, "rep3": 6.3, "rep_rai": 276352, "rep3_rai": 75560, "tb": [{"n": "ต.ภูน้ำหยด", "a": "อ.วิเชียรบุรี", "p": "เพชรบูรณ์", "t": 33767}, {"n": "ต.คลองกระจัง", "a": "อ.ศรีเทพ", "p": "เพชรบูรณ์", "t": 22055}, {"n": "ต.ซับน้อย", "a": "อ.วิเชียรบุรี", "p": "เพชรบูรณ์", "t": 20845}, {"n": "ต.สระกรวด", "a": "อ.ศรีเทพ", "p": "เพชรบูรณ์", "t": 19577}, {"n": "ต.หนองมะค่า", "a": "อ.โคกเจริญ", "p": "ลพบุรี", "t": 15972}]}, "ข้าวโพด": {"pv": [{"name": "ตาก", "total": 128357, "m": [8263, 13635, 18101, 88358], "rep": 2.6}, {"name": "ลพบุรี", "total": 56910, "m": [22745, 20819, 7922, 5424], "rep": 25.0}, {"name": "ลำปาง", "total": 47719, "m": [2303, 4973, 16934, 23509], "rep": 1.3}, {"name": "น่าน", "total": 46801, "m": [6997, 5742, 10527, 23535], "rep": 0.7}, {"name": "นครสวรรค์", "total": 41632, "m": [11948, 15905, 8883, 4896], "rep": 20.5}, {"name": "เชียงใหม่", "total": 37019, "m": [2622, 1002, 6152, 27243], "rep": 1.0}, {"name": "เลย", "total": 36942, "m": [1067, 1807, 4745, 29323], "rep": 3.1}, {"name": "แพร่", "total": 36476, "m": [2131, 5557, 12905, 15883], "rep": 6.6}, {"name": "แม่ฮ่องสอน", "total": 36321, "m": [1218, 2086, 9738, 23279], "rep": 0.1}, {"name": "เพชรบูรณ์", "total": 35566, "m": [7068, 5580, 7830, 15088], "rep": 11.0}, {"name": "เชียงราย", "total": 35242, "m": [5318, 14465, 9680, 5779], "rep": 4.2}, {"name": "นครราชสีมา", "total": 23331, "m": [1448, 4717, 9115, 8051], "rep": 16.2}, {"name": "อุตรดิตถ์", "total": 20619, "m": [1315, 5807, 7213, 6284], "rep": 2.1}, {"name": "พะเยา", "total": 15898, "m": [548, 2206, 4044, 9100], "rep": 4.2}, {"name": "สระบุรี", "total": 12852, "m": [4487, 4519, 1491, 2355], "rep": 14.5}, {"name": "กาญจนบุรี", "total": 10271, "m": [424, 1692, 4161, 3994], "rep": 3.6}, {"name": "พิษณุโลก", "total": 8955, "m": [564, 1002, 1081, 6308], "rep": 1.2}, {"name": "ลำพูน", "total": 8252, "m": [555, 893, 1190, 5614], "rep": 0.2}, {"name": "สระแก้ว", "total": 4157, "m": [920, 864, 1164, 1209], "rep": 18.6}, {"name": "สุโขทัย", "total": 3596, "m": [551, 1049, 456, 1540], "rep": 1.2}, {"name": "กำแพงเพชร", "total": 2856, "m": [572, 1293, 221, 770], "rep": 2.2}, {"name": "อุทัยธานี", "total": 2179, "m": [250, 339, 339, 1251], "rep": 4.1}, {"name": "สุพรรณบุรี", "total": 1869, "m": [199, 379, 589, 702], "rep": 13.7}, {"name": "หนองบัวลำภู", "total": 1447, "m": [249, 482, 486, 230], "rep": 10.5}, {"name": "พิจิตร", "total": 1199, "m": [141, 351, 165, 542], "rep": 10.9}, {"name": "ชัยภูมิ", "total": 640, "m": [58, 184, 168, 230], "rep": 4.3}, {"name": "ศรีสะเกษ", "total": 377, "m": [7, 35, 159, 176], "rep": 8.9}, {"name": "ขอนแก่น", "total": 143, "m": [23, 53, 20, 47], "rep": 5.7}, {"name": "อุบลราชธานี", "total": 108, "m": [1, 4, 53, 50], "rep": 2.8}, {"name": "เพชรบุรี", "total": 107, "m": [0, 36, 52, 19], "rep": 0.0}, {"name": "ชัยนาท", "total": 76, "m": [8, 5, 49, 14], "rep": 7.4}, {"name": "ปทุมธานี", "total": 62, "m": [0, 35, 27, 0], "rep": 1.7}, {"name": "บุรีรัมย์", "total": 58, "m": [0, 2, 4, 52], "rep": 7.1}, {"name": "จันทบุรี", "total": 32, "m": [0, 0, 7, 25], "rep": 4.6}, {"name": "ปราจีนบุรี", "total": 18, "m": [2, 0, 8, 8], "rep": 34.7}, {"name": "นครปฐม", "total": 18, "m": [0, 2, 16, 0], "rep": 3.5}, {"name": "ราชบุรี", "total": 12, "m": [0, 0, 0, 12], "rep": 0.0}, {"name": "หนองคาย", "total": 12, "m": [2, 0, 0, 10], "rep": 4.5}, {"name": "อุดรธานี", "total": 5, "m": [0, 0, 5, 0], "rep": 5.2}, {"name": "พระนครศรีอยุธยา", "total": 4, "m": [0, 0, 4, 0], "rep": 2.8}, {"name": "ฉะเชิงเทรา", "total": 2, "m": [0, 1, 1, 0], "rep": 5.9}, {"name": "มหาสารคาม", "total": 2, "m": [0, 2, 0, 0], "rep": 3.1}, {"name": "อำนาจเจริญ", "total": 2, "m": [0, 0, 0, 2], "rep": 5.4}, {"name": "อ่างทอง", "total": 2, "m": [0, 0, 0, 2], "rep": 4.1}], "rp": [["ป่าสงวนแห่งชาติ", 49.6], ["พื้นที่เกษตร", 19.6], ["เขตปฏิรูปที่ดินเพื่อเกษตรกรรม", 13.5], ["ป่าอนุรักษ์", 13.5], ["ชุมชนและอื่นๆ", 3.3], ["ริมทางหลวง 50 เมตร", 0.4]], "rep": 14.9, "rep3": 4.6, "rep_rai": 98150, "rep3_rai": 30131, "tb": [{"n": "ต.โคกตูม", "a": "อ.เมืองลพบุรี", "p": "ลพบุรี", "t": 16739}, {"n": "ต.สามหมื่น", "a": "อ.แม่ระมาด", "p": "ตาก", "t": 10211}, {"n": "ต.อิปุ่ม", "a": "อ.ด่านซ้าย", "p": "เลย", "t": 10049}, {"n": "ต.แม่หละ", "a": "อ.ท่าสองยาง", "p": "ตาก", "t": 9341}, {"n": "ต.บ้านเวียง", "a": "อ.ร้องกวาง", "p": "แพร่", "t": 8251}]}, "ป่าไม้": {"pv": [{"name": "ลำปาง", "total": 1538900, "m": [4220, 115248, 604535, 814897], "rep": 1.3}, {"name": "แม่ฮ่องสอน", "total": 1334033, "m": [1272, 10932, 274548, 1047281], "rep": 0.1}, {"name": "เชียงใหม่", "total": 1261507, "m": [871, 23190, 203327, 1034119], "rep": 1.0}, {"name": "ตาก", "total": 1254953, "m": [5352, 74299, 350379, 824923], "rep": 2.6}, {"name": "อุตรดิตถ์", "total": 879962, "m": [705, 63324, 371120, 444813], "rep": 2.1}, {"name": "กาญจนบุรี", "total": 816085, "m": [4583, 73502, 185964, 552036], "rep": 3.6}, {"name": "แพร่", "total": 629149, "m": [1903, 63515, 341231, 222500], "rep": 6.6}, {"name": "น่าน", "total": 542658, "m": [1327, 6218, 119299, 415814], "rep": 0.7}, {"name": "ลำพูน", "total": 538493, "m": [372, 51921, 153136, 333064], "rep": 0.2}, {"name": "พะเยา", "total": 493268, "m": [2257, 27284, 187520, 276207], "rep": 4.2}, {"name": "ชัยภูมิ", "total": 423667, "m": [4352, 95418, 64757, 259140], "rep": 4.3}, {"name": "เลย", "total": 386304, "m": [171, 7784, 26882, 351467], "rep": 3.1}, {"name": "กำแพงเพชร", "total": 333868, "m": [97, 5325, 75797, 252649], "rep": 2.2}, {"name": "เพชรบูรณ์", "total": 315224, "m": [8439, 59394, 84274, 163117], "rep": 11.0}, {"name": "สุโขทัย", "total": 243461, "m": [107, 2801, 34686, 205867], "rep": 1.2}, {"name": "นครสวรรค์", "total": 240305, "m": [7439, 17712, 59026, 156128], "rep": 20.5}, {"name": "ลพบุรี", "total": 236456, "m": [52741, 128447, 40756, 14512], "rep": 25.0}, {"name": "พิษณุโลก", "total": 223884, "m": [506, 10320, 49025, 164033], "rep": 1.2}, {"name": "อุทัยธานี", "total": 191459, "m": [665, 16087, 7181, 167526], "rep": 4.1}, {"name": "ราชบุรี", "total": 168867, "m": [72, 14345, 38330, 116120], "rep": 0.0}, {"name": "อุบลราชธานี", "total": 138233, "m": [1007, 40367, 54863, 41996], "rep": 2.8}, {"name": "ขอนแก่น", "total": 134822, "m": [935, 19137, 20733, 94017], "rep": 5.7}, {"name": "เชียงราย", "total": 133356, "m": [859, 4274, 23194, 105029], "rep": 4.2}, {"name": "อุดรธานี", "total": 102388, "m": [524, 8298, 18662, 74904], "rep": 5.2}, {"name": "หนองบัวลำภู", "total": 101942, "m": [341, 18358, 21593, 61650], "rep": 10.5}, {"name": "นครราชสีมา", "total": 96025, "m": [2037, 51349, 31768, 10871], "rep": 16.2}, {"name": "เพชรบุรี", "total": 83102, "m": [3370, 28283, 8351, 43098], "rep": 0.0}, {"name": "กาฬสินธุ์", "total": 76900, "m": [11685, 47873, 12384, 4958], "rep": 7.2}, {"name": "มุกดาหาร", "total": 75270, "m": [1658, 26157, 19034, 28421], "rep": 0.6}, {"name": "สกลนคร", "total": 64842, "m": [4196, 28551, 8022, 24073], "rep": 5.8}, {"name": "หนองคาย", "total": 42724, "m": [26, 904, 2063, 39731], "rep": 4.5}, {"name": "สระบุรี", "total": 35250, "m": [11819, 3992, 10993, 8446], "rep": 14.5}, {"name": "สุพรรณบุรี", "total": 31479, "m": [406, 15920, 3863, 11290], "rep": 13.7}, {"name": "สระแก้ว", "total": 19900, "m": [222, 14706, 1385, 3587], "rep": 18.6}, {"name": "นครพนม", "total": 17805, "m": [369, 7642, 3026, 6768], "rep": 8.4}, {"name": "จันทบุรี", "total": 11350, "m": [707, 10614, 9, 20], "rep": 4.6}, {"name": "มหาสารคาม", "total": 10029, "m": [58, 832, 7164, 1975], "rep": 3.1}, {"name": "ศรีสะเกษ", "total": 9642, "m": [70, 1614, 6278, 1680], "rep": 8.9}, {"name": "บุรีรัมย์", "total": 8542, "m": [295, 1205, 1926, 5116], "rep": 7.1}, {"name": "ร้อยเอ็ด", "total": 8452, "m": [10, 944, 4478, 3020], "rep": 13.9}, {"name": "ชัยนาท", "total": 7463, "m": [95, 4057, 1539, 1772], "rep": 7.4}, {"name": "อำนาจเจริญ", "total": 6334, "m": [60, 556, 1715, 4003], "rep": 5.4}, {"name": "ยโสธร", "total": 5882, "m": [46, 226, 1279, 4331], "rep": 10.0}, {"name": "ประจวบคีรีขันธ์", "total": 5299, "m": [261, 1374, 602, 3062], "rep": 0.0}, {"name": "บึงกาฬ", "total": 3400, "m": [28, 927, 22, 2423], "rep": 2.7}, {"name": "ปราจีนบุรี", "total": 2543, "m": [280, 1855, 315, 93], "rep": 34.7}, {"name": "ชลบุรี", "total": 2087, "m": [279, 1759, 0, 49], "rep": 0.4}, {"name": "สุรินทร์", "total": 1711, "m": [202, 153, 1061, 295], "rep": 9.3}, {"name": "พิจิตร", "total": 1114, "m": [48, 539, 386, 141], "rep": 10.9}, {"name": "นครนายก", "total": 444, "m": [0, 175, 247, 22], "rep": 46.0}, {"name": "ชุมพร", "total": 82, "m": [0, 0, 1, 81], "rep": 0.0}, {"name": "ตราด", "total": 45, "m": [4, 0, 0, 41], "rep": 0.0}, {"name": "ฉะเชิงเทรา", "total": 15, "m": [4, 11, 0, 0], "rep": 5.9}, {"name": "สมุทรสาคร", "total": 1, "m": [0, 0, 0, 1], "rep": 0.0}], "rp": [["ป่าอนุรักษ์", 54.1], ["ป่าสงวนแห่งชาติ", 36.5], ["ชุมชนและอื่นๆ", 7.7], ["เขตปฏิรูปที่ดินเพื่อเกษตรกรรม", 1.4], ["พื้นที่เกษตร", 0.3], ["ริมทางหลวง 50 เมตร", 0.0]], "rep": 0.5, "rep3": 0.3, "rep_rai": 65279, "rep3_rai": 43678, "tb": [{"n": "ต.บ้านนา", "a": "อ.สามเงา", "p": "ตาก", "t": 256265}, {"n": "ต.แม่คง", "a": "อ.แม่สะเรียง", "p": "แม่ฮ่องสอน", "t": 240473}, {"n": "ต.ไล่โว่", "a": "อ.สังขละบุรี", "p": "กาญจนบุรี", "t": 136164}, {"n": "ต.สะเอียบ", "a": "อ.สอง", "p": "แพร่", "t": 124509}, {"n": "ต.เสาหิน", "a": "อ.แม่สะเรียง", "p": "แม่ฮ่องสอน", "t": 120675}]}, "เกษตรอื่น ๆ": {"pv": [{"name": "ลพบุรี", "total": 489901, "m": [143518, 155515, 109677, 81191], "rep": 25.0}, {"name": "เพชรบูรณ์", "total": 403272, "m": [110736, 109424, 77461, 105651], "rep": 11.0}, {"name": "ตาก", "total": 378521, "m": [32313, 35825, 63773, 246610], "rep": 2.6}, {"name": "นครสวรรค์", "total": 325830, "m": [98929, 94457, 70371, 62073], "rep": 20.5}, {"name": "นครราชสีมา", "total": 265731, "m": [28285, 59884, 85049, 92513], "rep": 16.2}, {"name": "เชียงใหม่", "total": 161057, "m": [7401, 3402, 29649, 120605], "rep": 1.0}, {"name": "แม่ฮ่องสอน", "total": 149946, "m": [5007, 6723, 26247, 111969], "rep": 0.1}, {"name": "ชัยภูมิ", "total": 121537, "m": [10573, 38030, 28764, 44170], "rep": 4.3}, {"name": "กาญจนบุรี", "total": 117707, "m": [9443, 19402, 59719, 29143], "rep": 3.6}, {"name": "อุบลราชธานี", "total": 110905, "m": [2556, 14639, 37773, 55937], "rep": 2.8}, {"name": "เลย", "total": 104114, "m": [4479, 7729, 18094, 73812], "rep": 3.1}, {"name": "ลำปาง", "total": 100602, "m": [4366, 9657, 39106, 47473], "rep": 1.3}, {"name": "น่าน", "total": 100385, "m": [10534, 13081, 21481, 55289], "rep": 0.7}, {"name": "สระแก้ว", "total": 92915, "m": [16882, 18588, 25607, 31838], "rep": 18.6}, {"name": "สระบุรี", "total": 89201, "m": [30152, 20781, 14571, 23697], "rep": 14.5}, {"name": "บุรีรัมย์", "total": 72299, "m": [6721, 14362, 13226, 37990], "rep": 7.1}, {"name": "อุดรธานี", "total": 67625, "m": [3941, 16762, 16527, 30395], "rep": 5.2}, {"name": "กำแพงเพชร", "total": 66520, "m": [6477, 11494, 17091, 31458], "rep": 2.2}, {"name": "ขอนแก่น", "total": 62756, "m": [6690, 20804, 14381, 20881], "rep": 5.7}, {"name": "หนองบัวลำภู", "total": 61631, "m": [8690, 17608, 16476, 18857], "rep": 10.5}, {"name": "อุตรดิตถ์", "total": 57679, "m": [2993, 15635, 18175, 20876], "rep": 2.1}, {"name": "พิจิตร", "total": 54799, "m": [18573, 6626, 5455, 24145], "rep": 10.9}, {"name": "แพร่", "total": 53274, "m": [2472, 8068, 22167, 20567], "rep": 6.6}, {"name": "พิษณุโลก", "total": 52787, "m": [5664, 5754, 5728, 35641], "rep": 1.2}, {"name": "เชียงราย", "total": 51375, "m": [8777, 13398, 13010, 16190], "rep": 4.2}, {"name": "พะเยา", "total": 46027, "m": [1794, 6655, 12559, 25019], "rep": 4.2}, {"name": "ศรีสะเกษ", "total": 39487, "m": [2033, 4401, 15849, 17204], "rep": 8.9}, {"name": "ปราจีนบุรี", "total": 38696, "m": [12778, 6940, 12072, 6906], "rep": 34.7}, {"name": "สุโขทัย", "total": 35712, "m": [1874, 5379, 5628, 22831], "rep": 1.2}, {"name": "กาฬสินธุ์", "total": 34107, "m": [8948, 11404, 6490, 7265], "rep": 7.2}, {"name": "สุพรรณบุรี", "total": 33765, "m": [3938, 8640, 8271, 12916], "rep": 13.7}, {"name": "ร้อยเอ็ด", "total": 30801, "m": [4444, 7428, 6228, 12701], "rep": 13.9}, {"name": "ราชบุรี", "total": 29347, "m": [2441, 5288, 13684, 7934], "rep": 0.0}, {"name": "ลำพูน", "total": 25986, "m": [1022, 3389, 4792, 16783], "rep": 0.2}, {"name": "สกลนคร", "total": 23383, "m": [2882, 6705, 3717, 10079], "rep": 5.8}, {"name": "อุทัยธานี", "total": 21642, "m": [3339, 3981, 3193, 11129], "rep": 4.1}, {"name": "ยโสธร", "total": 21254, "m": [1593, 1975, 4427, 13259], "rep": 10.0}, {"name": "ชัยนาท", "total": 21246, "m": [1886, 4002, 5318, 10040], "rep": 7.4}, {"name": "อำนาจเจริญ", "total": 19558, "m": [481, 1817, 3106, 14154], "rep": 5.4}, {"name": "นครพนม", "total": 18598, "m": [2109, 7481, 2713, 6295], "rep": 8.4}, {"name": "มหาสารคาม", "total": 15888, "m": [4282, 1717, 3372, 6517], "rep": 3.1}, {"name": "พระนครศรีอยุธยา", "total": 11965, "m": [171, 88, 559, 11147], "rep": 2.8}, {"name": "ฉะเชิงเทรา", "total": 11244, "m": [2939, 2069, 2333, 3903], "rep": 5.9}, {"name": "ชลบุรี", "total": 10759, "m": [7016, 2011, 272, 1460], "rep": 0.4}, {"name": "หนองคาย", "total": 10645, "m": [1540, 1472, 1505, 6128], "rep": 4.5}, {"name": "นครนายก", "total": 10236, "m": [1349, 401, 2535, 5951], "rep": 46.0}, {"name": "จันทบุรี", "total": 10142, "m": [1735, 2496, 1587, 4324], "rep": 4.6}, {"name": "สุรินทร์", "total": 10086, "m": [1499, 2405, 1790, 4392], "rep": 9.3}, {"name": "เพชรบุรี", "total": 9303, "m": [1315, 4404, 1112, 2472], "rep": 0.0}, {"name": "มุกดาหาร", "total": 8631, "m": [1249, 1493, 2418, 3471], "rep": 0.6}, {"name": "ประจวบคีรีขันธ์", "total": 8395, "m": [1324, 851, 1610, 4610], "rep": 0.0}, {"name": "บึงกาฬ", "total": 7353, "m": [2014, 1031, 942, 3366], "rep": 2.7}, {"name": "นครปฐม", "total": 5175, "m": [107, 419, 1999, 2650], "rep": 3.5}, {"name": "สิงห์บุรี", "total": 4548, "m": [178, 118, 404, 3848], "rep": 3.5}, {"name": "ชุมพร", "total": 3789, "m": [88, 75, 405, 3221], "rep": 0.0}, {"name": "อ่างทอง", "total": 3689, "m": [221, 132, 288, 3048], "rep": 4.1}, {"name": "ปทุมธานี", "total": 3355, "m": [9, 69, 969, 2308], "rep": 1.7}, {"name": "ระยอง", "total": 1570, "m": [543, 806, 31, 190], "rep": 7.7}, {"name": "นนทบุรี", "total": 1308, "m": [14, 25, 7, 1262], "rep": 1.1}, {"name": "กรุงเทพมหานคร", "total": 1232, "m": [9, 5, 529, 689], "rep": 0.1}, {"name": "สมุทรปราการ", "total": 658, "m": [220, 31, 20, 387], "rep": 0.8}, {"name": "สมุทรสาคร", "total": 390, "m": [87, 41, 229, 33], "rep": 0.0}, {"name": "ตราด", "total": 67, "m": [8, 44, 15, 0], "rep": 0.0}, {"name": "สมุทรสงคราม", "total": 40, "m": [40, 0, 0, 0], "rep": 0.0}], "rp": [["พื้นที่เกษตร", 33.1], ["ป่าสงวนแห่งชาติ", 27.2], ["เขตปฏิรูปที่ดินเพื่อเกษตรกรรม", 25.5], ["ชุมชนและอื่นๆ", 7.2], ["ป่าอนุรักษ์", 6.2], ["ริมทางหลวง 50 เมตร", 0.7]], "rep": 13.8, "rep3": 4.4, "rep_rai": 579060, "rep3_rai": 184361, "tb": [{"n": "ต.แม่ตื่น", "a": "อ.แม่ระมาด", "p": "ตาก", "t": 37671}, {"n": "ต.โพธิ์ประสาท", "a": "อ.ไพศาลี", "p": "นครสวรรค์", "t": 27427}, {"n": "ต.คีรีราษฎร์", "a": "อ.พบพระ", "p": "ตาก", "t": 23687}, {"n": "ต.แม่นาจร", "a": "อ.แม่แจ่ม", "p": "เชียงใหม่", "t": 20908}, {"n": "ต.ช่องแคบ", "a": "อ.พบพระ", "p": "ตาก", "t": 20885}]}};
+
+const CROP_COLORS = {
+  'ข้าว':'#4a7fb5','อ้อย':'#7abf90','ข้าวโพด':'#c9a227',
+  'ป่าไม้':'#2d5a1b','เกษตรอื่น ๆ':'#a0785a','อื่น ๆ':'#b8b8b0'
+};
+const C_MON_LBL = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.'];
+const C_MON_CLR = ['#a8c5da','#5a8fa8','#c0392b','#7b1010'];
+const RP_CLR = {
+  'ป่าอนุรักษ์':'#1a5c2a','ป่าสงวนแห่งชาติ':'#3d8b4f',
+  'เขตปฏิรูปที่ดินเพื่อเกษตรกรรม':'#c9a227','พื้นที่เกษตร':'#a0785a',
+  'ชุมชนและอื่นๆ':'#b8b8b0','ริมทางหลวง 50 เมตร':'#d0d0c8'
+};
+
+function openCropModal(lu) {
+  const d = CROP_DATA[lu];
+  if (!d) return;
+  const color = CROP_COLORS[lu] || '#888';
+  const totalAll = d.pv.reduce((s,p)=>s+p.total,0);
+
+  document.getElementById('crop-dot').style.background = color;
+  document.getElementById('crop-title').textContent = lu;
+  document.getElementById('crop-sub').textContent =
+    'รวม 4 เดือน: ' + totalAll.toLocaleString() + ' ไร่  |  ' + d.pv.length + ' จังหวัด';
+
+  const maxPv = d.pv.length>0 ? d.pv[0].total : 1;
+
+  // --- RP section ---
+  let rp = '<div class="crop-sec">พื้นที่รับผิดชอบ</div>';
+  d.rp.forEach(([name,pct])=>{
+    const c = RP_CLR[name]||'#aaa';
+    rp += `<div class="crop-rp-row">
+      <div class="crop-rp-name">${name}</div>
+      <div class="crop-rp-track"><div class="crop-rp-fill" style="background:${c};width:${pct}%"></div></div>
+      <div class="crop-rp-pct">${pct}%</div>
+    </div>`;
+  });
+
+  // --- Repeat section (with methodology note) ---
+  let rep = '<div class="crop-sec">พื้นที่ทับซ้อนกับโซนเผาซ้ำ (ตามรอยเผา HII)</div>';
+  rep += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;">
+    <div style="background:var(--paper-warm);padding:12px 14px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;">ทับซ้อน ≥2 ปี</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:var(--accent);">${d.rep}%</div>
+      <div style="font-size:11px;color:var(--ink-light);">${d.rep_rai.toLocaleString()} ไร่</div>
+    </div>
+    <div style="background:var(--paper-warm);padding:12px 14px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;">ทับซ้อน 3 ปีติด</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:#8c2303;">${d.rep3}%</div>
+      <div style="font-size:11px;color:var(--ink-light);">${d.rep3_rai.toLocaleString()} ไร่</div>
+    </div>
+  </div>
+  <div class="crop-note">ตัวเลขนี้คือสัดส่วนพื้นที่ที่ Shapefile GISTDA 2569 ทับซ้อนกับโซนที่ระบบตามรอยเผา (HII) ระบุว่ามีการเผาซ้ำ — สองระบบใช้ methodology ต่างกัน ใช้เป็นบริบทเปรียบเทียบเท่านั้น</div>`;
+
+  // --- Top 5 ตำบล ---
+  let tb = '<div class="crop-sec">Top 5 ตำบล</div>';
+  d.tb.forEach((t,i)=>{
+    tb += `<div class="crop-tb-row">
+      <div><div class="crop-tb-name">${i+1}. ${t.n}</div>
+      <div class="crop-tb-sub">${t.a} · ${t.p}</div></div>
+      <div class="crop-tb-val">${t.t.toLocaleString()} ไร่</div>
+    </div>`;
+  });
+
+  // --- Province list + search ---
+  let pvHdr = `<div class="crop-sec" style="margin-top:20px;">รายจังหวัด — ค้นหาจังหวัดของคุณ</div>
+  <div class="crop-search-wrap">
+    <span class="crop-search-icon">🔍</span>
+    <input class="crop-search" id="cpv-search" type="text"
+      placeholder="พิมพ์ชื่อจังหวัด..." oninput="filterCpv(this.value)">
+  </div>
+  <div class="crop-pv-count" id="cpv-count">${d.pv.length} จังหวัด</div>
+  <div style="display:grid;grid-template-columns:110px 1fr 85px 58px;gap:8px;
+    padding-bottom:6px;border-bottom:2px solid var(--ink);margin-bottom:2px;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-light);">จังหวัด</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-light);">4 เดือน</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-light);text-align:right;">รวม (ไร่)</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);text-align:right;">ทับซ้อน</div>
+  </div>`;
+
+  const maxM = Math.max(...d.pv.map(p=>Math.max(...p.m)));
+  let pvRows = '<div class="crop-pv-list" id="cpv-list">';
+  d.pv.forEach(pv=>{
+    const bars = pv.m.map((v,i)=>{
+      const w = maxM>0 ? (v/maxM*100).toFixed(0) : 0;
+      return `<div class="crop-pv-bar-row">
+        <div class="crop-pv-bar-lbl">${C_MON_LBL[i]}</div>
+        <div class="crop-pv-bar-track">
+          <div class="crop-pv-bar-fill" style="background:${C_MON_CLR[i]};width:${w}%"></div>
+        </div>
+      </div>`;
+    }).join('');
+    const repStr = pv.rep>0 ? pv.rep+'%' : '—';
+    pvRows += `<div class="crop-pv-row" data-pv="${pv.name}">
+      <div class="crop-pv-name">${pv.name}</div>
+      <div class="crop-pv-bars">${bars}</div>
+      <div class="crop-pv-total">${pv.total.toLocaleString()}</div>
+      <div class="crop-pv-rep">${repStr}</div>
+    </div>`;
+  });
+  pvRows += '</div>';
+
+  document.getElementById('crop-body').innerHTML = rp + rep + tb + pvHdr + pvRows;
+  document.getElementById('crop-modal-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  setTimeout(()=>{ const s=document.getElementById('cpv-search'); if(s) s.focus(); },120);
+}
+
+function filterCpv(q) {
+  const rows = document.querySelectorAll('#cpv-list .crop-pv-row');
+  const sq = q.trim();
+  let n = 0;
+  rows.forEach(r=>{
+    const match = !sq || r.dataset.pv.includes(sq);
+    r.classList.toggle('hidden', !match);
+    if(match) n++;
+  });
+  const el = document.getElementById('cpv-count');
+  if(el) el.textContent = sq ? ('พบ '+n+' จังหวัด') : (rows.length+' จังหวัด');
+}
+
+function closeCropModal() {
+  document.getElementById('crop-modal-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const ov = document.getElementById('crop-modal-overlay');
+  const cl = document.getElementById('crop-close');
+  if(ov) ov.addEventListener('click', e=>{ if(e.target===ov) closeCropModal(); });
+  if(cl) cl.addEventListener('click', closeCropModal);
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeCropModal(); });
+
 </script>
 
 <!-- FOREST CLUSTER MODAL -->
@@ -2505,6 +2972,22 @@ clmv.forEach((d, i) => {
       <button class="cluster-modal-close" id="modal-close" onclick="closeClusterModal()">✕</button>
     </div>
     <div class="cluster-modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+
+<!-- CROP DETAIL MODAL -->
+<div class="crop-modal-overlay" id="crop-modal-overlay">
+  <div class="crop-modal">
+    <div class="crop-modal-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div id="crop-dot" style="width:12px;height:12px;border-radius:50%;flex-shrink:0;"></div>
+        <div class="crop-modal-title" id="crop-title"></div>
+      </div>
+      <div id="crop-sub" style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-light);margin-top:3px;"></div>
+      <button class="crop-modal-close" id="crop-close">✕</button>
+    </div>
+    <div class="crop-modal-body" id="crop-body"></div>
   </div>
 </div>
 
